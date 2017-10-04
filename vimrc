@@ -1,6 +1,6 @@
 "
 "   vimrc
-"   Repo URL: https://github.com/LER0ever/EverVim
+"   Repo URL: https://github.com/arubertoson/vimfiles
 "   Author: Marcus Albertsson
 "   Licensed under
 "       * MIT

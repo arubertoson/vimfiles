@@ -1,0 +1,10 @@
+# tags
+GPATH
+GRTAGS
+GTAGS
+
+.backup
+.scratchpads
+init.vim
+miv
+

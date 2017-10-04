@@ -1,622 +1,193 @@
+# _vimrc.yaml * miv plugin manager setup file.
 
-# |Themes|
-# |Visual|
-# |Auto-Completion|
-# |Syntax-Checking|
-# |TextObj|
-# |Window-Management|
+# Author: Shougo <Shougo.Matsu at gmail.com>
+# License: MIT license
 
-before: |
-  MyAuto BufWritePost _vimrc.yaml let mivjob = jobstart([
-    \ 'cmd', '/c', 'chcp', '65001', '&&', 'miv', 'install'
-    \ ])
-
-  let g:mamvim#theme = 'icode'
-  let g:mamvim#themes = {
-  \   'iwrite': { 'colorscheme': 'pencil',
-  \              'background': 'light',
-  \              'font-size': '14',
-  \              'linespace': '6',
-  \              'typeface': 'Cousine',
-  \              'callback': 'iwrite'},
-  \   'icode': { 'colorscheme': 'ayu',
-  \              'background': 'dark',
-  \              'font-size': '12',
-  \              'linespace': '3',
-  \              'typeface': 'Droid Sans Mono',
-  \              'callback': 'icode'},
-  \ }
-
+# CONTENTS
+# |Auto-Complete|
+#
+#
+#
 plugin:
+  
+  # ===========================================================================
+  # AUTO-COMPLETE                                               *Auto-Complete*
 
-  wting/gitsessions.vim:
-    script: |
-      let g:gitsession_dir = expand('$CACHE/vim/sesions')
-      let g:session_directory = g:gitsession_dir
-
-  simeji/winresizer:
-    command:
-      - WinResizerStartResize
-    script: |
-      let g:winresizer_vert_resize = 4
-      let g:winresizer_horiz_resize = 1
-      let g:winresizer_keycode_finish = char2nr('o')
-      nnoremap <silent> <leader>wr :<C-u>WinResizerStartResize<CR>
-
-  thinca/vim-quickrun:
-    command: QuickRun
-    mapping: <Plug>(quickrun)
-    before: |
-      let g:quickrun_config = {'_': {
-        \ 'runner': 'vimproc', 'runner/vimproc/updatetime': 200, 'split': 
-        \ 'vertical', 'into': 1}}
-    script: |
-      nnoremap <expr> <C-c> exists('*quickrun#is_running') && 
-        \ quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
-      nnoremap <silent> <Leader>r :<C-u>call <SID>quickrun(0, 0)<CR>
-      nnoremap <silent> <Leader>e :<C-u>call <SID>quickrun(1, 0)<CR>
-      nnoremap <silent> <Leader>o :<C-u>call <SID>quickrun(1, 1)<CR>
-      function! s:quickrun(input, output)
-        let bufname = '-outputter/buffer/name ' . string( '[quickrun output'
-         \ . (tabpagenr() > 1 ? ' ' . tabpagenr() : '') . ']' )
-        let name = matchstr(expand('%:t'), '.*\ze\.')
-        let out = a:output ? '>file:' . name . 'o' : ''
-        let infile = name . 'i'
-        let in = a:input ? 
-          \ (filereadable(infile) ? '<' . infile : filereadable('i') ? 
-          \ '<i' : '') : ''
-        execute 'QuickRun' bufname in out
-      endfunction
-
-  mbbill/undotree:
-    command:
-      - UndotreeToggle
-    script: |
-      nnoremap <silent> ,u :<C-u>call UndotreeMyToggle()<CR>
-      MyAutoFT undotree,diff setlocal nonu nornu colorcolumn=
-      function! UndotreeMyToggle() abort
-        if &l:filetype != 'php'
-          let s:undotreeLastFiletype = &l:filetype
-          MyAutoFT diff MyAuto BufEnter,WinEnter <buffer>
-            \ let &l:syntax = s:undotreeLastFiletype
-        endif
-        UndotreeToggle
-      endfunction
-    before: |
-      let g:undotree_WindowLayout = 4
-      let g:undotree_SplitWidth = 36
-      let g:undotree_SetFocusWhenToggle = 1
-      function! g:Undotree_CustomMap() abort
-        nmap <buffer> o <Enter>
-        nmap <buffer> u <Plug>UndotreeUndo
-        nmap <buffer> r <Plug>UndotreeRedo
-        nmap <buffer> h <Plug>UndotreeGoNextState
-        nmap <buffer> l <Plug>UndotreeGoPreviousState
-        nmap <buffer> d <Plug>UndotreeDiffToggle
-        nmap <buffer> t <Plug>UndotreeTimestampToggle
-        nmap <buffer> C <Plug>UndotreeClearHistory
-      endfunction
-      MyAutoFT diff MyAuto BufEnter,WinEnter <buffer>
-        \  nnoremap <silent> <buffer> q :<C-u>UndotreeHide<CR>
-        \| nnoremap <silent> <buffer> ` :<C-u>UndotreeHide<CR>
-
-  Shougo/denite.nvim:
-    command: Denite
-    script: |
-      nnoremap <silent> <leader>sg :<C-u>Denite grep<CR>
-      nnoremap <silent> <leader>sf :<C-u>Denite file_rec -mode=insert<CR>
-      nnoremap <silent> <leader>ss :<C-u>Denite line -buffer-name=search
-        \ -mode=insert<CR>
-
-      nnoremap <silent> <leader>as :<C-U>Denite file_rec:$VIMFILES
-      nnoremap <silent> <leader>bt :<C-u>Denite filetype<CR>
-      nnoremap <silent> <leader>bb :<C-u>Denite buffer -reversed<CR>
-      nnoremap <silent> <leader>ps :<C-u>Denite session
-      nnoremap <silent> <leader><leader> :<C-u>Denite command<CR>
-      nnoremap <silent> <leader>` :<C-u>Denite command_history<CR>
-    after: |
-      call denite#custom#option('_', {
-        \ 'prompt': '❯',
-        \ 'auto_accel': 1,
-        \ 'empty': 1,
-        \ 'winheight': 10,
-        \ 'short_source_names': 1,
-        \ 'vertical_preview': 1,
-        \ 'updatetime': 10,
-        \ })
-      call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [
-        \ '.git/', '__pycache__/', '*.py[cd]'
-        \ ])
-
-      if executable('rg')
-        call denite#custom#var('grep', 'command', ['rg'])
-        call denite#custom#var('grep', 'recursive_opts', [])
-        call denite#custom#var('grep', 'final_opts', ['.'])
-        call denite#custom#var('grep', 'separator', ['--'])
-        call denite#custom#var('grep', 'default_opts',
-          \ ['--maxdepth', '8', '--vimgrep', '--no-heading'])
-      endif
-      call denite#custom#var('file_rec', 'command', ['rg', '--files'])
-
-      " Sources
-      call denite#custom#source('buffer', 'sorters', ['sorter_reverse'])
-      call denite#custom#source('file_rec', 'sorters', ['sorter_sublime'])
-      call denite#custom#source('file_rec', 'matchers', ['matcher_substring'])
-      call denite#custom#source('file_mru', 'matchers', ['matcher_project_files',
-        \ 'matcher_substring'])
-      call denite#custom#source('file_mru,file_rec,buffer', 'converters',
-        \ ['converter_relative_word'])
-
-      " Mappings
-      call denite#custom#map('normal', 'q',        '<denite:quit>',                        'noremap')
-      call denite#custom#map('normal', '`',        '<denite:quit>',                        'noremap')
-      call denite#custom#map('normal', '<Esc>',    '<denite:quit>',                        'noremap')
-      call denite#custom#map('normal', '-',        '<denite:choose_action>',               'noremap')
-      call denite#custom#map('normal', 'd',        '<denite:do_action:delete>',            'noremap')
-      call denite#custom#map('normal', 'o',        '<denite:do_action:default>',           'noremap')
-      call denite#custom#map('normal', 'f',        '<denite:do_action:find>',              'noremap')
-      call denite#custom#map('normal', 'r',        '<denite:do_action:reset>',             'noremap')
-      call denite#custom#map('normal', 'u',        '<denite:do_action:update>',            'noremap')
-      call denite#custom#map('normal', '<C-v>',    '<denite:do_action:vsplit>',            'noremap')
-      call denite#custom#map('insert', '<C-i>',    '<denite:choose_action>',               'noremap')
-      call denite#custom#map('insert', 'kj',       '<denite:enter_mode:normal>',           'noremap')
-      call denite#custom#map('insert', '<C-j>',    '<denite:move_to_next_line>',           'noremap')
-      call denite#custom#map('insert', '<C-k>',    '<denite:move_to_previous_line>',           'noremap')
-      call denite#custom#map('insert', '<C-p>',    '<denite:paste_from_default_register>', 'noremap')
-      call denite#custom#map('insert', '<C-d>',    '<denite:delete_char_before_caret>',    'noremap')
-      call denite#custom#map('insert', '<C-h>',    '<denite:move_caret_to_left>',          'noremap')
-      call denite#custom#map('insert', '<C-l>',    '<denite:move_caret_to_right>',         'noremap')
-      call denite#custom#map('insert', '<C-a>',    '<denite:move_caret_to_head>',          'noremap')
-      call denite#custom#map('insert', '<C-e>',    '<denite:move_caret_to_tail>',          'noremap')
-      call denite#custom#map('insert', '<C-v>',    '<denite:do_action:vsplit>',            'noremap')
-
-      autocmd! Syntax denite
-        \  highlight! default link deniteStatusLinePath   StatusLine
-        \| highlight! default link deniteStatusLineNumber StatusLine
-    dependedby:
-      - denite-session
-      - denite-gtags
-
-  ozelentok/denite-gtags:
-    loadafter: denite.nvim
-    script: |
-      nnoremap <leader>ga :DeniteCursorWord -buffer-name=gtags_context gtags_context<cr>
-      nnoremap <leader>gd :DeniteCursorWord -buffer-name=gtags_def gtags_def<cr>
-      nnoremap <leader>gr :DeniteCursorWord -buffer-name=gtags_ref gtags_ref<cr>
-      nnoremap <leader>gg :DeniteCursorWord -buffer-name=gtags_grep gtags_grep<cr>
-      nnoremap <leader>gc :Denite -buffer-name=gtags_completion gtags_completion<cr>
-      nnoremap <leader>gf :Denite -buffer-name=gtags_file gtags_file<cr>
-      nnoremap <leader>gp :Denite -buffer-name=gtags_path gtags_path<cr>
-
-  rafi/vim-denite-session:
-    loadafter: denite.nvim
-    after: |
-      call denite#custom#var('session', 'path', expand('$VIMFILES/.sessions'))
-
-  tomtom/tcomment_vim:
-    command: 
-      - TComment
-    mapmode:
-      - o
-      - v
-    mapping: 
-      - <Plug>TComment_gc
-      - gc
-    function: tcomment
-    script: |
-      nnoremap <silent> <C-/> :TComment<CR>
-      vnoremap <silent> <C-/> :TComment<CR>
-      nmap <silent> gc <Plug>TComment_gc
-    before: |
-      let g:tcommentMapLeader1 = ''
-      let g:tcommentMapLeader2 = ''
-      let g:tcommentMapLeaderUncommentAnyway = ''
-      let g:tcommentMapLeaderCommentAnyway = ''
-
-  # lervag/vimtex:
-  #   filetype: tex
-
-  rhysd/clever-f.vim: {}
-  Konfekt/vim-scratchpad:
-    function: scratchpad#
-    mapping:
-      - <Plug>(ToggleScratchPad)
-    script: |
-      nmap <leader>fs <Plug>(ToggleScratchPad)
-      command! -nargs=? Scratchpad call scratchpad#ToggleScratchPad(<q-args>)
-  wellle/visual-split.vim:
-    command:
-      - VSResize
-      - VSSplit
-      - VSSplitAbove
-      - VSSplitBelow
-
-  tpope/vim-scriptease:
-    command:
-        - PP
-        - Runtime
-        - Disarm
-        - Scriptnames
-        - Messages
-        - Verbose
-        - Time
-        - Breakadd
-        - Vedit
-
-  # haya14busa/incsearch.vim:
-  #   mapping:
-  #     - <Plug>(incsearch-forward)
-  #     - <Plug>(incsearch-backwards)
-  #     - <Plug>(incsearch-stay)
-  #     - <Plug>(incsearch-nohl-*)
-  #     - <Plug>(incsearch-nohl-#)
-  #     - <Plug>(incsearch-nohl-g*)
-  #     - <Plug>(incsearch-nohl-g#)
-  #   script: |
-  #     set hlsearch
-  #     let g:incsearch#auto_nohlsearch = 1
-  #
-  #     map /  <Plug>(incsearch-forward)
-  #     map ?  <Plug>(incsearch-backward)
-  #     map g/ <Plug>(incsearch-stay)
-  #
-  #     map n  <Plug>(incsearch-nohl-n)
-  #     map N  <Plug>(incsearch-nohl-N)
-  #     map *  <Plug>(incsearch-nohl-*)
-  #     map #  <Plug>(incsearch-nohl-#)
-  #     map g* <Plug>(incsearch-nohl-g*)
-  #     map g# <Plug>(incsearch-nohl-g#)
-
-    # - repo: mhinz/vim-sayonara
-    # - re_cmd: Sayonara
-    # - reoka_add: |
-    # - re  nnoremap <leader>d :Sayonara<CR>
-    # - re  nnoremap <leader>D :Sayonara!<CR>
-    # - re  let g:sayonara_confirm_quit = 1
-
-  # |Visual|
-  itchyny/vim-parenmatch:
-    after: |
-      highlight! link MatchParen ParenMatch
-
-  itchyny/vim-cursorword:
-    script: |
-      augroup cursorword-filetype
-        autocmd!
-        autocmd FileType qf,denite,vimfiler,vimshell,thumbnail,vimcalc,quickrun,calendar let b:cursorword = 0
-        autocmd InsertEnter * let b:cursorword = 0
-        autocmd InsertLeave * let b:cursorword = 1
-      augroup END
-
-  # display indentguides ¦ ┆ │ ⎸ ▏
-  Yggdroot/indentLine:
-    script: |
-      let g:indentLine_char = '¦'
-      let g:indentLine_showFirstIndentLevel = 0
-      let g:indentLine_leadingSpaceChar = '·'
-      let g:indentLine_leadingSpaceEnabled = 0
-
-  # |Themes-Syntax|
-
-  # Syntax highlighting and file settings
-  # sheerun/vim-polyglot: {}
-  reedes/vim-colors-pencil: {}
-  mhinz/vim-janah:
-    before: highlight Normal ctermbg=235
-  ayu-theme/ayu-vim:
-    before: |
-      let g:ayucolor="mirage"
-
-  hdima/python-syntax:
-    filetype: python
-    script: |
-      let g:python_highlight_all = 1
-
-  # |Auto-Completion|
-  Shougo/context_filetype.vim: {}
-
-  Shougo/deoplete.nvim:
+  roxma/nvim-completion-manager: 
     insert: true
-    depends: context_filetype
-    script: |
-      let g:deoplete#enable_at_startup = 1
 
-  Shougo/neco-vim:
-    dependon: deoplete.nvim
-    filetype: vim
+  roxma/clang_complete:
+    loadafter: nvim-completion-manager
+    filetype: [c, cpp, objc, objcpp]
 
-  zchee/deoplete-jedi:
-    dependon: deoplete.nvim
-    filetype: python
-
-  davidhalter/jedi-vim:
-    filetype: python
-    script: |
-      let g:jedi#completions_enabled = 0
-      let g:jedi#auto_vim_configuration = 0
-      let g:jedi#smart_auto_mappings = 0
-      let g:jedi#show_call_signatures = 0
-      let g:jedi#use_splits_not_buffers = 1
-
-    # script: |
-    #   deoplete#sources#jedi#extra_path:
-
-  # tweekmonster/deoplete-clang2:
-  #   dependon: deoplete.nvim
-
-  # roxma/nvim-completion-manager:
+  # roxma/ncm-clang:
+  #   loadafter: nvim-completion-manager
+  #   filetype: [c, cpp, objc, objcpp]
+  
+  # Shougo/deoplete.nvim:
   #   insert: true
   #   script: |
-  #     let g:cm_matcher = {
-  #     \ 'module': 'cm_matchers.abbrev_matcher',
-  #     \ 'case': 'smartcase',
-  #     \ }
-  #
-  # roxma/clang_complete:
-  #   dependon: nvim-completion-manager
-  #   filetype: [cpp, c, h, hpp]
-  #
-  # Shougo/neoinclude.vim:
-  #   dependon: nvim-completion-manager
-  #   filetype: [cpp, c, h, hpp]
-  #
+  #     let g:deoplete#enable_at_startup = 1
+
+  #     " General
+  #     let g:deoplete#max_list = 20
+  #     let g:deoplete#auto_complete_delay = 30
+  #     let g:deoplete#enable_refresh_always = 1
+  #     let g:deoplete#max_abbr_width = 35
+  #     let g:deoplete#max_menu_width = 20
+  #     let g:deoplete#skip_chars = ['(', ')', '<', '>']
+  #     let g:deoplete#tag#cache_limit_size = 800000
+  #     let g:deoplete#file#enable_buffer_path = 1
+
+  #     " Jedi
+  #     let g:deoplete#sources#jedi#short_types = 1
+  #     let g:deoplete#sources#jedi#show_docstring = 1
+  #     let g:deoplete#sources#jedi#statement_length = 30
+
+  #     " Sources
+  #     let g:deoplete#omni#functions = get(g:, 'deoplete#omni#functions', {})
+  #     let g:deoplete#omni#functions.css = 'csscomplete#CompleteCSS'
+  #     let g:deoplete#omni#functions.html = 'htmlcomplete#CompleteTags'
+  #     let g:deoplete#omni#functions.markdown = 'htmlcomplete#CompleteTags'
+
+  #     let g:deoplete#omni_patterns = get(g:, 'deoplete#omni_patterns', {})
+  #     let g:deoplete#omni_patterns.html = '<[^>]*'
+  #     let g:deoplete#omni_patterns.php =
+  #       \ '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+
+  #     let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
+  #     let g:deoplete#omni#input_patterns.xml = '<[^>]*'
+  #     let g:deoplete#omni#input_patterns.md = '<[^>]*'
+  #     let g:deoplete#omni#input_patterns.css  = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+  #     let g:deoplete#omni#input_patterns.scss = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+  #     let g:deoplete#omni#input_patterns.sass = '^\s\+\w\+\|\w\+[):;]\?\s\+\w*\|[@!]'
+  #     let g:deoplete#omni#input_patterns.python = ''
+  #     let g:deoplete#omni#input_patterns.javascript = ''
+      
+  #     let g:deoplete#sources = {}
+  #     let g:deoplete#sources.python = ['jedi', 'file', 'neosnippet']
+
+  #     " Mapping
+  #     MyAuto CompleteDone * silent! pclose!
+
+  #     " Movement within 'ins-completion-menu'
+  #     imap <expr><C-j>   pumvisible() ? "\<Down>" : "\<C-j>"
+  #     imap <expr><C-k>   pumvisible() ? "\<Up>" : "\<C-k>"
+
+  #     " Scroll pages in menu
+  #     inoremap <expr><C-f> pumvisible() ? "\<PageDown>" : "\<Right>"
+  #     inoremap <expr><C-b> pumvisible() ? "\<PageUp>" : "\<Left>"
+  #     imap     <expr><C-d> pumvisible() ? "\<PageDown>" : "\<C-d>"
+  #     imap     <expr><C-u> pumvisible() ? "\<PageUp>" : "\<C-u>"
+
+  #     " Undo completion
+  #     inoremap <expr><C-g> deoplete#undo_completion()
+
+  #     " Redraw candidates
+  #     inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
+  #     inoremap <expr><C-l> deoplete#refresh()
+
+  #     " <Tab> completion:
+  #     " if popup menu is visible, we have a selection
+  #     "   - if selection is a snippet expand it
+  #     "   - else select the first object in the list
+  #     " else
+  #     "   - if we can expand or jump in snippet do it
+  #     "   - return normal tab
+  #     function! s:custom_complete()
+  #       if pumvisible()
+  #         if !empty(v:completed_item)
+  #           if neosnippet#expandable_or_jumpable()
+  #             return "\<C-y>\<Plug>(neosnippet_expand_or_jump)"
+  #           endif
+  #         else
+  #           return "\<C-n>"
+  #         endif
+  #       else
+  #         if neosnippet#expandable_or_jumpable()
+  #           return "\<Plug>(neosnippet_expand_or_jump)"
+  #         endif
+  #       endif
+  #       return '\<TAB>'
+  #     endfunction
+  #     imap <silent><expr><TAB> <SID>custom_complete()
+  #   after: |
+  #     " Jedi
+  #     call deoplete#custom#source('jedi', 'disable_syntaxes', ['Comment'])
+  #     call deoplete#custom#source('jedi', 'matchers', ['matcher_fuzzy'])
+
+  #     " Marks
+  #     call deoplete#custom#source('omni',          'mark', '⌾')
+  #     call deoplete#custom#source('jedi',          'mark', '⌁')
+  #     call deoplete#custom#source('vim',           'mark', '⌁')
+  #     call deoplete#custom#source('neosnippet',    'mark', '•')
+  #     call deoplete#custom#source('tag',           'mark', 't')
+  #     call deoplete#custom#source('gtags',         'mark', 'gt')
+  #     call deoplete#custom#source('buffer',        'mark', 'b')
+
+  #     "
+  #     " Default rank is 100, higher is better.
+  #     call deoplete#custom#source('vim',           'rank', 630)
+  #     call deoplete#custom#source('jedi',          'rank', 610)
+  #     call deoplete#custom#source('neosnippet',    'rank', 510)
+  #     call deoplete#custom#source('file_include',  'rank', 420)
+  #     call deoplete#custom#source('file',          'rank', 410)
+  #     call deoplete#custom#source('tag',           'rank', 400)
+  #     call deoplete#custom#source('gtags',         'rank', 400)
+  #     call deoplete#custom#source('buffer',        'rank', 320)
+
+  #     " Source Loading
+  #     " call deoplete#custom#source('jedi', 'filetypes', ['py'])
+
+  #     call deoplete#custom#source('_', 'converters', [
+  #       \ 'converter_remove_paren',
+  #       \ 'converter_remove_overlap',
+  #       \ 'converter_truncate_abbr',
+  #       \ 'converter_truncate_menu',
+  #       \ 'converter_auto_delimiter',
+  #       \ ])
+  #   dependby:
+  #     - neco
+  #     - neoinclude
+  #     - deoplete-jedi
+  #     - deoplete-clang
+
   # Shougo/neco-vim:
-  #   dependon: nvim-completion-manager
+  #   loadafter: deoplete.nvim
   #   filetype: vim
-  #
-  # jsfaint/gen_tags.vim:
-  #   dependon: nvim-completion-manager
-  #   filetype: [cpp, c, h, hpp, python, vim]
-  #   script: |
-  #     let g:loaded_gentags#ctags = 1
+  # zchee/deoplete-jedi:
+  #   loadafter: deoplete.nvim
+  #   filetype: python
+  # Shougo/neoinclude.vim:
+  #   loadafter: deoplete.nvim
+  #   filetype: [c, cpp, objc, objcpp]
 
+  # tweekmonster/deoplete-clang2:
+  #   loadafter: deoplete.nvim
+  #   filetype: [c, cpp, objc, objcpp]
+  #   script: | 
+  #     let g:deoplete#sources#clang#std = {
+  #       \ 'c': 'c11',
+  #       \ 'cpp': 'c++1z',
+  #       \ 'objc': 'c11',
+  #       \ 'objcpp': 'c++1z',
+  #       \ }
+  #     " let g:deoplete#sources#clang#flags = []
+      
+  # # zchee/deoplete-clang:
+  # #   loadafter: deoplete.nvim
+  # #   filetype: [c, cpp, objc, objcpp]
+  # #   script: |
+  # #     let g:deoplete#sources#clang#clang_header = 
+  # #       \ 'C:/tc/sys/win64/lib/clang/'
+  # #     let g:deoplete#sources#clang#libclang_path = 
+  # #       \ 'C:/tc/sys/win64/bin/libclang.dll'
+  # #     let g:deoplete#sources#clang#std = {'cpp': 'c++1z'}
+  # #   submodule: true
 
-  # |Syntax-Checking|
+  # # \ "C:/Program Files/LLVM/lib/clang/5.0.0/include"
+  # # \ "C:/Program Files/LLVM/bin/libclang.dll"
+  # Shougo/neosnippet-snippets: {}
+  # Shougo/neosnippet.vim:
+  #   dependon: neosnippet-snippets
 
-  rhysd/vim-grammarous:
-    command: GrammarousCheck
-    script: |
-      nmap <silent> <leader>eg :GrammarousCheck<CR>
-    before: |
-      if IsWindows()
-        let g:grammarous#languagetool_cmd = "java -d64 -jar C:/Users/marcu/Desktop/toolchain/sys/packges/LanguageTool-3.8/languagetool-commandline.jar"
-      endif
-      let g:grammarous#default_comments_only_filetypes = {
-        \ '*' : 1, 'help' : 0, 'markdown' : 0,
-        \ }
-
-  w0rp/ale:
-    mapmode: 'n'
-    mapping:
-      - <Plug>(ale_toggle)
-      - <Plug>(ale_fix)
-    script: |
-      nmap <silent> <leader>el <Plug>(ale_toggle)
-      nmap <silent> <leader>ef <Plug>(ale_fix)
-      nmap <silent> <leader>en <Plug>(ale_next_wrap)
-      nmap <silent> <leader>ep <Plug>(ale_previous_wrap)
-
-      MyAuto ColorScheme *
-        \  hi ALEErrorSign   guifg=#FF3333 guibg=#242B38 gui=bold
-        \| hi ALEWarningSign guifg=#FFCC66 guibg=#242B38 gui=bold
-    before: |
-      let g:ale_sign_error = '►'
-      let g:ale_sign_warning = '»'
-      let g:ale_statusline_format = ['× %d', '∆ %d', '♦ ok']
-
-      let g:ale_lint_on_text_changed = 0
-      let g:ale_lint_on_insert_leave = 0
-      let g:ale_lint_on_save = 1
-      let g:ale_lint_on_enter = 1
-
-      let g:ale_fixers = {
-        \ 'python': ['yapf'],
-        \ }
-      let g:ale_fix_on_save = 1
-      let g:ale_linters = {
-        \ 'jsx': ['stylelint', 'eslint'],
-        \ 'python': ['pycodestyle', 'pylint', ],
-        \ }
-      let g:ale_linter_aliases = {'jsx': 'css'}
-
-  fisadev/vim-isort:
-    command: Isort
-    filetype: python
-    script: |
-      let g:vim_isort_map = ''
-
-  itchyny/lightline.vim:
-    script: |
-      let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left':  [ 
-      \              ['mode', 'paste'],
-      \              ['gitbranch', 'readonly', 'relativepath', 'modified'],
-      \            ],
-      \   'right': [ 
-      \              ['percent', 'lineinfo'],
-      \              ['fileformat', 'fileencoding', 'filetype'],
-      \              ['linter_errors', 'linter_warnings', 'linter_ok'],
-      \            ]
-      \ },
-      \ 'inactive': {
-      \   'left':  [ 
-      \              ['filename'], 
-      \            ],
-      \   'right': [ 
-      \              ['lineinfo'],
-      \              ['percent'],
-      \            ] 
-      \ },
-      \ 'component_expand': {
-      \   'linter_warnings': 'LightlineLinterWarnings',
-      \   'linter_errors': 'LightlineLinterErrors',
-      \   'linter_ok': 'LightlineLinterOK'
-      \ },
-      \ 'component_type': {
-      \   'readonly': 'error',
-      \   'linter_warnings': 'warning',
-      \   'linter_errors': 'error',
-      \ },
-      \ }
-      MyAuto User ALELint call lightline#update()
-
-      function! LightlineLinterErrors() abort
-        let l:counts = ale#statusline#Count(bufnr(''))
-        let l:all_errors = l:counts.error + l:counts.style_error
-        let l:all_non_errors = l:counts.total - l:all_errors
-        return l:counts.total == 0 ? '' : printf('x %d', all_errors)
-      endfunction
-
-      function! LightlineLinterWarnings() abort
-        let l:counts = ale#statusline#Count(bufnr(''))
-        let l:all_errors = l:counts.error + l:counts.style_error
-        let l:all_non_errors = l:counts.total - l:all_errors
-        return l:counts.total == 0 ? '' : printf('▲ %d', all_non_errors)
-      endfunction
-
-      function! LightlineLinterOK() abort
-        let l:counts = ale#statusline#Count(bufnr(''))
-        let l:all_errors = l:counts.error + l:counts.style_error
-        let l:all_non_errors = l:counts.total - l:all_errors
-        return l:counts.total == 0 ? '♦ Ok' : ''
-      endfunction
-
-
-  # |TextObj|
-
-  # This one is a beast, adding many textobjects, refer
-  # to the github readme for information.
-  # TODO: Fix conflict with textobj-line 'il' binding
-  wellle/targets.vim: {}
-  machakann/vim-sandwich:
-    mapmode: [o, v]
-    mapping: [sa, sd, sr]
-
-  kana/vim-operator-user: {}
-
-  kana/vim-textobj-user: {}
-  kana/vim-textobj-entire:
-    dependon: textobj-user
-    mapmode: [o, v]
-    mapping:
-      - <Plug>(textobj-entire-a)
-      - <Plug>(textobj-entire-i)
-      - ae
-      - ie
-
-  # Surround
-  machakann/vim-textobj-functioncall:
-    dependon: textobj-user
-    mapmode: [o, v]
-    mapping: [if, af]
-
-  machakann/vim-textobj-delimited:
-    dependon: textobj-user
-    mapmode: [o, v]
-    mapping: [id, iD, ad, aD]
-
-  whatyouhide/vim-textobj-xmlattr:
-    dependon: textobj-user
-    mapmode: [o, v]
-    mapping: [vix, vax]
-
-  # |Utils|
-  chaoren/vim-wordmotion: {}
-
-  # kana/vim-smartword:
-  #   mapping:
-  #     - <Plug>(smartword-w) 
-  #     - <Plug>(smartword-b) 
-  #     - <Plug>(smartword-e) 
-  #     - <Plug>(smartword-ge)
-  #   script: |
-  #     map w  <Plug>(smartword-w)
-  #     map b  <Plug>(smartword-b)
-  #     map e  <Plug>(smartword-e)
-  #     map ge <Plug>(smartword-ge)
-    
-  # csexton/trailertrash.vim:
-  #   command:
-  #     - TrailerTrim
-  #     - TrailerToggle
-
-  tpope/vim-scriptease:
-    command:
-      - PP
-      - Runtime
-      - Disarm
-      - Scriptnames
-      - Messages
-      - Verbose
-      - Time
-      - Breakadd
-      - Vedit
-
-  machakann/vim-highlightedyank:
-    mapping:
-      - <Plug>(highlightedyank)
-    script: |
-      map y <Plug>(highlightedyank)
-      highlight link HighlightedyankRegion Visual
-      let g:highlightedyank_highlight_duration = 100
-
-  junegunn/goyo.vim:
-    command: Goyo
-    after: |
-
-      function! s:goyo_enter()
-        let b:quitting = 0
-        let b:quitting_bang = 0
-        autocmd QuitPre <buffer> let b:quitting = 1
-        cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-      endfunction
-
-      function! s:goyo_leave()
-        " Quit Vim if this is the only remaining buffer
-        "
-        if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-          if b:quitting_bang
-            qa!
-          else
-            qa
-          endif
-        endif
-      endfunction
-
-      autocmd! User GoyoEnter call <SID>goyo_enter()
-      autocmd! User GoyoLeave call <SID>goyo_leave()
-
-  junegunn/limelight.vim:
-    command: Limelight
-    after: |
-      autocmd! User GoyoEnter Limelight
-      autocmd! User GoyoLeave Limelight!
-
-
-  # |Insert|
-
-  # Autocomplete brackets
-  kana/vim-smartinput:
-    insert: true
-
-  # Autocomplete if/endif statements
-  tpope/vim-endwise:
-    insert: true
-    filetype:
-      - c
-      - cpp
-      - vim
-
-
-filetype:
-  python: |
-    nnoremap <buffer> <leader>gt :call jedi#goto()<CR>
-    nnoremap <buffer> <leader>ga :call jedi#goto_assignments()<CR>
-    nnoremap <buffer> <leader>gd :call jedi#goto_definitions()<CR>
-    nnoremap <buffer> <leader>gu :call jedi#usages()<CR>
-    nnoremap <buffer> <leader>gr :call jedi#rename()<CR>
-    vnoremap <buffer> <leader>gr :call jedi#rename_visual()<CR>
-    nnoremap <buffer> K :call jedi#show_documentation()<CR>
-    let g:ale_python_pylint_options = "--init-hook=\"import sys; sys.path.append('C:/Program Files/Autodesk/Maya2017/devkit/other/pymel/extras/completion/py')\""
