@@ -70,9 +70,6 @@
   Gautocmd BufWritePre,FileWritePre *?
     \ call vimrc#make_dir('<afile>:h', v:cmdbang)
 
-  " Turn off highlight when moving in file
-  Gautocmd CursorMove * :noh<CR>
-
 "---------------------------------------------------------------------------
 " Global Functions:
 
