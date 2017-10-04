@@ -1,5 +1,5 @@
-" vimrc functions
 "---------------------------------------------------------------------------
+" Vimrc Functions:
 
 function! vimrc#make_dir(name, ...) abort
   let force = a:0 >= 1 && a:1 ==# '!'
@@ -60,5 +60,16 @@ function! vimrc#set_theme(...) abort
     execute 'GuiFont! ' . l:font
     execute 'GuiLinespace ' . a:theme['linespace']
   endif
+endfunction
+
+
+function! vimrc#auto_nohlsearch() abort
+  nnoremap <silent> <Plug>(_auto-nohl) :<C-u>nohlsearch<CR>
+
+  augroup auto-nohl
+    autocmd!
+    autocmd InsertEnter,CursorMoved * call feedkeys('\<Plug>(_auto-nohl)')
+      \| autocmd! auto-nohl
+  augroup END
 endfunction
 

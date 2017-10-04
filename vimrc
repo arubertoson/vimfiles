@@ -1,105 +1,87 @@
 "
-"   vimrc
 "   Repo URL: https://github.com/arubertoson/vimfiles
 "   Author: Marcus Albertsson
-"   Licensed under
-"       * MIT
-"---------------------------------------------------------------------------
-
-
-if has('reltime') && has('vim_starting')
-  " Shell: vim --startuptime filename -q; vim filename
-  " vim --cmd 'profile start profile.txt' --cmd 'profile file $HOME/.vimrc' 
-  "  \ +q && vim profile.txt
-  let s:startupTime = reltime()
-  augroup VimEnter
-    autocmd! VimEnter * let s:startupTime = reltime(s:startupTime)
-      \ | redraw | echomsg reltimestr(s:startupTime)
-  augroup END
-endif
-
-
-" Environemnt
 "
-" Set main configuration directory, and where cache is stored
 "---------------------------------------------------------------------------
+" Environment Variables:
 
-  let $VIMFILES = expand('$HOME/vimfiles')
-  let $VIMHOME = expand((has('nvim') ? '$HOME/.nvim' : '$HOME/.vim'))
-  let $MIVFILES = expand('$VIMFILES/miv/miv')
-  let $CACHE = expand('$HOME/.cache/vim')
+  let $XDG_CONFIG_HOME = expand($HOME.'/.config')
+  let $XDG_CACHE_HOME = expand($HOME.'/.cache')
+  let $XDG_DATA_HOME = expand($HOME.'/.local/share')
+  let $XDG_RUNTIME_DIR = expand('/.local/runtime')
+  
+  let $XDG_CONFIG_DIRS = expand('/etc/xdg')
+  let $XDG_DATA_DIRS = expand('$HOME/.vim/miv/miv')
 
-  let g:loaded_python_provider = 1
-  let g:python2_host_prog = "c:/python/2713_x64/python"
-  let g:python3_host_prog = "c:/python/362_x64/python"
+  let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p')), 'h:h:')
 
-  set runtimepath=$VIMFILES,$VIMRUNTIME
+  set runtimepath^=$XDG_DATA_DIRS
 
-  set nomodeline modelines=0  " prevents security exploits
-  set noexrc                  " avoid reading local (g)vimrc, exrc
-  set packpath=
-  " set noswapfile
-  set regexpengine=2          " 0=auto 1=old 2=NFA
-
-" Undo
-  set undodir=$CACHE/undo
-  set undofile undolevels=500 undoreload=1000
-  " View
-  set viewdir=$CACHE/view
-  set viewoptions=cursor,slash,unix
-  " Tmp
-  set directory=$CACHE
-
-  if has('nvim')
-    set inccommand=split
-    set clipboard+=unnamedplus
-  endif
-
-  " Initialize autogroup
-  augroup MyVimrc | execute 'autocmd!' | augroup END
-
-
-" Commands
 "---------------------------------------------------------------------------
-  command! -nargs=* MyAuto autocmd MyVimrc <args>
-  command! -nargs=* MyAutoFT autocmd MyVimrc FileType <args>
+" Global AutoCmd:
+
+  augroup vimrc | execute 'autocmd!' | augroup END
+  command! -nargs=* Gautocmd autocmd vimrc <args>
+  command! -nargs=* Gautocmdft autocmd vimrc FileType <args>
+
+"---------------------------------------------------------------------------
+" Global Commands:
+
   command! -nargs=1 Indent execute
     \ 'setlocal tabstop='.<q-args>
     \ 'softtabstop='.<q-args>
     \ 'shiftwidth='.<q-args>
   command! -nargs=0 -bar GoldenRatio exe 'vertical resize' &columns * 5 / 8
-   " Shows the syntax stack under the cursor
+  " Shows the syntax stack under the cursor
   command! -bar SS echo 
     \ map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+  " Set color theme
   command! -nargs=? SetColorScheme call vimrc#set_theme(<q-args>)
 
-" Events
 "---------------------------------------------------------------------------
-  if exists('$MYVIMRC')
-    autocmd MyVimrc BufWritePost $MYVIMRC | source $MYVIMRC | redraw
-  endif
-  MyAuto Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
-  " Check if there are other open instances of file in buffer
-  MyAuto WinEnter * checktime
-  " Use relative numbers only in buffer with focus
-  MyAuto WinLeave *? let [&l:number, &l:relativenumber] =
-    \ &l:number ? [1, 0] : [&l:number, &l:relativenumber]
-  MyAuto WinEnter *? let [&l:number, &l:relativenumber] =
-    \ &l:number ? [1, 1] : [&l:number, &l:relativenumber] 
-  " Show listchars in insert mode 
-  MyAuto InsertEnter *? setlocal list
-  MyAuto InsertLeave *? setlocal nolist
-  " Format options
-  MyAutoFT *? setlocal formatoptions=cmMj
-  " Fix window position of help
-  MyAuto FileType help if &l:buftype ==# 'help' | wincmd K | endif
-  " Always open read-only when a swap file is found
-  MyAuto SwapExists * let v:swapchoice = 'o'
+" Global Events:
 
-" Functions
+  " Optimize syntax in big files
+  Gautocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
+
+  " Check if there are other open instances of file in buffer
+  Gautocmd WinEnter * checktime
+  
+  " Use relative numbers only in buffer with focus
+  Gautocmd WinLeave *? let [&l:number, &l:relativenumber] =
+    \ &l:number ? [1, 0] : [&l:number, &l:relativenumber]
+  Gautocmd WinEnter *? let [&l:number, &l:relativenumber] =
+    \ &l:number ? [1, 1] : [&l:number, &l:relativenumber] 
+  
+  " Show listchars in insert mode 
+  Gautocmd InsertEnter *? setlocal list
+  Gautocmd InsertLeave *? setlocal nolist
+  
+  " Format options
+  Gautocmdft *? setlocal formatoptions=cmMj
+  
+  " Fix window position of help
+  Gautocmd FileType help if &l:buftype ==# 'help' | wincmd K | endif
+
+  " Always open read-only when a swap file is found
+  Gautocmd SwapExists * let v:swapchoice = 'o'
+
+  " Create directory if hierarchy doesn't exist
+  Gautocmd BufWritePre,FileWritePre *?
+    \ call vimrc#make_dir('<afile>:h', v:cmdbang)
+
+  " Turn off highlight when moving in file
+  Gautocmd CursorMove * :noh<CR>
+
 "---------------------------------------------------------------------------
+" Global Functions:
+
   function! IsWindows() abort
     return has('win64') || has('win32') || has('win32unix')
+  endfunction
+
+  function! IsUnix() abort
+    return has('unix')
   endfunction
 
   function! IsMac() abort
@@ -108,29 +90,24 @@ endif
           \     || (!executable('xdg-open') && system('uname') =~? '^darwin'))
   endfunction
 
-" Vimrc
-"---------------------------------------------------------------------------
-  " MakeDir
-  command! -nargs=1 -bang MakeDir call vimrc#make_dir(<f-args>, "<bang>")
-  MyAuto BufWritePre,FileWritePre *?
-    \ call vimrc#make_dir('<afile>:h', v:cmdbang)
+  function! IsNvim() abort
+    return has('nvim')
+  endfunction
 
-" Modules
 "---------------------------------------------------------------------------
+" Global Settings:
 
   " Load configuration modules
   call vimrc#load_modules([
     \ 'encoding',
-    \ 'gui',
+    \ 'general',
     \ 'view',
-    \ 'edit',
-    \ 'statusline',
     \ 'mapping',
     \ 'abbr'
     \ ])
 
-" Plugins
-" ---------------------------------------------------------------------------
+"---------------------------------------------------------------------------
+" Global Plugins:
 
   " Disable default plugins
   let g:loaded_csv = 1
