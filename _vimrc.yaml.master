@@ -1,8 +1,122 @@
+# ===========================================================================
+# _vimrc.yaml * miv plugin manager setup file.
+#
+# Author: Marcus Albertsson (arubertoson@github.com)
+# License: MIT license
+# ===========================================================================
 
-before:
+# ===========================================================================
+# CONTENTS
+
+# |Auto-Complete|
+
 
 plugin:
+        
+# ===========================================================================
+# AUTO-COMPLETE                                               *Auto-Complete*
 
-after:
+  Shougo/deoplete.nvim:
+    insert: true
+    script: |
+      let g:deoplete#enable_at_startup = 1
 
-filetype:
+      let g:deoplete#max_list = 20
+      let g:deoplete#auto_complete_delay = 30
+      let g:deoplete#enable_refresh_always = 1
+      let g:deoplete#max_abbr_width = 35
+      let g:deoplete#max_menu_width = 20
+      let g:deoplete#skip_chars = ['(', ')', '<', '>']
+      let g:deoplete#tag#cache_limit_size = 800000
+      let g:deoplete#file#enable_buffer_path = 1
+
+      " Jedi
+      let g:deoplete#sources#jedi#short_types = 1
+      let g:deoplete#sources#jedi#show_docstring = 1
+      let g:deoplete#sources#jedi#statement_length = 30
+
+      " Sources
+      let g:deoplete#ignore_sources = {}
+      let g:deoplete#ignore_sources._ = ['around']
+      let g:deoplete#ignore_sources.python = 
+        \ ['buffer', 'dictionary', 'omni', 'tag', 'syntax']
+      let g:deoplete#ignore_sources.c = 
+        \ ['buffer', 'dictionary', 'omni', 'tag', 'syntax']
+      let g:deoplete#ignore_sources.cpp = g:deoplete#ignore_sources.c  
+
+      let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so.5.0'
+      let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
+
+      let g:deoplete#omni#input_patterns = get(g:, 'deoplete#omni#input_patterns', {})
+      let g:deoplete#omni#input_patterns.python = ''
+      let g:deoplete#omni#input_patterns.javascript = ''
+    
+      " Movement within 'ins-completion-menu'
+      imap <expr><C-j>   pumvisible() ? "\<Down>" : "\<C-j>"
+      imap <expr><C-k>   pumvisible() ? "\<Up>" : "\<C-k>"
+
+      " Scroll pages in menu
+      inoremap <expr><C-f> pumvisible() ? "\<PageDown>" : "\<Right>"
+      inoremap <expr><C-b> pumvisible() ? "\<PageUp>" : "\<Left>"
+      imap     <expr><C-d> pumvisible() ? "\<PageDown>" : "\<C-d>"
+      imap     <expr><C-u> pumvisible() ? "\<PageUp>" : "\<C-u>"
+
+      " Undo completion
+      inoremap <expr><C-g> deoplete#undo_completion()
+
+      " Redraw candidates
+      inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
+      inoremap <expr><C-l> deoplete#refresh()
+    after: |
+      " Jedi
+      call deoplete#custom#source('jedi', 'disable_syntaxes', ['Comment'])
+      call deoplete#custom#source('jedi', 'matchers', ['matcher_fuzzy'])
+
+      " Marks
+      call deoplete#custom#source('omni',          'mark', '⌾')
+      call deoplete#custom#source('jedi',          'mark', '⌁')
+      call deoplete#custom#source('vim',           'mark', '⌁')
+      call deoplete#custom#source('neosnippet',    'mark', '•')
+      call deoplete#custom#source('tag',           'mark', 't')
+      call deoplete#custom#source('gtags',         'mark', 'gt')
+      call deoplete#custom#source('buffer',        'mark', 'b')
+
+      " Default rank is 100, higher is better.
+      call deoplete#custom#source('vim',           'rank', 630)
+      call deoplete#custom#source('jedi',          'rank', 610)
+      call deoplete#custom#source('neosnippet',    'rank', 510)
+      call deoplete#custom#source('file_include',  'rank', 420)
+      call deoplete#custom#source('file',          'rank', 410)
+      call deoplete#custom#source('tag',           'rank', 400)
+      call deoplete#custom#source('gtags',         'rank', 400)
+      call deoplete#custom#source('buffer',        'rank', 320)
+
+      call deoplete#custom#source('_', 'converters', [
+        \ 'converter_remove_paren',
+        \ 'converter_remove_overlap',
+        \ 'converter_truncate_abbr',
+        \ 'converter_truncate_menu',
+        \ 'converter_auto_delimiter',
+        \ ])
+    dependby:
+      - neco
+      - neoinclude
+      - deoplete-jedi
+      - deoplete-clang
+
+  Shougo/neco-vim:
+    loadafter: deoplete.nvim
+    filetype: vim
+  zchee/deoplete-jedi:
+    loadafter: deoplete.nvim
+    filetype: python
+    submodule: true
+
+  Shougo/neoinclude.vim:
+    loadafter: deoplete.nvim
+    filetype: [c, cpp, objc, objcpp]
+  zchee/deoplete-clang:
+    loadafter: deoplete.nvim
+    filetype: [c, cpp, objc, objcpp]
+    submodule: true
+
