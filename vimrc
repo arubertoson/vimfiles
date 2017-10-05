@@ -9,13 +9,13 @@
   let $XDG_CACHE_HOME = expand($HOME.'/.cache')
   let $XDG_DATA_HOME = expand($HOME.'/.local/share')
   let $XDG_RUNTIME_DIR = expand('/.local/runtime')
+
+  let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p:h')), '')
   
   let $XDG_CONFIG_DIRS = expand('/etc/xdg')
   let $XDG_DATA_DIRS = expand('$HOME/.vim/miv/miv')
 
-  let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p')), 'h:h:')
-
-  set runtimepath^=$XDG_DATA_DIRS
+  set runtimepath^=$VIMPATH
 
 "---------------------------------------------------------------------------
 " Global AutoCmd:
