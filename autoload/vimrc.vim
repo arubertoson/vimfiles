@@ -13,9 +13,9 @@ endfunction
 
 
 function! vimrc#load_modules(modules) abort
-  let l:basedir = resolve(expand('$VIMFILES/modules/'))
+  let l:basedir = resolve(expand('$VIMPATH/modules'))
   for l:module in a:modules
-    let l:modfile = l:basedir . l:module . '.vim'
+    let l:modfile = l:basedir .'/'. l:module . '.vim'
     if filereadable(l:modfile)
       execute 'source' l:modfile
     endif
@@ -26,7 +26,7 @@ endfunction
 function! vimrc#load_plugins() abort
   filetype off
   if has('vim_starting')
-    let &runtimepath= expand($MIVFILES) . ',' . &runtimepath
+    set runtimepath^=$XDG_DATA_DIRS
   endif
   filetype plugin indent on
   silent! syntax enable
