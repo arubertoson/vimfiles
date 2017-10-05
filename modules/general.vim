@@ -28,8 +28,7 @@
   set directory=$XDG_CACHE_HOME/swap//,$XDG_CACHE_HOME,
   set undodir=$XDG_CACHE_HOME/undo//,$XDG_CACHE_HOME,
   set backupdir=$XDG_CACHE_HOME/backup//,$XDG_CACHE_HOME,
-  set viewdir=$XDG_CACHE_HOME/view//,$XDG_CACHE_HOME,
-  set nospell spellfile=$/view//,$XDG_CACHE_HOME,
+  set viewdir=$XDG_CACHE_HOME/view
   set nospell spellfile=$VIMPATH/spell/en.utf-8.add
 
   " History saving
