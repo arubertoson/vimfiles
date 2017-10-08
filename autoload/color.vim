@@ -52,10 +52,8 @@ function! s:Restore_links() " {{{1
   endfor
 endfunction
 
-function! s:AccurateColorscheme(colo_name)
+function! color#set(colo_name)
   call <SID>Find_links()
   exec "colorscheme " a:colo_name
   call <SID>Restore_links()
 endfunction
-
-command! -nargs=1 -complete=color MyColorscheme call <SID>AccurateColorscheme(<q-args>)
