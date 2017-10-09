@@ -46,11 +46,11 @@ function! vimrc#set_theme(...) abort
   " assume the colorscheme exists, else set a default
   let l:colorscheme = get(a:theme, 'colorscheme', 'desert')
   try
-    execute 'MyColorscheme ' .  l:colorscheme
     " execute 'colorscheme ' . l:colorscheme
+    call color#set(l:colorscheme)
   catch /E185:/
     " If no colorscheme use a default from vim
-    execute 'MyColorscheme ' . 'desert'
+    call color#set('desert')
   endtry
 
   " Set font and linespace

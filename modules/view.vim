@@ -4,6 +4,7 @@
 
   set title titlestring=%t%(\ %M%)%(\ (%{expand(\"%:~:.:h\")})%)%(\ %a%)
   
+  set termguicolors            " Use gui colors in terminal
   set noshowmode               " Don't show mode in cmd window
   set shortmess=aoOtTIcF       " shorten messages
   set scrolloff=2              " Keep at least 2 lines above/below

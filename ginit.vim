@@ -11,8 +11,6 @@ if exists('g:GuiLoaded')
     \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
     \,sm:block-blinkwait175-blinkoff150-blinkon175
 
-  set termguicolors
-
   call GuiMousehide(1)
   if exists('g:thematic#theme_name')
     let s:theme = g:thematic#themes[g:thematic#theme_name]

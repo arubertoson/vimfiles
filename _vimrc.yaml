@@ -8,12 +8,108 @@
 # ===========================================================================
 # CONTENTS
 
+# |Visual-Themes|
 # |Auto-Complete|
 # |Command-Palette|
 # |Git|
 
-
 plugin:
+# ===========================================================================
+# VISUAL-THEMES                                               *Visual-Themes*
+
+  # Syntax highlighting and file settings
+  sheerun/vim-polyglot: {}
+
+  # Themes
+  reedes/vim-colors-pencil: {}
+  mhinz/vim-janah:
+    before: highlight Normal ctermbg=235
+  ayu-theme/ayu-vim:
+    before: |
+      let g:ayucolor="mirage"
+
+  # Visual Enhancements
+  yami-beta/vim-responsive-tabline: {}
+  itchyny/vim-parenmatch:
+    after: |
+      highlight! link MatchParen ParenMatch
+  itchyny/vim-cursorword:
+    script: |
+      augroup cursorword-filetype
+        autocmd!
+        autocmd FileType qf,denite,vimfiler,vimshell,thumbnail,vimcalc,quickrun,calendar let b:cursorword = 0
+        autocmd InsertEnter * let b:cursorword = 0
+        autocmd InsertLeave * let b:cursorword = 1
+      augroup END
+  # display indentguides ¦ ┆ │ ⎸ ▏
+  Yggdroot/indentLine:
+    script: |
+      let g:indentLine_char = '¦'
+      let g:indentLine_showFirstIndentLevel = 0
+      let g:indentLine_leadingSpaceChar = '·'
+      let g:indentLine_leadingSpaceEnabled = 0
+
+  itchyny/lightline.vim:
+    script: |
+      let g:lightline = {
+      \ 'enable': {
+      \ },
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left':  [ 
+      \              ['mode', 'paste'],
+      \              ['gitbranch', 'readonly', 'relativepath', 'modified'],
+      \            ],
+      \   'right': [ 
+      \              ['percent', 'lineinfo'],
+      \              ['fileformat', 'fileencoding', 'filetype'],
+      \              ['linter_errors', 'linter_warnings', 'linter_ok'],
+      \            ]
+      \ },
+      \ 'inactive': {
+      \   'left':  [ 
+      \              ['filename'], 
+      \            ],
+      \   'right': [ 
+      \              ['lineinfo'],
+      \              ['percent'],
+      \            ] 
+      \ },
+      \ 'component_expand': {
+      \   'linter_warnings': 'LightlineLinterWarnings',
+      \   'linter_errors': 'LightlineLinterErrors',
+      \   'linter_ok': 'LightlineLinterOK'
+      \ },
+      \ 'component_type': {
+      \   'readonly': 'error',
+      \   'linter_warnings': 'warning',
+      \   'linter_errors': 'error',
+      \ },
+      \ }
+      Gautocmd User ALELint call lightline#update()
+
+      function! LightlineLinterErrors() abort
+        let l:counts = ale#statusline#Count(bufnr(''))
+        let l:all_errors = l:counts.error + l:counts.style_error
+        let l:all_non_errors = l:counts.total - l:all_errors
+        return l:counts.total == 0 ? '' : printf('x %d', all_errors)
+      endfunction
+
+      function! LightlineLinterWarnings() abort
+        let l:counts = ale#statusline#Count(bufnr(''))
+        let l:all_errors = l:counts.error + l:counts.style_error
+        let l:all_non_errors = l:counts.total - l:all_errors
+        return l:counts.total == 0 ? '' : printf('▲ %d', all_non_errors)
+      endfunction
+
+      function! LightlineLinterOK() abort
+        let l:counts = ale#statusline#Count(bufnr(''))
+        let l:all_errors = l:counts.error + l:counts.style_error
+        let l:all_non_errors = l:counts.total - l:all_errors
+        return l:counts.total == 0 ? '♦ Ok' : ''
+      endfunction
+
+
 # ===========================================================================
 # AUTO-COMPLETE                                               *Auto-Complete*
 
@@ -230,4 +326,37 @@ plugin:
       let g:gsw_sessions_dir = expand('$XDG_CACHE_HOME/git_switcher/')
       let g:gsw_autoload_session = 'yes'
       let g:gsw_autodelete_sessions_if_branch_not_exist = 'confirm'
+
+
+# ===========================================================================
+# HOOK-ON-SOURCE                                             *Hook-on-source*
+
+before: |
+  Gautocmd BufWritePost _vimrc.yaml let mivjob = jobstart(
+    \ ['bash', '-c "', 'miv', 'install"'])
+
+  let g:vimrc#theme = 'icode'
+  let g:vimrc#themes = {
+    \   'iwrite': { 'colorscheme': 'pencil',
+    \              'background': 'light',
+    \              'font-size': '14',
+    \              'linespace': '6',
+    \              'typeface': 'Cousine',
+    \              'callback': 'iwrite'},
+    \   'icode': { 'colorscheme': 'ayu',
+    \              'background': 'dark',
+    \              'font-size': '12',
+    \              'linespace': '3',
+    \              'typeface': 'Droid Sans Mono',
+    \              'callback': 'icode'},
+    \ }
+
+
+# ===========================================================================
+# HOOK-AFTER-SOURCE                                       *Hook-after-source*
+after: |
+  if !has('gui_running')
+    execute 'colorscheme' get(
+      \ g:vimrc#themes[g:vimrc#theme], 'colorscheme', 'desert')
+  endif
 
