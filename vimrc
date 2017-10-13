@@ -138,3 +138,10 @@
   " Load User Plugins
   call vimrc#load_plugins()
 
+
+"---------------------------------------------------------------------------
+" Post:
+
+  " Avoid running autocmds not owned by you in local .vimrc
+  set secure                
+

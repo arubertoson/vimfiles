@@ -2,7 +2,7 @@
 "---------------------------------------------------------------------------
 " General Settings:
 
-  set noexrc                   " avoid reading local (g)vimrc, exrc
+  set exrc                     " avoid reading local (g)vimrc, exrc
   set packpath=
 
   set mouse=nv                 " Disable mouse in command-line mode
