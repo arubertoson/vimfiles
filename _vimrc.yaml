@@ -1,5 +1,4 @@
-# ===========================================================================
-# _vimrc.yaml * miv plugin manager setup file.
+# =========================================================================== _vimrc.yaml * miv plugin manager setup file.
 #
 # Author: Marcus Albertsson (arubertoson@github.com)
 # License: MIT license
@@ -8,27 +7,150 @@
 # ===========================================================================
 # CONTENTS
 
-# |Visual-Themes|
+# |Editing|
+#   |Operators|
+#   |Textobjects|
+# |Navigation|
+# |Visual
+#   |Visual-Themes|
+#   |Syntax-Filetypes|
+#   |Visual-Enhancements|
+#   |Distraction-Free|
 # |Auto-Complete|
+# |Syntax-Checkers|
 # |Command-Palette|
 # |Git|
+# |Views|
+# |Debugging-Executing|
+# |Language-Specific|
+#   |Python|
+#   |C\Cpp|
+
 
 plugin:
+  danro/rename.vim:
+    command:
+      - rename
+
+  simeji/winresizer:
+    command:
+      - WinResizerStartResize
+    script: |
+      let g:winresizer_vert_resize = 4
+      let g:winresizer_horiz_resize = 1
+      let g:winresizer_keycode_finish = char2nr('o')
+      nnoremap <silent> <leader>wr :<C-u>WinResizerStartResize<CR>
+
+
+# ===========================================================================
+# EDITING                                                           *Editing*
+
+  kana/vim-smartinput:
+    insert: true
+
+  tomtom/tcomment_vim: {}
+  tpope/vim-abolish:
+    command:
+      - S
+      - Subvert
+  mhinz/vim-sayonara:
+    command:
+      - Sayonara
+    script: |
+      nnoremap <leader>bd :Sayonara<CR>
+      nnoremap <leader>bD :Sayonara!<CR>
+      let g:sayonara_confirm_quit = 1
+  Konfekt/vim-scratchpad:
+    function: scratchpad#
+    mapping:
+      - <Plug>(ToggleScratchPad)
+    script: |
+      nmap <leader>fs <Plug>(ToggleScratchPad)
+      command! -nargs=? Scratchpad call scratchpad#ToggleScratchPad(<q-args>)
+  mtth/scratch.vim:
+    command:
+      - Scratch
+    mapping:
+      - <Plug>(scratch-insert-reuse)    
+      - <Plug>(scratch-insert-clear)           
+      - <Plug>(scratch-selection-reuse) 
+      - <Plug>(scratch-selection-clear) 
+    script: |
+        let g:scratch_no_mappings = 1
+        nmap <Leader>bs <Plug>(scratch-insert-reuse)
+        nmap <Leader>bS <Plug>(scratch-insert-clear)
+        xmap <Leader>bs <Plug>(scratch-selection-reuse)
+        xmap <Leader>bS <Plug>(scratch-selection-clear)
+
+
+  # *Operators & Textobjects*
+  wellle/targets.vim: {}
+  machakann/vim-sandwich:
+    mapmode: [o, v]
+    mapping: [sa, sd, sr]
+
+
+# ===========================================================================
+# NAVIGATION                                                     *Navigation*
+
+  rhysd/clever-f.vim: {}
+  chaoren/vim-wordmotion: {}
+
+
 # ===========================================================================
 # VISUAL-THEMES                                               *Visual-Themes*
 
-  # Syntax highlighting and file settings
+  # *Syntax-Filetype*
   sheerun/vim-polyglot: {}
 
-  # Themes
+
+  # *Themes*
   reedes/vim-colors-pencil: {}
   mhinz/vim-janah:
     before: highlight Normal ctermbg=235
   ayu-theme/ayu-vim:
-    before: |
+    script: |
       let g:ayucolor="mirage"
+      Gautocmd ColorScheme *
+        \  hi ALEErrorSign   guifg=#FF3333 guibg=#242B38 gui=bold
+        \| hi ALEWarningSign guifg=#FFCC66 guibg=#242B38 gui=bold
 
-  # Visual Enhancements
+
+  # *Distraction-Free-Mode*
+  junegunn/goyo.vim:
+    command: Goyo
+    before: |
+      function! s:goyo_enter() abort
+        let b:quitting = 0
+        let b:quitting_bang = 0
+        autocmd QuitPre <buffer> let b:quitting = 1
+        cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+      endfunction
+
+      function! s:goyo_leave() abort
+        if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+          if b:quitting_bang
+            qa!
+          else
+            qa
+          endif
+        endif
+      endfunction
+
+      autocmd! User GoyoEnter call <SID>goyo_enter()
+      autocmd! User GoyoLeave call <SID>goyo_leave()
+    script: |
+      nnoremap <silent><Leader>Td :<C-u>Goyo<CR>
+  junegunn/limelight.vim:
+    command: Limelight
+    after: |
+      autocmd! User GoyoEnter Limelight
+      autocmd! User GoyoLeave Limelight!
+    script: |
+      nnoremap <silent><Leader>Tl :<C-u>Limelight!<CR>
+
+
+  # *Visual-Enhancements*
   yami-beta/vim-responsive-tabline: {}
   itchyny/vim-parenmatch:
     after: |
@@ -48,11 +170,26 @@ plugin:
       let g:indentLine_showFirstIndentLevel = 0
       let g:indentLine_leadingSpaceChar = '·'
       let g:indentLine_leadingSpaceEnabled = 0
+  machakann/vim-highlightedyank:
+    mapping:
+      - <Plug>(highlightedyank)
+    script: |
+      map y <Plug>(highlightedyank)
+      highlight link HighlightedyankRegion Visual
+      let g:highlightedyank_highlight_duration = 100
+  wellle/visual-split.vim:
+    command:
+      - VSResize
+      - VSSplit
+      - VSSplitAbove
+      - VSSplitBelow
 
+  # *Statusline*
   itchyny/lightline.vim:
     script: |
       let g:lightline = {
       \ 'enable': {
+      \ 'tabline': 0,
       \ },
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -218,6 +355,58 @@ plugin:
     submodule: true
 
 # ===========================================================================
+# SYNTAX-CHECKERS                                           *Syntax-Checkers*
+
+  csexton/trailertrash.vim:
+    command:
+      - TrailerTrim
+      - TrailerToggle
+
+  rhysd/vim-grammarous:
+    command: GrammarousCheck
+    script: |
+      nmap <silent> <leader>eg :GrammarousCheck<CR>
+    before: |
+      if IsWindows()
+        let g:grammarous#languagetool_cmd = 
+        \ "java -d64 -jar languagetool-commandline.jar"
+      endif
+      let g:grammarous#default_comments_only_filetypes = {
+        \ '*' : 1, 'help' : 0, 'markdown' : 0,
+        \ }
+
+  w0rp/ale:
+    mapmode: 'n'
+    mapping:
+      - <Plug>(ale_toggle)
+      - <Plug>(ale_fix)
+    script: |
+      nmap <silent> <leader>el <Plug>(ale_toggle)
+      nmap <silent> <leader>ef <Plug>(ale_fix)
+      nmap <silent> <leader>en <Plug>(ale_next_wrap)
+      nmap <silent> <leader>ep <Plug>(ale_previous_wrap)
+    before: |
+      let g:ale_sign_error = '►'
+      let g:ale_sign_warning = '»'
+      let g:ale_statusline_format = ['× %d', '∆ %d', '♦ ok']
+
+      let g:ale_lint_on_text_changed = 0
+      let g:ale_lint_on_insert_leave = 0
+      let g:ale_lint_on_save = 1
+      let g:ale_lint_on_enter = 1
+
+      let g:ale_fixers = {
+        \ 'python': ['yapf'],
+        \ }
+      let g:ale_fix_on_save = 1
+      let g:ale_linters = {
+        \ 'jsx': ['stylelint', 'eslint'],
+        \ 'python': ['pycodestyle', 'pylint'],
+        \ }
+      let g:ale_linter_aliases = {'jsx': 'css'}
+
+
+# ===========================================================================
 # COMMAND_PALETTE                                           *Command-Palette*
 
   Shougo/denite.nvim:
@@ -327,13 +516,100 @@ plugin:
       let g:gsw_autoload_session = 'yes'
       let g:gsw_autodelete_sessions_if_branch_not_exist = 'confirm'
 
+# ===========================================================================
+# VIEWS                                                               *Views*
+
+  mbbill/undotree:
+    command:
+      - UndotreeToggle
+    script: |
+      nnoremap <silent> ,u :<C-u>call UndotreeMyToggle()<CR>
+      Gautocmdft undotree,diff setlocal nonu nornu colorcolumn=
+      function! UndotreeMyToggle() abort
+        if &l:filetype != 'php'
+          let s:undotreeLastFiletype = &l:filetype
+          MyAutoFT diff MyAuto BufEnter,WinEnter <buffer>
+            \ let &l:syntax = s:undotreeLastFiletype
+        endif
+        UndotreeToggle
+      endfunction
+    before: |
+      let g:undotree_WindowLayout = 4
+      let g:undotree_SplitWidth = 36
+      let g:undotree_SetFocusWhenToggle = 1
+      function! g:Undotree_CustomMap() abort
+        nmap <buffer> o <Enter>
+        nmap <buffer> u <Plug>UndotreeUndo
+        nmap <buffer> r <Plug>UndotreeRedo
+        nmap <buffer> h <Plug>UndotreeGoNextState
+        nmap <buffer> l <Plug>UndotreeGoPreviousState
+        nmap <buffer> d <Plug>UndotreeDiffToggle
+        nmap <buffer> t <Plug>UndotreeTimestampToggle
+        nmap <buffer> C <Plug>UndotreeClearHistory
+      endfunction
+      Gautocmdft diff Gautocmd BufEnter,WinEnter <buffer>
+        \  nnoremap <silent> <buffer> q :<C-u>UndotreeHide<CR>
+        \| nnoremap <silent> <buffer> ` :<C-u>UndotreeHide<CR>
+
+
+# ===========================================================================
+# DEBUGGING-EXECUTING                                   *Debugging-Executing*
+
+  thinca/vim-prettyprint: {}
+
+  thinca/vim-quickrun:
+    command: QuickRun
+    before: |
+      let g:quickrun_config = get(g:, 'quickrun_config', {})
+      let g:quickrun_config._ = {
+        \ 'outputter': 'quickfix',
+        \ 'split': 'vertical',
+        \ 'into': 1,
+        \ }
+    script: |
+      nnoremap <silent> <F8> :<C-u>QuickRun<CR>
+
+
+# ===========================================================================
+# LANGUAGE-SPECIFIC                                       *Language-Specific*
+
+  # *Python*
+  davidhalter/jedi-vim:
+    filetype: python
+    script: |
+      let g:jedi#completions_enabled = 0
+      let g:jedi#auto_vim_configuration = 0
+      let g:jedi#smart_auto_mappings = 0
+      let g:jedi#show_call_signatures = 0
+      let g:jedi#use_splits_not_buffers = 1
+  fisadev/vim-isort:
+    command: Isort
+    filetype: python
+    script: |
+      let g:vim_isort_map = ''
+
+
+# ===========================================================================
+# FILETYPES                                                       *Filetypes*
+filetype:
+
+  python: |
+    nnoremap <buffer> <leader>gt :call jedi#goto()<CR>
+    nnoremap <buffer> <leader>ga :call jedi#goto_assignments()<CR>
+    nnoremap <buffer> <leader>gd :call jedi#goto_definitions()<CR>
+    nnoremap <buffer> <leader>gu :call jedi#usages()<CR>
+    nnoremap <buffer> <leader>gr :call jedi#rename()<CR>
+    vnoremap <buffer> <leader>gr :call jedi#rename_visual()<CR>
+    nnoremap <buffer> K :call jedi#show_documentation()<CR>
+    let g:ale_python_pylint_options = "--init-hook=\"import sys; sys.path.append('C:/Program Files/Autodesk/Maya2017/devkit/other/pymel/extras/completion/py')\""
+
 
 # ===========================================================================
 # HOOK-ON-SOURCE                                             *Hook-on-source*
 
 before: |
   Gautocmd BufWritePost _vimrc.yaml let mivjob = jobstart(
-    \ ['bash', '-c "', 'miv', 'install"'])
+    \ ['bash', '-c ', '"miv install"'])
 
   let g:vimrc#theme = 'icode'
   let g:vimrc#themes = {
@@ -354,9 +630,9 @@ before: |
 
 # ===========================================================================
 # HOOK-AFTER-SOURCE                                       *Hook-after-source*
+
 after: |
   if !has('gui_running')
     execute 'colorscheme' get(
       \ g:vimrc#themes[g:vimrc#theme], 'colorscheme', 'desert')
   endif
-
