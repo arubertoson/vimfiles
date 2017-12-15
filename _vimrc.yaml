@@ -203,7 +203,7 @@ plugin:
       \ 'active': {
       \   'left':  [ 
       \              ['mode', 'paste'],
-      \              ['gitbranch', 'readonly', 'relativepath', 'modified'],
+      \              ['gitbranch', 'readonly', 'filename', 'modified'],
       \            ],
       \   'right': [ 
       \              ['percent', 'lineinfo'],
@@ -229,6 +229,9 @@ plugin:
       \   'readonly': 'error',
       \   'linter_warnings': 'warning',
       \   'linter_errors': 'error',
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
       \ },
       \ }
       Gautocmd User ALELint call lightline#update()
@@ -503,6 +506,8 @@ plugin:
 
   # Gutter signs for git diff
   mhinz/vim-signify: {}
+  itchyny/vim-gitbranch: {}
+
   # Git log/diff viewer
   cohama/agit.vim:
     command:
