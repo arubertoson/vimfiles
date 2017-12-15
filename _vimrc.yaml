@@ -28,9 +28,17 @@
 
 
 plugin:
+  euclio/vim-markdown-composer: {}
+
+  Shougo/vimproc.vim:
+    build: make
+    function: vimproc
+    loadbefore:
+      - quickrun
+
   danro/rename.vim:
     command:
-      - rename
+      - Rename
 
   simeji/winresizer:
     command:
@@ -559,13 +567,6 @@ plugin:
 
   thinca/vim-quickrun:
     command: QuickRun
-    before: |
-      let g:quickrun_config = get(g:, 'quickrun_config', {})
-      let g:quickrun_config._ = {
-        \ 'outputter': 'quickfix',
-        \ 'split': 'vertical',
-        \ 'into': 1,
-        \ }
     script: |
       nnoremap <silent> <F8> :<C-u>QuickRun<CR>
 
