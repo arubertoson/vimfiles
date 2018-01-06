@@ -49,6 +49,11 @@ plugin:
       let g:winresizer_keycode_finish = char2nr('o')
       nnoremap <silent> <leader>wr :<C-u>WinResizerStartResize<CR>
 
+# ===========================================================================
+# SEARCHING
+  dyng/ctrlsf.vim: 
+    command:
+      - CtrlSF
 
 # ===========================================================================
 # EDITING                                                           *Editing*
