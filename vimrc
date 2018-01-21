@@ -97,7 +97,6 @@
   " Load configuration modules
   call vimrc#load_modules([
     \ 'encoding',
-    \ 'encoding',
     \ 'general',
     \ 'view',
     \ 'mapping',

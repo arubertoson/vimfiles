@@ -34,8 +34,8 @@ endfunction
 
 
 function! vimrc#set_theme(...) abort
-  let a:theme_name = a:0 > 0 ? a:1 : g:mamvim#theme
-  let a:theme = g:mamvim#themes[a:theme_name]
+  let a:theme_name = a:0 > 0 ? a:1 : g:vimrc#theme
+  let a:theme = g:vimrc#themes[a:theme_name]
 
   " Use the original background
   let l:background = get(a:theme, 'background', 'dark')
@@ -59,6 +59,13 @@ function! vimrc#set_theme(...) abort
   if exists('g:GuiLoaded')
     execute 'GuiFont! ' . l:font
     execute 'GuiLinespace ' . a:theme['linespace']
+  endif
+
+  " Execute callback
+  let l:cmd = get(a:theme, 'callback')
+  echom l:cmd
+  if l:cmd
+    execute l:cmd
   endif
 endfunction
 
