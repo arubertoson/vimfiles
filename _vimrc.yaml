@@ -572,17 +572,14 @@ filetype:
     nnoremap <buffer> <leader>gr :call jedi#rename()<CR>
     vnoremap <buffer> <leader>gr :call jedi#rename_visual()<CR>
     nnoremap <buffer> K :call jedi#show_documentation()<CR>
-    let g:ale_python_pylint_options = "--init-hook=\"import sys; sys.path.append('C:/Program Files/Autodesk/Maya2017/devkit/other/pymel/extras/completion/py')\""
+    " let g:ale_python_pylint_options = "--init-hook=\"import sys; sys.path.append('C:/Program Files/Autodesk/Maya2017/devkit/other/pymel/extras/completion/py')\""
 
 
 # ===========================================================================
 # HOOK-ON-SOURCE                                             *Hook-on-source*
 
 before: |
-  Gautocmd BufWritePost _vimrc.yaml let mivjob = jobstart(
-    \ ['bash', '-c ', '"miv install"'])
-
-  # Set default theme and other themes that we can change to
+  " Set default theme and other themes that we can change to
   let g:vimrc#theme = 'icode'
   let g:vimrc#themes = {
     \   'iwrite': { 'colorscheme': 'pencil',
