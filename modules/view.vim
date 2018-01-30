@@ -4,9 +4,11 @@
 
   set title titlestring=%t%(\ %M%)%(\ (%{expand(\"%:~:.:h\")})%)%(\ %a%)
   
-  set termguicolors            " Use gui colors in terminal
+  if IsNvim()
+    set termguicolors            " Use gui colors in terminal
+    set shortmess=aoOtTIcF       " shorten messages
+  endif
   set noshowmode               " Don't show mode in cmd window
-  set shortmess=aoOtTIcF       " shorten messages
   set scrolloff=2              " Keep at least 2 lines above/below
   set sidescrolloff=5          " Keep at least 5 lines left/right
   set number relativenumber    " show the line number

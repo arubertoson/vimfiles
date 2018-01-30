@@ -17,6 +17,11 @@
 
   set runtimepath^=$VIMPATH
 
+  "
+  " This is per workstation, it should be setup in this manner
+  let g:python_host_prog  = expand($HOME.'/.pyenv/versions/2.7.14/envs/neovim-2.7/bin/python')
+  let g:python3_host_prog  = expand($HOME.'/.pyenv/versions/3.6.4/envs/neovim-3.6/bin/python')
+
 "---------------------------------------------------------------------------
 " Global AutoCmd:
 
@@ -134,8 +139,10 @@
   let g:netrw_nogx                = 1
   let g:suppress_doxygen          = 1 " $VIMRUNTIME/syntax/doxygen.vim
   
-  " Load User Plugins
-  call vimrc#load_plugins()
+  if IsNvim()
+    " Load User Plugins
+    call vimrc#load_plugins()
+  endif
 
 
 "---------------------------------------------------------------------------

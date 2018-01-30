@@ -3,7 +3,9 @@
 " General Settings:
 
   set exrc                     " avoid reading local (g)vimrc, exrc
-  set packpath=
+  if IsNvim()
+    set packpath=
+  endif
 
   set mouse=nv                 " Disable mouse in command-line mode
   set modeline                 " automatically setting options from modelines
@@ -33,7 +35,7 @@
 
   " History saving
   set history=2000
-  if has('nvim')
+  if IsNvim()
   	"  ShaDa/viminfo:
   	"   ' - Maximum number of previously edited files marks
   	"   < - Maximum number of lines saved for each register
@@ -55,15 +57,19 @@
   set whichwrap+=h,l,<,>,[,],~        " Move to following line on certain keys
   set splitbelow splitright           " Splits open bottom right
   set switchbuf=useopen,usetab        " Jump to the first open window in any tab
-  set switchbuf+=vsplit               " Switch buffer behavior to vsplit
+  if IsNvim()
+    set switchbuf+=vsplit               " Switch buffer behavior to vsplit
+  endif
   set backspace=indent,eol,start      " Intuitive backspacing in insert mode
   set diffopt=filler,iwhite,vertical  " Diff mode: show fillers, ignore white
   set showfulltag                     " Show tag and tidy search in completion
   set complete=.                      " No wins, buffs, tags, include scanning
   set completeopt=menuone             " Show menu even for one item
   set completeopt=longest             " Complete the longest common text
-  set completeopt+=noselect           " Do not select a match in the menu
-  set completeopt+=noinsert           " Do not insert any text
+  if IsNvim()
+    set completeopt+=noselect           " Do not select a match in the menu
+    set completeopt+=noinsert           " Do not insert any text
+  endif
 
   if has('wildmenu')
     set nowildmenu
