@@ -123,8 +123,8 @@
   inoremap <C-l> <Esc>`^
   " [jj|qq]: smart fast Esc
   inoremap <expr> j getline('.')[getcurpos()[4]-2] ==# 'j' ? "\<BS>\<Esc>`^" : "\j"
-  inoremap <expr> q getline('.')[getcurpos()[4]-2] ==# 'q' ? "\<BS>\<Esc>`^" : "\q"
-
+  inoremap <expr> k getline('.')[getcurpos()[4]-2] ==# 'k' ? "\<BS>\<Esc>`^" : "\k"
+   
   " Unbinds
   inoremap <C-j> <Nop>
   inoremap <C-k> <Nop>
@@ -153,6 +153,10 @@
   " Ctrl-v: open the command-line window
   cnoremap <C-v> <C-f>a
 
+"---------------------------------------------------------------------------
+" Terminal Mode:
+
+  tnoremap <C-\><C-\> <C-\><C-n>
 
 "---------------------------------------------------------------------------
 " Functions:
