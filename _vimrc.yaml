@@ -34,13 +34,18 @@ plugin:
   #
   # Plugins here are not yet integrated, more for testing purposes
 
-  JamshedVesuna/vim-markdown-preview:
-    filetype: [markdown]
-    script: |
-      let g:vim_markdown_preview_github=1
-      let g:vim_markdown_preview_toggle=2
-      " let g:vim_markdown_preview_hotkey="<C-m>"
-      " let g:vim_markdown_preview_browser="google-chrome"
+  suan/vim-instant-markdown: {}
+
+  # iamcco/markdown-preview.vim:
+  #   filetype: [markdown]
+
+  # JamshedVesuna/vim-markdown-preview:
+  #   filetype: [markdown]
+  #   script: |
+  #     let g:vim_markdown_preview_github=1
+  #     let g:vim_markdown_preview_toggle=2
+  #     " let g:vim_markdown_preview_hotkey="<C-m>"
+  #     " let g:vim_markdown_preview_browser="google-chrome"
 
   #   euclio/vim-markdown-composer: {}
   # wellle/visual-split.vim:
@@ -378,6 +383,11 @@ plugin:
       let g:ale_lint_on_save = 1
       let g:ale_lint_on_enter = 1
 
+      let g:ale_linters = {
+        \ 'sh': ['shell', 'shellcheck'],
+        \ 'bash': ['shell', 'shellcheck'],
+        \ 'zsh': ['shell', 'shellcheck'],
+        \ }
       let g:ale_fixers = {
         \ 'python': ['yapf'],
         \ }
