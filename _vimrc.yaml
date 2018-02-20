@@ -1,4 +1,4 @@
-# =========================================================================== 
+# ===========================================================================
 # _vimrc.yaml * miv plugin manager setup file.
 # Author: Marcus Albertsson (arubertoson@github.com)
 # License: MIT license
@@ -71,13 +71,13 @@ plugin:
   # chaoren/vim-wordmotion: {}
 
   yamahigashi/sendtomaya.vim:
-    after: |                   
+    after: |
       let g:send_to_maya_host="localhost"
       let g:send_to_maya_port=12345
       let g:send_to_maya_prefer_language = 'python'
 
       vmap mayap <Plug>(SendToMayaPy)
-      nmap <silent><Leader>aa :SendToMayaPy<Cr> 
+      nmap <silent><Leader>aa :SendToMayaPy<Cr>
 
   simeji/winresizer:
     command:
@@ -88,9 +88,9 @@ plugin:
       let g:winresizer_keycode_finish = char2nr('o')
       nnoremap <silent> <leader>wr :<C-u>WinResizerStartResize<CR>
 
-  # ctrlf is a search tool for finding tags and providing smart renaming 
+  # ctrlf is a search tool for finding tags and providing smart renaming
   # across several files in project structure
-  dyng/ctrlsf.vim: 
+  dyng/ctrlsf.vim:
     command:
       - CtrlSF
 
@@ -111,7 +111,7 @@ plugin:
 
   # Provides substition search %Subvert/facilit{y,ies}/building{,s}/g
   # Also provides and easy way to switch betweetn
-  # snake_case/SnakeCase/snakeCase/snacke-case/SNACKE_CASE 
+  # snake_case/SnakeCase/snakeCase/snacke-case/SNACKE_CASE
   #   crs         crm       crs       srd         sru
   tpope/vim-abolish: {}
 
@@ -123,9 +123,9 @@ plugin:
       nnoremap <leader>bd :Sayonara<CR>
       nnoremap <leader>bD :Sayonara!<CR>
       let g:sayonara_confirm_quit = 1
-  
+
   #
-  # Scratchpads 
+  # Scratchpads
   #
   # I've decided to use two types of scratch pad plugins, one to
   # quickly be able to take notes that behaves in a non intrusive manner and
@@ -139,17 +139,17 @@ plugin:
     command:
       - Scratch
     mapping:
-      - <Plug>(scratch-insert-reuse)    
-      - <Plug>(scratch-insert-clear)           
-      - <Plug>(scratch-selection-reuse) 
-      - <Plug>(scratch-selection-clear) 
+      - <Plug>(scratch-insert-reuse)
+      - <Plug>(scratch-insert-clear)
+      - <Plug>(scratch-selection-reuse)
+      - <Plug>(scratch-selection-clear)
     script: |
         let g:scratch_no_mappings = 1
         nmap <Leader>bs <Plug>(scratch-insert-reuse)
         nmap <Leader>bS <Plug>(scratch-insert-clear)
         xmap <Leader>bs <Plug>(scratch-selection-reuse)
         xmap <Leader>bS <Plug>(scratch-selection-clear)
-        
+
   # More for testing out code chunks and ideas
   Konfekt/vim-scratchpad:
     function: scratchpad#
@@ -161,7 +161,7 @@ plugin:
 
   # =========================================================================
   # Auto Complete (Look into language server by microsoft)
-  # 
+  #
   # Nvim completion manager works well, does not require complex setup.
   roxma/nvim-completion-manager:
     insert: true
@@ -183,6 +183,7 @@ plugin:
   #
   # Light theme for prose/writing
   reedes/vim-colors-pencil: {}
+  trevordmiller/nova-vim: {}
   # Dark red based theme
   mhinz/vim-janah:
     before: highlight Normal ctermbg=235
@@ -209,24 +210,24 @@ plugin:
       \ },
       \ 'colorscheme': 'wombat',
       \ 'active': {
-      \   'left':  [ 
+      \   'left':  [
       \              ['gitbranch', 'paste'],
       \              ['readonly', 'modified'],
       \            ],
-      \   'right': [ 
+      \   'right': [
       \              ['percent', 'lineinfo'],
       \              ['filetype', 'fileencoding', 'fileformat'],
       \              ['linter_errors', 'linter_warnings', 'linter_ok'],
       \            ]
       \ },
       \ 'inactive': {
-      \   'left':  [ 
-      \              ['filename'], 
+      \   'left':  [
+      \              ['filename'],
       \            ],
-      \   'right': [ 
+      \   'right': [
       \              ['lineinfo'],
       \              ['percent'],
-      \            ] 
+      \            ]
       \ },
       \ 'component_expand': {
       \   'linter_warnings': 'LightlineLinterWarnings',
@@ -319,13 +320,13 @@ plugin:
   # will also stretch the columns to fit onto the vertical buffer.
   yami-beta/vim-responsive-tabline: {}
 
-  # Parenmtach will highlight matched parens, it's faster than the built in. 
+  # Parenmtach will highlight matched parens, it's faster than the built in.
   itchyny/vim-parenmatch:
     after: |
       let g:loaded_matchparen = 1
       highlight! link MatchParen ParenMatch
 
-  # Cursor word will highlight all matching words in the buffer 
+  # Cursor word will highlight all matching words in the buffer
   itchyny/vim-cursorword:
     script: |
       augroup cursorword-filetype
@@ -398,7 +399,7 @@ plugin:
 # COMMAND_PALETTE                                           *Command-Palette*
 
   Shougo/denite.nvim:
-    command: 
+    command:
       - Denite
       - DeniteProjectDir
       - DeniteCursorWord
@@ -447,7 +448,7 @@ plugin:
         \ ['converter_relative_word'])
 
       call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-      call denite#custom#var('file_rec/git', 'command', 
+      call denite#custom#var('file_rec/git', 'command',
         \ ['git', 'ls-files', '--others', '--cached', '--exclude-standard'
         \ ])
 
@@ -490,14 +491,14 @@ plugin:
       - Agit
       - AgitFile
       - AgitDiff
-        
+
   # Magit inspired git interface in vim
   jreybert/vimagit:
     command:
       - Magit
     script: |
       let g:magit_default_show_all_files = 0
-      
+
   # Save sessions with branches
   ToruIwashita/git-switcher.vim:
     script: |
@@ -598,7 +599,7 @@ before: |
     \              'linespace': '6',
     \              'typeface': 'Cousine',
     \               },
-    \   'icode': { 'colorscheme': 'ayu',
+    \   'icode': { 'colorscheme': 'nova',
     \              'background': 'dark',
     \              'font-size': '12',
     \              'linespace': '3',
