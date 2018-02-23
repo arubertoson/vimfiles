@@ -11,8 +11,8 @@
   xnoremap ,        <Nop>
   nnoremap ;        <Nop>
   xnoremap ;        <Nop>
-  nnoremap m        <Nop>
-  xnoremap m        <Nop>
+  " nnoremap m        <Nop>
+  " xnoremap m        <Nop>
 
 
 "---------------------------------------------------------------------------
@@ -156,7 +156,9 @@
 "---------------------------------------------------------------------------
 " Terminal Mode:
 
-  tnoremap <C-\><C-\> <C-\><C-n>
+  if IsNvim()
+    tnoremap <C-\><C-\> <C-\><C-n>
+  endif
 
 "---------------------------------------------------------------------------
 " Functions:
