@@ -184,6 +184,7 @@ plugin:
   # Light theme for prose/writing
   reedes/vim-colors-pencil: {}
   trevordmiller/nova-vim: {}
+  rakr/vim-one: {}
   # Dark red based theme
   mhinz/vim-janah:
     before: highlight Normal ctermbg=235
@@ -599,7 +600,7 @@ before: |
     \              'linespace': '6',
     \              'typeface': 'Cousine',
     \               },
-    \   'icode': { 'colorscheme': 'nova',
+    \   'icode': { 'colorscheme': 'one',
     \              'background': 'dark',
     \              'font-size': '12',
     \              'linespace': '3',
@@ -621,6 +622,7 @@ before: |
 
 after: |
   if !has('gui_running')
-    execute 'colorscheme' get(
-      \ g:vimrc#themes[g:vimrc#theme], 'colorscheme', 'desert')
+    SetColorScheme icode
+    " execute 'colorscheme' get(
+    "   \ g:vimrc#themes[g:vimrc#theme], 'colorscheme', 'desert')
   endif

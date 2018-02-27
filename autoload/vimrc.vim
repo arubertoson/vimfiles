@@ -63,7 +63,6 @@ function! vimrc#set_theme(...) abort
 
   " Execute callback
   let l:cmd = get(a:theme, 'callback')
-  echom l:cmd
   if l:cmd
     execute l:cmd
   endif
