@@ -19,8 +19,8 @@
 
   "
   " This is per workstation, it should be setup in this manner
-  let g:python_host_prog  = expand($HOME.'/.pyenv/versions/2.7.14/envs/neovim-2.7/bin/python')
-  let g:python3_host_prog  = expand($HOME.'/.pyenv/versions/3.6.4/envs/neovim-3.6/bin/python')
+  let g:python_host_prog  = expand('/scratch/envs/2.7.14/neovim2/bin/python')
+  let g:python3_host_prog  = expand('/scratch/envs/3.6.4/neovim3/bin/python')
 
 "---------------------------------------------------------------------------
 " Global AutoCmd:
