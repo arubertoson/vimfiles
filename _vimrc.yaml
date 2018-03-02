@@ -33,6 +33,10 @@ plugin:
   # Playground
   #
   # Plugins here are not yet integrated, more for testing purposes
+  superfunc/usda-syntax: 
+    script: |
+      Gautocmd BufRead,BufNewFile *.{usd[a]} set filetype=usda
+      Gautocmd FileType usda source $VIMPATH/miv/usda-syntax/vim/usda.vim
 
   suan/vim-instant-markdown: {}
 
@@ -115,41 +119,6 @@ plugin:
   #   crs         crm       crs       srd         sru
   tpope/vim-abolish: {}
 
-  # For handling of closing buffers in a smart way.
-  mhinz/vim-sayonara:
-    command:
-      - Sayonara
-    script: |
-      nnoremap <leader>bd :Sayonara<CR>
-      nnoremap <leader>bD :Sayonara!<CR>
-      let g:sayonara_confirm_quit = 1
-
-  #
-  # Scratchpads
-  #
-  # I've decided to use two types of scratch pad plugins, one to
-  # quickly be able to take notes that behaves in a non intrusive manner and
-  # another that is more for testing out chunks of codes. I find this way of
-  # working easier to manage.
-
-  # Works as a quick note taking for the current session, great for small todos
-  # or other stuff that you just have to rember for the moment, should be
-  # dispensable
-  mtth/scratch.vim:
-    command:
-      - Scratch
-    mapping:
-      - <Plug>(scratch-insert-reuse)
-      - <Plug>(scratch-insert-clear)
-      - <Plug>(scratch-selection-reuse)
-      - <Plug>(scratch-selection-clear)
-    script: |
-        let g:scratch_no_mappings = 1
-        nmap <Leader>bs <Plug>(scratch-insert-reuse)
-        nmap <Leader>bS <Plug>(scratch-insert-clear)
-        xmap <Leader>bs <Plug>(scratch-selection-reuse)
-        xmap <Leader>bS <Plug>(scratch-selection-clear)
-
   # More for testing out code chunks and ideas
   Konfekt/vim-scratchpad:
     function: scratchpad#
@@ -182,6 +151,7 @@ plugin:
   # Themes
   #
   # Light theme for prose/writing
+  ajh17/Spacegray.vim: {}
   reedes/vim-colors-pencil: {}
   trevordmiller/nova-vim: {}
   rakr/vim-one: {}
@@ -413,7 +383,7 @@ plugin:
       nnoremap <silent> <leader>as :<C-U>Denite file_rec -path=$VIMPATH<CR>
 
       nnoremap <silent> <leader>bb :<C-u>Denite buffer<CR>
-      nnoremap <silent> <leader>bt :<C-u>Denite filetype<CR>
+      nnoremap <silent> <leader>ft :<C-u>Denite filetype<CR>
       nnoremap <silent> <leader><leader> :<C-u>Denite command<CR>
       nnoremap <silent> <leader>` :<C-u>Denite command_history<CR>
     after: |
