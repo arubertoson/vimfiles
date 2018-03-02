@@ -11,9 +11,6 @@
   xnoremap ,        <Nop>
   nnoremap ;        <Nop>
   xnoremap ;        <Nop>
-  " nnoremap m        <Nop>
-  " xnoremap m        <Nop>
-
 
 "---------------------------------------------------------------------------
 " Normal Mode:
@@ -51,8 +48,8 @@
   nnoremap C "_C
 
   " open vimrc in a new tab
-  nnoremap <silent> <leader>ad :<C-u>edit $VIMFILES/vimrc<CR>
-  nnoremap <silent> <leader>ap :<C-u>edit $VIMFILES/_vimrc.yaml<CR>
+  nnoremap <silent> <leader>fer :<C-u>edit $VIMPATH/vimrc<CR>
+  nnoremap <silent> <leader>fep :<C-u>edit $VIMPATH/_vimrc.yaml<CR>
 
   " <leader>sr: replace a word under cursor
   nnoremap <leader>sr :%s/<C-R><C-w>//g<left><left>
@@ -73,7 +70,7 @@
   " delete buffer
   nnoremap <silent> <Space>bd :<C-u>bdelete<CR>
   " jump to alternate buffer
-  nnoremap <silent> <leader>b<TAB> :<C-u>buffer#<CR>
+  nnoremap <silent> <leader><TAB> :<C-u>buffer#<CR>
   " new buffer
   nnoremap <silent> <leader>bt :<C-u>call <SID>makeBuffer()<CR>
   " smart close tab -> window -> buffer
@@ -121,9 +118,10 @@
   inoremap <C-c> <Esc>`^
   " Ctrl-l: fast Esc
   inoremap <C-l> <Esc>`^
+  
   " [jj|qq]: smart fast Esc
   inoremap <expr> j getline('.')[getcurpos()[4]-2] ==# 'j' ? "\<BS>\<Esc>`^" : "\j"
-  inoremap <expr> k getline('.')[getcurpos()[4]-2] ==# 'k' ? "\<BS>\<Esc>`^" : "\k"
+  inoremap <expr> q getline('.')[getcurpos()[4]-2] ==# 'q' ? "\<BS>\<Esc>`^" : "\q"
    
   " Unbinds
   inoremap <C-j> <Nop>
