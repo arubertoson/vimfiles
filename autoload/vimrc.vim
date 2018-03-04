@@ -26,7 +26,7 @@ endfunction
 function! vimrc#load_plugins() abort
   filetype off
   if has('vim_starting')
-    set runtimepath^=$XDG_DATA_DIRS
+    set runtimepath^=$VIMDATA
   endif
   filetype plugin indent on
   silent! syntax enable
