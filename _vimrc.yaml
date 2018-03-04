@@ -33,6 +33,10 @@ plugin:
   # Playground
   #
   # Plugins here are not yet integrated, more for testing purposes
+
+  # vim cool is essential as it will fix the nohls situation without rebinds.
+  romainl/vim-cool: {}
+
   superfunc/usda-syntax: 
     script: |
       Gautocmd BufRead,BufNewFile *.{usd[a]} set filetype=usda
@@ -314,8 +318,9 @@ plugin:
       let g:indentLine_char = '¦'
       let g:indentLine_showFirstIndentLevel = 0
       let g:indentLine_leadingSpaceChar = '·'
-      let g:indentLine_leadingSpaceEnabled = 0
+      let g:indentLine_leadingSpaceEnabled = 1
       let g:indentLine_setColors = 0
+      let g:indentLine_fileTypeExclude = ['md', 'markdown', 'json']
 
   # Highlight yanked areas
   machakann/vim-highlightedyank:
