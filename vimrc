@@ -5,20 +5,13 @@
 "---------------------------------------------------------------------------
 " Environment Variables:
 
-  let $XDG_CONFIG_HOME = expand($HOME.'/.config')
-  let $XDG_CACHE_HOME = expand($HOME.'/.cache')
-  let $XDG_DATA_HOME = expand($HOME.'/.local/share')
-  let $XDG_RUNTIME_DIR = expand('/.local/runtime')
-
   let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p:h')), '')
+  let $VIMDATA = expand('$HOME/.vim/miv/miv')
   
-  let $XDG_CONFIG_DIRS = expand('/etc/xdg')
-  let $XDG_DATA_DIRS = expand('$HOME/.vim/miv/miv')
-
   set runtimepath^=$VIMPATH
 
   "
-  " This is per workstation, it should be setup in this manner
+  " This is per workstation expect this to change at different locations 
   let g:python_host_prog  = expand('/scratch/envs/2.7.14/neovim2/bin/python')
   let g:python3_host_prog  = expand('/scratch/envs/3.6.4/neovim3/bin/python')
 
