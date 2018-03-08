@@ -42,7 +42,7 @@ plugin:
       Gautocmd BufRead,BufNewFile *.{usd[a]} set filetype=usda
       Gautocmd FileType usda source $VIMPATH/miv/usda-syntax/vim/usda.vim
 
-  suan/vim-instant-markdown: {}
+  # suan/vim-instant-markdown: {}
 
   # iamcco/markdown-preview.vim:
   #   filetype: [markdown]
@@ -138,6 +138,35 @@ plugin:
   # Nvim completion manager works well, does not require complex setup.
   roxma/nvim-completion-manager:
     insert: true
+
+  # prabirshrestha/async.vim: {}
+  # prabirshrestha/vim-lsp:
+  #   script: |
+  #     if executable('clangd')
+  #       au User lsp_setup call lsp#register_server({
+  #         \ 'name': 'clangd',
+  #         \ 'cmd': {server_info->['clangd']},
+  #         \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+  #         \ })
+  #     endif
+  # prabirshrestha/asyncomplete.vim: {}
+  # prabirshrestha/asyncomplete-lsp.vim: {}
+
+  # autozimu/LanguageClient-neovim:
+  #   script: |
+  #     let g:LanguageClient_serverCommands = {
+  #       \ 'cpp': ['clangd'],
+  #       \ }
+  #     let g:LanguageClient_autoStart = 1
+  #     let g:LanguageClient_trace = 'verbose'
+        
+  roxma/ncm-clang:
+    filetype: [cpp]
+  #
+  # justmao945/vim-clang:
+  #   filetype: [h, hpp, cpp]
+
+  # Valloric/YouCompleteMe: {}
 
   Shougo/neco-vim:
     loadafter: nvim-completion-manager
