@@ -189,6 +189,13 @@ plugin:
   trevordmiller/nova-vim: {}
   rakr/vim-one: {}
   # Dark red based theme
+  gosukiwi/vim-atom-dark: {}
+  kristijanhusak/vim-hybrid-material:
+    script: |
+      Gautocmd ColorScheme *
+        \  hi ALEErrorSign   guifg=#FF3333 guibg=#242B38 gui=bold
+        \| hi ALEWarningSign guifg=#FFCC66 guibg=#242B38 gui=bold
+  sonph/onehalf: {}
   mhinz/vim-janah:
     before: highlight Normal ctermbg=235
   # Dark cyan based theme
@@ -348,7 +355,7 @@ plugin:
       let g:indentLine_showFirstIndentLevel = 0
       let g:indentLine_leadingSpaceChar = '·'
       let g:indentLine_leadingSpaceEnabled = 1
-      let g:indentLine_setColors = 0
+      let g:indentLine_setColors = 1
       let g:indentLine_fileTypeExclude = ['md', 'markdown', 'json']
 
   # Highlight yanked areas
@@ -604,7 +611,7 @@ before: |
     \              'linespace': '6',
     \              'typeface': 'Cousine',
     \               },
-    \   'icode': { 'colorscheme': 'one',
+    \   'icode': { 'colorscheme': 'hybrid_material',
     \              'background': 'dark',
     \              'font-size': '12',
     \              'linespace': '3',
