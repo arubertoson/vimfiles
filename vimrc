@@ -7,13 +7,14 @@
 
   let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p:h')), '')
   let $VIMDATA = expand('$HOME/.vim/miv/miv')
+  " let $VIMRUNTIME = expand('$HOME/.local')
   
   set runtimepath^=$VIMPATH
 
   "
   " This is per workstation expect this to change at different locations 
-  let g:python_host_prog  = expand('/scratch/envs/2.7.14/neovim2/bin/python')
-  let g:python3_host_prog  = expand('/scratch/envs/3.6.4/neovim3/bin/python')
+  let g:python_host_prog = resolve(expand('~/.pyenv/versions/neovim-2.7')) . '/bin/python'
+  let g:python3_host_prog = resolve(expand('~/.pyenv/versions/neovim-3.6')) . '/bin/python'
 
 "---------------------------------------------------------------------------
 " Global AutoCmd:
