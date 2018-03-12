@@ -11,6 +11,7 @@
   xnoremap ,        <Nop>
   nnoremap ;        <Nop>
   xnoremap ;        <Nop>
+  nnoremap q        <Nop>
 
 "---------------------------------------------------------------------------
 " Normal Mode:
@@ -120,7 +121,7 @@
   inoremap <C-l> <Esc>`^
   
   " [jj|qq]: smart fast Esc
-  inoremap <expr> j getline('.')[getcurpos()[4]-2] ==# 'j' ? "\<BS>\<Esc>`^" : "\j"
+  inoremap <expr> k getline('.')[getcurpos()[4]-2] ==# 'j' ? "\<BS>\<Esc>`^" : "\k"
   inoremap <expr> q getline('.')[getcurpos()[4]-2] ==# 'q' ? "\<BS>\<Esc>`^" : "\q"
    
   " Unbinds
