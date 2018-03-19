@@ -13,8 +13,9 @@
 
   "
   " This is per workstation expect this to change at different locations 
-  let g:python_host_prog = resolve(expand('~/.pyenv/versions/neovim-2.7')) . '/bin/python'
-  let g:python3_host_prog = resolve(expand('~/.pyenv/versions/neovim-3.6')) . '/bin/python'
+  "
+  let g:python_host_prog = resolve(expand('~/.conda/envs/nvim27')) . '/bin/python2'
+  let g:python3_host_prog = resolve(expand('~/.conda/envs/nvim36')) . '/bin/python3'
 
 "---------------------------------------------------------------------------
 " Global AutoCmd:
@@ -45,20 +46,20 @@
 
   " Check if there are other open instances of file in buffer
   Gautocmd WinEnter * checktime
-  
+
   " Use relative numbers only in buffer with focus
   Gautocmd WinLeave *? let [&l:number, &l:relativenumber] =
     \ &l:number ? [1, 0] : [&l:number, &l:relativenumber]
   Gautocmd WinEnter *? let [&l:number, &l:relativenumber] =
     \ &l:number ? [1, 1] : [&l:number, &l:relativenumber] 
-  
+
   " Show listchars in insert mode 
   Gautocmd InsertEnter *? setlocal list
   Gautocmd InsertLeave *? setlocal nolist
-  
+
   " Format options
   Gautocmdft *? setlocal formatoptions=cmMj
-  
+
   " Fix window position of help
   Gautocmd FileType help if &l:buftype ==# 'help' | wincmd K | endif
 
@@ -133,9 +134,105 @@
   let g:netrw_nogx                = 1
   let g:suppress_doxygen          = 1 " $VIMRUNTIME/syntax/doxygen.vim
   
-  if IsNvim()
-    " Load User Plugins
-    call vimrc#load_plugins()
+"  if IsNvim()
+"    " Load User Plugins
+"    call vimrc#load_plugins()
+"  endif
+
+"---------------------------------------------------------------------------
+" Vim Plug:
+
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  endif
+
+  call plug#begin('~/.vim/plugged')
+
+    " Quick comments
+    Plug 'tomtom/tcomment_vim'
+    " Smart input provides auto-pairs like behaviour to complete ()[]{} and other
+    " inputs that require a secondary input to be considdered complete.
+    Plug 'kana/vim-smartinput'
+    " Provides a way to add, delete, switch surrounding brackets [test]->(test)
+    Plug 'machakann/vim-sandwich'
+    " For search highlight control
+    Plug 'romainl/vim-cool'
+
+    " Distractionfree editing
+    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/limelight.vim'
+
+    " Auto complete
+    Plug 'roxma/nvim-completion-manager'
+
+    " Linters
+    Plug 'w0rp/ale'
+      " Gutter signs
+      let g:ale_sign_error = '►'
+      let g:ale_sign_warning = '»'
+      let g:ale_statusline_format = ['× %d', '∆ %d', '♦ ok']
+
+      " Only lint on save
+      let g:ale_lint_on_text_changed = 0
+      let g:ale_lint_on_insert_leave = 0
+      let g:ale_lint_on_save = 1
+      let g:ale_lint_on_enter = 1
+
+      " Fix on save
+      let g:ale_fixers = {
+        \ 'python': ['yapf'],
+        \ }
+      let g:ale_fix_on_save = 1
+
+    " Themes
+    Plug 'reedes/vim-colors-pencil'
+    Plug 'ayu-theme/ayu-vim'
+      " Custom theme settings
+      let g:ayucolor="mirage"
+      " Ayu theme overrides for ale gutter marks
+      Gautocmd ColorScheme *
+        \  hi ALEErrorSign   guifg=#FF3333 guibg=#242B38 gui=bold
+        \| hi ALEWarningSign guifg=#FFCC66 guibg=#242B38 gui=bold
+
+    Plug 'Yggdroot/indentLine'
+      let g:indentLine_char = '¦'
+      let g:indentLine_showFirstIndentLevel = 0
+      let g:indentLine_leadingSpaceChar = '·'
+      let g:indentLine_leadingSpaceEnabled = 1
+      let g:indentLine_setColors = 1
+      let g:indentLine_fileTypeExclude = ['md', 'markdown', 'json']
+
+    " USD syntax highlighting
+    Plug 'superfunc/usda-syntax' 
+        Gautocmd BufRead,BufNewFile *.{usd[a]} set filetype=usda
+        Gautocmd FileType usda source $VIMPATH/plugged/usda-syntax/vim/usda.vim
+
+    " clang syntax highlighting
+    Plug 'arakashic/chromatica.nvim'
+
+
+  call plug#end()
+
+  " Set default theme and other themes that we can change to
+  let g:vimrc#theme = 'icode'
+  let g:vimrc#themes = {
+    \   'iwrite': { 'colorscheme': 'pencil',
+    \              'background': 'light',
+    \              'font-size': '14',
+    \              'linespace': '6',
+    \              'typeface': 'Cousine',
+    \               },
+    \   'icode': { 'colorscheme': 'ayu',
+    \              'background': 'dark',
+    \              'font-size': '12',
+    \              'linespace': '3',
+    \              'typeface': 'Droid Sans Mono',
+    \               },
+    \ }
+  
+  if !has('gui_running')
+    SetColorScheme icode
   endif
 
 
