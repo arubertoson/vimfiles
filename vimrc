@@ -13,8 +13,17 @@
 
   "
   " This is per workstation expect this to change at different locations 
-  let g:python_host_prog = resolve(expand('~/.pyenv/versions/neovim-2.7')) . '/bin/python'
-  let g:python3_host_prog = resolve(expand('~/.pyenv/versions/neovim-3.6')) . '/bin/python'
+  let g:python_host_prog = resolve(expand('~/.conda/envs/nvim27')) . '/bin/python2'
+  let g:python3_host_prog = resolve(expand('~/.conda/envs/nvim36')) . '/bin/python3'
+
+  " Arch Linux, with python-neovim packages.
+  " if len(glob('/home/malbertsson/.conda/envs/nvim27/lib/ /usr/lib/python2*/site-packages/neovim/__init__.py', 1))
+  "   let g:python_host_prog="/usr/bin/python2"
+  " endif
+  " if len(glob('/usr/lib/python3*/site-packages/neovim/__init__.py', 1))
+  "   let g:python3_host_prog="/usr/bin/python3"
+  " endif
+  " let $PATH .= ':' . fnamemodify(g:python3_host_prog, ':p:h')
 
 "---------------------------------------------------------------------------
 " Global AutoCmd:
