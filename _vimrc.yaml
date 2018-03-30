@@ -138,6 +138,7 @@ plugin:
   # Nvim completion manager works well, does not require complex setup.
   roxma/nvim-completion-manager:
     insert: true
+  # roxma/python-support.nvim: {}
 
   # prabirshrestha/async.vim: {}
   # prabirshrestha/vim-lsp:
@@ -199,12 +200,12 @@ plugin:
   mhinz/vim-janah:
     before: highlight Normal ctermbg=235
   # Dark cyan based theme
-  ayu-theme/ayu-vim: {}
-    # script: |
-    #   let g:ayucolor="mirage"
-    #   Gautocmd ColorScheme *
-    #     \  hi ALEErrorSign   guifg=#FF3333 guibg=#242B38 gui=bold
-    #     \| hi ALEWarningSign guifg=#FFCC66 guibg=#242B38 gui=bold
+  ayu-theme/ayu-vim:
+    before: |
+      let g:ayucolor="mirage"
+      Gautocmd ColorScheme *
+        \  hi ALEErrorSign   guifg=#FF3333 guibg=#242B38 gui=bold
+        \| hi ALEWarningSign guifg=#FFCC66 guibg=#242B38 gui=bold
 
   # =========================================================================
   # Statusbar
@@ -611,7 +612,7 @@ before: |
     \              'linespace': '6',
     \              'typeface': 'Cousine',
     \               },
-    \   'icode': { 'colorscheme': 'hybrid_material',
+    \   'icode': { 'colorscheme': 'ayu',
     \              'background': 'dark',
     \              'font-size': '12',
     \              'linespace': '3',

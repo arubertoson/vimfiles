@@ -158,12 +158,18 @@
     " For search highlight control
     Plug 'romainl/vim-cool'
 
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
+    Plug 'tmhedberg/SimpylFold'
+
     " Distractionfree editing
     Plug 'junegunn/goyo.vim'
     Plug 'junegunn/limelight.vim'
 
+    Plug 'thinca/vim-quickrun'
+
     " Auto complete
-    Plug 'roxma/nvim-completion-manager'
+    " Plug 'roxma/nvim-completion-manager'
 
     " Linters
     Plug 'w0rp/ale'
@@ -197,18 +203,30 @@
     Plug 'Yggdroot/indentLine'
       let g:indentLine_char = '¦'
       let g:indentLine_showFirstIndentLevel = 0
-      let g:indentLine_leadingSpaceChar = '·'
-      let g:indentLine_leadingSpaceEnabled = 1
+    "   let g:indentLine_leadingSpaceChar = '·'
+      let g:indentLine_leadingSpaceEnabled = 0
       let g:indentLine_setColors = 1
       let g:indentLine_fileTypeExclude = ['md', 'markdown', 'json']
 
     " USD syntax highlighting
+    Plug 'sheerun/vim-polyglot'
     Plug 'superfunc/usda-syntax' 
         Gautocmd BufRead,BufNewFile *.{usd[a]} set filetype=usda
         Gautocmd FileType usda source $VIMPATH/plugged/usda-syntax/vim/usda.vim
 
     " clang syntax highlighting
     Plug 'arakashic/chromatica.nvim'
+
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim'
+      nnoremap <leader>sf :Files<CR>
+      nnoremap <leader>pf :GFiles<CR>
+      nnoremap <leader>ss :BLines<CR>
+      nnoremap <leader>sl :Lines<CR>
+      nnoremap <leader>bb :Buffers<CR>
+      nnoremap <leader>gt :Tags<CR>
+      nnoremap <leader>gr :BTags<CR>
+      nnoremap <leader>ft :Filetypes<CR>
 
 
   call plug#end()

@@ -8,3 +8,5 @@ GTAGS
 init.vim
 miv
 
+plugged
+autoload/plug.vim
