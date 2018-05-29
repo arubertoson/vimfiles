@@ -13,8 +13,8 @@
 
   "
   " This is per workstation expect this to change at different locations 
-  let g:python_host_prog = resolve(expand('~/.conda/envs/nvim27')) . '/bin/python2'
-  let g:python3_host_prog = resolve(expand('~/.conda/envs/nvim36')) . '/bin/python3'
+  let g:python_host_prog = resolve(expand('/scratch/envs/2.7.14/nvim27')) . '/bin/python2'
+  let g:python3_host_prog = resolve(expand('/scratch/envs/2.7.14/nvim36')) . '/bin/python3'
 
 "---------------------------------------------------------------------------
 " Global AutoCmd:
@@ -159,6 +159,20 @@
     Plug 'romainl/vim-cool'
 
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
+    Plug 'ludovicchabant/vim-gutentags'
+      let g:gutentags_cache_dir = expand('$XDG_CACHE_HOME/gutentags')
+      let g:gutentags_project_info = []
+      call add(g:gutentags_project_info, {'type': 'python', 'file': 'package.py'})
+
+      " let g:gutentags_trace = 1
+      let g:gutentags_ctags_exclude = ['tests/*', 'test/*', '_*']
+
+      " let g:gutentags_file_list_command = {
+      "   \ 'markers': {
+      "     \ '.git': 'git ls-files',
+      "     \ }
+      "   \ }
 
     Plug 'tmhedberg/SimpylFold'
 
