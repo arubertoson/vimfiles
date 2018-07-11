@@ -168,11 +168,11 @@
       " let g:gutentags_trace = 1
       let g:gutentags_ctags_exclude = ['tests/*', 'test/*', '_*']
 
-      " let g:gutentags_file_list_command = {
-      "   \ 'markers': {
-      "     \ '.git': 'git ls-files',
-      "     \ }
-      "   \ }
+      let g:gutentags_file_list_command = {
+        \ 'markers': {
+          \ '.git': 'git ls-files',
+          \ }
+        \ }
 
     Plug 'tmhedberg/SimpylFold'
 
@@ -236,12 +236,22 @@
       nnoremap <leader>sf :Files<CR>
       nnoremap <leader>pf :GFiles<CR>
       nnoremap <leader>ss :BLines<CR>
+      nnoremap <leader>st :BTags<CR>
       nnoremap <leader>sl :Lines<CR>
-      nnoremap <leader>bb :Buffers<CR>
       nnoremap <leader>gt :Tags<CR>
-      nnoremap <leader>gr :BTags<CR>
+      nnoremap <leader>bb :Buffers<CR>
       nnoremap <leader>ft :Filetypes<CR>
+      nnoremap <leader>hh :Helptags<CR>
 
+      command! -bang -nargs=* Rg
+        \ call fzf#vim#grep(
+        \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+        \ <bang>0 ? fzf#vim#with_preview('up:60%')
+        \         : fzf#vim#with_preview('right:50%:hidden', '?'),
+        \ <bang>0)
+
+      command! -bang -nargs=? -complete=dir Files 
+        \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
   call plug#end()
 
