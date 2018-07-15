@@ -50,7 +50,7 @@
 
   " open vimrc in a new tab
   nnoremap <silent> <leader>fer :<C-u>edit $VIMPATH/vimrc<CR>
-  nnoremap <silent> <leader>fep :<C-u>edit $VIMPATH/_vimrc.yaml<CR>
+  nnoremap <silent> <leader>fep :<C-u>edit $VIMPATH/modules/plugins.vim<CR>
 
   " <leader>sr: replace a word under cursor
   nnoremap <leader>sr :%s/<C-R><C-w>//g<left><left>
