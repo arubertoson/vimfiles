@@ -23,16 +23,6 @@ function! vimrc#load_modules(modules) abort
 endfunction
 
 
-function! vimrc#load_plugins() abort
-  filetype off
-  if has('vim_starting')
-    set runtimepath^=$VIMDATA
-  endif
-  filetype plugin indent on
-  silent! syntax enable
-endfunction
-
-
 function! vimrc#set_theme(...) abort
   let a:theme_name = a:0 > 0 ? a:1 : g:vimrc#theme
   let a:theme = g:vimrc#themes[a:theme_name]

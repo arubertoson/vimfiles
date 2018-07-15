@@ -6,15 +6,12 @@
 " Environment Variables:
 
   let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p:h')), '')
-  let $VIMDATA = expand('$HOME/.vim/miv/miv')
-  " let $VIMRUNTIME = expand('$HOME/.local')
-  
   set runtimepath^=$VIMPATH
 
   "
   " This is per workstation expect this to change at different locations 
-  let g:python_host_prog = resolve(expand('/scratch/envs/2.7.14/nvim27')) . '/bin/python2'
-  let g:python3_host_prog = resolve(expand('/scratch/envs/2.7.14/nvim36')) . '/bin/python3'
+  let g:python_host_prog = resolve(expand('$_BASE_OPT/conda/envs/nvim27')) . '/bin/python2'
+  let g:python3_host_prog = resolve(expand('$_BASE_OPT/conda/envs/nvim36')) . '/bin/python3'
 
 "---------------------------------------------------------------------------
 " Global AutoCmd:
@@ -141,12 +138,13 @@
 "---------------------------------------------------------------------------
 " Vim Plug:
 
-  if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+
+  if empty(glob('$VIMPATH/autoload/plug.vim'))
+    silent !curl -fLo $VIMPATH/autoload/plug.vim --create-dirs
       \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   endif
 
-  call plug#begin('~/.vim/plugged')
+  call plug#begin('$VIMPATH/plugged')
 
     " Quick comments
     Plug 'tomtom/tcomment_vim'
@@ -158,7 +156,7 @@
     " For search highlight control
     Plug 'romainl/vim-cool'
 
-    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+    Plug 'Valloric/YouCompleteMe'
 
     Plug 'ludovicchabant/vim-gutentags'
       let g:gutentags_cache_dir = expand('$XDG_CACHE_HOME/gutentags')
@@ -204,6 +202,9 @@
         \ }
       let g:ale_fix_on_save = 1
 
+      nmap <silent> <Leader><C-k> <Plug>(ale_previous_wrap)
+      nmap <silent> <Leader><C-j> <Plug>(ale_next_wrap)
+
     " Themes
     Plug 'reedes/vim-colors-pencil'
     Plug 'ayu-theme/ayu-vim'
@@ -222,6 +223,9 @@
       let g:indentLine_setColors = 1
       let g:indentLine_fileTypeExclude = ['md', 'markdown', 'json']
 
+    Plug 'JamshedVesuna/vim-markdown-preview'
+      let vim_markdown_preview_github=1
+
     " USD syntax highlighting
     Plug 'sheerun/vim-polyglot'
     Plug 'superfunc/usda-syntax' 
@@ -231,17 +235,10 @@
     " clang syntax highlighting
     Plug 'arakashic/chromatica.nvim'
 
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+    Plug 'junegunn/fzf', { 'dir': '/scratch/opt/fzf', 'do': './install --bin' }
+    " Plug '/scratch/opt/fzf'
     Plug 'junegunn/fzf.vim'
-      nnoremap <leader>sf :Files<CR>
-      nnoremap <leader>pf :GFiles<CR>
-      nnoremap <leader>ss :BLines<CR>
-      nnoremap <leader>st :BTags<CR>
-      nnoremap <leader>sl :Lines<CR>
-      nnoremap <leader>gt :Tags<CR>
-      nnoremap <leader>bb :Buffers<CR>
-      nnoremap <leader>ft :Filetypes<CR>
-      nnoremap <leader>hh :Helptags<CR>
 
       command! -bang -nargs=* Rg
         \ call fzf#vim#grep(
@@ -250,8 +247,17 @@
         \         : fzf#vim#with_preview('right:50%:hidden', '?'),
         \ <bang>0)
 
-      command! -bang -nargs=? -complete=dir Files 
-        \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+      nnoremap <leader>sf :Files<CR>
+      nnoremap <leader>pf :GFiles<CR>
+      nnoremap <leader>ss :BLines<CR>
+      nnoremap <leader>sl :Lines<CR>
+      nnoremap <leader>gt :Tags<CR>
+      nnoremap <leader>sr :Rg<CR>
+      nnoremap <leader>st :BTags<CR>
+      nnoremap <leader>bb :Buffers<CR>
+      nnoremap <leader>ft :Filetypes<CR>
+      nnoremap <leader>hh :Helptags<CR>
+
 
   call plug#end()
 
