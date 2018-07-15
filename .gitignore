@@ -5,8 +5,6 @@ GTAGS
 
 .backup
 .scratchpads
-init.vim
-miv
 
 plugged
 autoload/plug.vim
