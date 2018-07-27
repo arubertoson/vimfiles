@@ -136,4 +136,7 @@ call plug#begin('$VIMPATH/plugged')
   Plug 'junegunn/fzf', { 'dir': '/scratch/opt/fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim' | call ConfigFZF()
 
+  Plug 'sjl/gundo.vim'
+  Plug 'ToruIwashita/git-switcher.vim'
+
 call plug#end()
