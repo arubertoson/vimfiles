@@ -95,7 +95,7 @@
     " Others
     nnoremap <leader>ft :Filetypes<CR>
     nnoremap <leader>fc :Colors<CR>
-    nnoremap <leader>fm :Marks<CR>
+    nnoremap <leader>fm :FzfBookmarks<CR>
   endfunction
 
 "---------------------------------------------------------------------------
@@ -143,14 +143,19 @@ call plug#begin('$VIMPATH/plugged')
   " clang syntax highlighting
   Plug 'arakashic/chromatica.nvim'
 
+  Plug 'junegunn/fzf', { 'dir': '/scratch/opt/fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim' | call ConfigFZF()
 
   Plug 'sjl/gundo.vim'
   Plug 'ToruIwashita/git-switcher.vim'
   
-  Plug 'MattesGroeger/vim-bookmarks'
   " XXX
-  " Currently not working but it's the one I'd use
-  " Plug 'svermeulen/vim-easyclip'
+  " Modify C-K keys in init#maps
+  Plug 'mg979/vim-yanktools'
+  
+  " XXX
+  " PR pending:
+  " Plug 'MattesGroeger/vim-bookmarks'
+  Plug 'mg979/vim-bookmarks', {'branch': 'fzf'}
 
 call plug#end()
