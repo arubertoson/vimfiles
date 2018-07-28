@@ -138,5 +138,6 @@ call plug#begin('$VIMPATH/plugged')
 
   Plug 'sjl/gundo.vim'
   Plug 'ToruIwashita/git-switcher.vim'
+  Plug 'svermeulen/vim-easyclip'
 
 call plug#end()
