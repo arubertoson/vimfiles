@@ -76,16 +76,26 @@
       \         : fzf#vim#with_preview('right:50%:hidden', '?'),
       \ <bang>0)
 
+    " File Jumping
     nnoremap <leader>sf :Files<CR>
     nnoremap <leader>pf :GFiles<CR>
+    nnoremap <leader>sh :History<CR>
+    nnoremap <leader>bb :Buffers<CR>
+
+    " Searching
     nnoremap <leader>ss :BLines<CR>
     nnoremap <leader>sl :Lines<CR>
-    nnoremap <leader>gt :Tags<CR>
     nnoremap <leader>sr :Rg<CR>
+
+    " Tags
+    nnoremap <leader>gt :Tags<CR>
     nnoremap <leader>st :BTags<CR>
-    nnoremap <leader>bb :Buffers<CR>
-    nnoremap <leader>ft :Filetypes<CR>
     nnoremap <leader>hh :Helptags<CR>
+
+    " Others
+    nnoremap <leader>ft :Filetypes<CR>
+    nnoremap <leader>fc :Colors<CR>
+    nnoremap <leader>fm :Marks<CR>
   endfunction
 
 "---------------------------------------------------------------------------
@@ -109,9 +119,9 @@ call plug#begin('$VIMPATH/plugged')
   Plug 'ludovicchabant/vim-gutentags' | call ConfigGutentags()
 
   Plug 'tmhedberg/SimpylFold'
+  Plug 'thinca/vim-quickrun'
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
-  Plug 'thinca/vim-quickrun'
 
   " Linters
   Plug 'w0rp/ale' | call ConfigAle()
@@ -133,14 +143,14 @@ call plug#begin('$VIMPATH/plugged')
   " clang syntax highlighting
   Plug 'arakashic/chromatica.nvim'
 
-  Plug 'junegunn/fzf', { 'dir': '/scratch/opt/fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim' | call ConfigFZF()
 
   Plug 'sjl/gundo.vim'
   Plug 'ToruIwashita/git-switcher.vim'
+  
+  Plug 'MattesGroeger/vim-bookmarks'
+  " XXX
+  " Currently not working but it's the one I'd use
   " Plug 'svermeulen/vim-easyclip'
 
-  Plug 'maxbrunsfeld/vim-yankstack'
-    nmap <leader>n <Plug>yankstack_substitute_older_paste
-    nmap <leader>P <Plug>yankstack_substitute_newer_paste
 call plug#end()
