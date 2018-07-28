@@ -138,6 +138,9 @@ call plug#begin('$VIMPATH/plugged')
 
   Plug 'sjl/gundo.vim'
   Plug 'ToruIwashita/git-switcher.vim'
-  Plug 'svermeulen/vim-easyclip'
+  " Plug 'svermeulen/vim-easyclip'
 
+  Plug 'maxbrunsfeld/vim-yankstack'
+    nmap <leader>n <Plug>yankstack_substitute_older_paste
+    nmap <leader>P <Plug>yankstack_substitute_newer_paste
 call plug#end()
