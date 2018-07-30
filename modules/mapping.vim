@@ -14,6 +14,12 @@
   nnoremap q        <Nop>
 
 "---------------------------------------------------------------------------
+" User Tools:
+
+  nnoremap <silent> <leader>om :call mdpreview#open()<cr>  
+
+
+"---------------------------------------------------------------------------
 " Normal Mode:
 
   " [jk]: don't skip wrap lines
@@ -38,15 +44,8 @@
   nnoremap <silent> <expr> O v:count ?
     \ ':<C-u>call <SID>appendLineDown(v:count1)<CR>' : 'O'
 
-  " Ctrl-d: duplicate line
-  nnoremap <expr> <C-d> 'yyp' . col('.') . 'l'
-
   " Q: auto indent text
   nnoremap Q ==
-
-  " [cC]: don't update register
-  nnoremap c "_c
-  nnoremap C "_C
 
   " open vimrc in a new tab
   nnoremap <silent> <leader>fer :<C-u>edit $VIMPATH/vimrc<CR>
@@ -83,11 +82,11 @@
 " Windows
   for char in split('h j k l')
     " Space + [hjkl]: jump to a window
-    execute printf('nnoremap <silent> <localleader>%s :<C-u>wincmd %s<CR>', char, char)
+    execute printf('nnoremap <silent> <leader>%s :<C-u>wincmd %s<CR>', char, char)
     " Space + [HJKL]: move the current window
-    execute printf('nnoremap <silent> <localleader>%s :<C-u>wincmd %s<CR>', toupper(char), toupper(char))
+    execute printf('nnoremap <silent> <leader>%s :<C-u>wincmd %s<CR>', toupper(char), toupper(char))
   endfor | unlet char
-  " Space + w: next window
+
   " Space + r: rotate windows downwards / rightwards
   nnoremap <silent> <leader>wr :<C-u>wincmd r<CR>
   " Space + R: rotate windows upwards / leftwards
@@ -119,11 +118,11 @@
   inoremap <C-c> <Esc>`^
   " Ctrl-l: fast Esc
   inoremap <C-l> <Esc>`^
-  
+
   " [jj|qq]: smart fast Esc
   inoremap <expr> k getline('.')[getcurpos()[4]-2] ==# 'j' ? "\<BS>\<Esc>`^" : "\k"
-  inoremap <expr> q getline('.')[getcurpos()[4]-2] ==# 'q' ? "\<BS>\<Esc>`^" : "\q"
-   
+  inoremap <expr> j getline('.')[getcurpos()[4]-2] ==# 'k' ? "\<BS>\<Esc>`^" : "\j"
+
   " Unbinds
   inoremap <C-j> <Nop>
   inoremap <C-k> <Nop>

@@ -15,7 +15,7 @@ git clone https://github.com/arubertoson/vimfiles.git nvim
 
 ## Plug-Ins
 
-Start neovim or run vim plug install
+Start neovim or run vim plug install, awesome stuff
 
 ```
 nvim

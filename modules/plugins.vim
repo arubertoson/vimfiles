@@ -77,25 +77,25 @@
       \ <bang>0)
 
     " File Jumping
-    nnoremap <leader>sf :Files<CR>
-    nnoremap <leader>pf :GFiles<CR>
+    nnoremap <leader>of :Files<CR>
+    nnoremap <leader>og :GFiles<CR>
+    nnoremap <leader>ob :Buffers<CR>
+    nnoremap <leader>oh :Helptags<CR>
+    nnoremap <leader>ot :BTags<CR>
+    
+    " Tags
     nnoremap <leader>sh :History<CR>
-    nnoremap <leader>bb :Buffers<CR>
+    nnoremap <leader>sm :FzfBookmarks<CR>
+    nnoremap <leader>st :Tags<CR>
 
     " Searching
     nnoremap <leader>ss :BLines<CR>
     nnoremap <leader>sl :Lines<CR>
     nnoremap <leader>sr :Rg<CR>
 
-    " Tags
-    nnoremap <leader>gt :Tags<CR>
-    nnoremap <leader>st :BTags<CR>
-    nnoremap <leader>hh :Helptags<CR>
-
     " Others
     nnoremap <leader>ft :Filetypes<CR>
     nnoremap <leader>fc :Colors<CR>
-    nnoremap <leader>fm :FzfBookmarks<CR>
   endfunction
 
 "---------------------------------------------------------------------------
@@ -114,12 +114,24 @@ call plug#begin('$VIMPATH/plugged')
   " For search highlight control
   Plug 'romainl/vim-cool'
 
+  " Auto Completions & Tags
   Plug 'Valloric/YouCompleteMe'
-
   Plug 'ludovicchabant/vim-gutentags' | call ConfigGutentags()
 
+  " XXX Test
+  Plug 'reedes/vim-pencil'
   Plug 'tmhedberg/SimpylFold'
   Plug 'thinca/vim-quickrun'
+  Plug 'JamshedVesuna/vim-markdown-preview'
+    let vim_markdown_preview_github=1
+  Plug 'sjl/gundo.vim'
+  Plug 'ToruIwashita/git-switcher.vim'
+  " XXX
+  " Modify C-K keys in init#maps
+  " Plug 'mg979/vim-yanktools'
+
+
+  " Distraction Free Editing
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
 
@@ -131,28 +143,20 @@ call plug#begin('$VIMPATH/plugged')
   Plug 'ayu-theme/ayu-vim' | call ConfigAyu()
   Plug 'Yggdroot/indentLine' | call ConfigIndentLine()
 
-  Plug 'JamshedVesuna/vim-markdown-preview'
-    let vim_markdown_preview_github=1
 
   " USD syntax highlighting
   Plug 'sheerun/vim-polyglot'
   Plug 'superfunc/usda-syntax' 
       Gautocmd BufRead,BufNewFile *.{usd[a]} set filetype=usda
       Gautocmd FileType usda source $VIMPATH/plugged/usda-syntax/vim/usda.vim
-
   " clang syntax highlighting
   Plug 'arakashic/chromatica.nvim'
+
 
   Plug 'junegunn/fzf', { 'dir': '/scratch/opt/fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim' | call ConfigFZF()
 
-  Plug 'sjl/gundo.vim'
-  Plug 'ToruIwashita/git-switcher.vim'
-  
-  " XXX
-  " Modify C-K keys in init#maps
-  Plug 'mg979/vim-yanktools'
-  
+  Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
   " XXX
   " PR pending:
   " Plug 'MattesGroeger/vim-bookmarks'
