@@ -8,10 +8,9 @@
   let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p:h')), '')
   " set runtimepath^=$VIMPATH
 
-  "
   " This is per workstation expect this to change at different locations 
-  let g:python_host_prog = resolve(expand('$_BASE_OPT/conda/envs/nvim27')) . '/bin/python2'
-  let g:python3_host_prog = resolve(expand('$_BASE_OPT/conda/envs/nvim36')) . '/bin/python3'
+  let g:python_host_prog = resolve(expand('/storage/software/opt/miniconda/envs/nvim27')) . '/bin/python2'
+  let g:python3_host_prog = resolve(expand('/storage/software/opt/miniconda/envs/nvim37')) . '/bin/python3'
 
 "---------------------------------------------------------------------------
 " Global AutoCmd:

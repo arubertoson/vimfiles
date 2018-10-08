@@ -48,11 +48,20 @@
     let g:ale_lint_on_save = 1
     let g:ale_lint_on_enter = 1
 
-    " Fix on save
-    let g:ale_fixers = {
-      \ 'python': ['yapf'],
+    " Linters
+    let g:ale_python_pyls_executable = "/storage/software/opt/miniconda/envs/nvim37/bin/pyls"
+    let g:ale_linters = {
+      \ 'python': ['pyls']
       \ }
+
+    " Fixers
     let g:ale_fix_on_save = 1
+
+    let g:ale_python_yapf_executable = "/storage/software/opt/miniconda/envs/nvim37/bin/yapf" 
+    let g:ale_python_isort_executable = "/storage/software/opt/miniconda/envs/nvim37/bin/isort"  
+    let g:ale_fixers = {
+      \ 'python': ['isort', 'yapf'],
+      \ }
 
     nmap <silent> <Leader><C-k> <Plug>(ale_previous_wrap)
     nmap <silent> <Leader><C-j> <Plug>(ale_next_wrap)
@@ -116,7 +125,10 @@ call plug#begin('$VIMPATH/plugged')
 
   " Auto Completions & Tags
   Plug 'Valloric/YouCompleteMe'
-  Plug 'ludovicchabant/vim-gutentags' | call ConfigGutentags()
+
+  if executable('ctags')
+    Plug 'ludovicchabant/vim-gutentags' | call ConfigGutentags()
+  endif
 
   " XXX Test
   Plug 'reedes/vim-pencil'
