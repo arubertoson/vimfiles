@@ -157,6 +157,7 @@ call plug#begin('$VIMPATH/plugged')
 
   " Linters
   Plug 'w0rp/ale' | call ConfigAle()
+  Plug 'uber/prototool', { 'rtp':'vim/prototool' }
 
   " Themes
   Plug 'reedes/vim-colors-pencil'
@@ -166,6 +167,7 @@ call plug#begin('$VIMPATH/plugged')
 
   " USD syntax highlighting
   Plug 'sheerun/vim-polyglot'
+  Plug 'saltstack/salt-vim'
   Plug 'superfunc/usda-syntax' 
       Gautocmd BufRead,BufNewFile *.{usd[a]} set filetype=usda
       Gautocmd FileType usda source $VIMPATH/plugged/usda-syntax/vim/usda.vim
