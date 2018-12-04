@@ -50,7 +50,7 @@
 
     " Fix on save
     let g:ale_fixers = {
-      \ 'python': ['yapf'],
+      \ 'python': ['black'],
       \ }
     let g:ale_fix_on_save = 1
 
@@ -98,6 +98,26 @@
     nnoremap <leader>fc :Colors<CR>
   endfunction
 
+  function! ConfigVimWiki()
+                                  
+    let mywiki = {}
+    let mywiki.path = '/scratch/dev/gitlab.com/arubertoson/vimwiki/home'    
+    let mywiki.syntac = 'markdown'
+    let mywiki.ext = '.md'
+    
+    let workwiki = {}
+    let workwiki.path = '/scratch/dev/gitlab.com/arubertoson/vimwiki/work'    
+    let workwiki.syntac = 'markdown'
+    let workwiki.ext = '.md'
+
+    
+
+    let g:vimwiki_list = [mywiki, workwiki]
+    let g:vimwiki_ext2syntax = {
+      \ '.md': 'markdown',
+      \ '.markdown': 'markdown',
+      \ }
+  endfunction
 "---------------------------------------------------------------------------
 " Vim Plugin Installs:
 "---------------------------------------------------------------------------
@@ -156,7 +176,7 @@ call plug#begin('$VIMPATH/plugged')
   Plug 'junegunn/fzf', { 'dir': '/scratch/opt/fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim' | call ConfigFZF()
 
-  Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+  Plug 'vimwiki/vimwiki', { 'branch': 'dev' } | call ConfigVimWiki()
   " XXX
   " PR pending:
   " Plug 'MattesGroeger/vim-bookmarks'
