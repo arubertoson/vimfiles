@@ -102,12 +102,12 @@
                                   
     let mywiki = {}
     let mywiki.path = '/scratch/dev/gitlab.com/arubertoson/vimwiki/home'    
-    let mywiki.syntac = 'markdown'
+    let mywiki.syntax = 'markdown'
     let mywiki.ext = '.md'
     
     let workwiki = {}
-    let workwiki.path = '/scratch/dev/gitlab.com/arubertoson/vimwiki/work'    
-    let workwiki.syntac = 'markdown'
+    let workwiki.path = '/scratch/dev/gitlab.com/arubertoson/vimwiki/work'
+    let workwiki.syntax = 'markdown'
     let workwiki.ext = '.md'
 
     
@@ -139,6 +139,7 @@ call plug#begin('$VIMPATH/plugged')
   Plug 'ludovicchabant/vim-gutentags' | call ConfigGutentags()
 
   " XXX Test
+  Plug 'tbabej/taskwiki'
   Plug 'reedes/vim-pencil'
   Plug 'tmhedberg/SimpylFold'
   Plug 'thinca/vim-quickrun'
