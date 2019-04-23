@@ -118,6 +118,16 @@
       \ '.markdown': 'markdown',
       \ }
   endfunction
+
+  function! _install_coc()
+    CocInstall coc-json coc-yaml coc-python coc-snippets coc-html coc-css
+    CocInstall https://github.com/arubertoson/vscode-snippets
+  endfunction
+
+  function! _coc()
+    command! -nargs=0 PlugCocInstall call _install_coc()
+  endfunction
+
 "---------------------------------------------------------------------------
 " Vim Plugin Installs:
 "---------------------------------------------------------------------------
@@ -134,22 +144,19 @@ call plug#begin('$VIMPATH/plugged')
   " For search highlight control
   Plug 'romainl/vim-cool'
 
-  " Auto Completions & Tags
-  Plug 'Valloric/YouCompleteMe'
-  Plug 'ludovicchabant/vim-gutentags' | call ConfigGutentags()
+  if executable('yarn')
+    " Auto Completions & Tags
+    Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install()}} | call _coc()
+  endif
+
+  if executable('cmake')
+    Plug 'ludovicchabant/vim-gutentags' | call ConfigGutentags()
+  endif
 
   " XXX Test
   Plug 'reedes/vim-pencil'
   Plug 'tmhedberg/SimpylFold'
   Plug 'thinca/vim-quickrun'
-  Plug 'JamshedVesuna/vim-markdown-preview'
-    let vim_markdown_preview_github=1
-  Plug 'sjl/gundo.vim'
-  Plug 'ToruIwashita/git-switcher.vim'
-  " XXX
-  " Modify C-K keys in init#maps
-  " Plug 'mg979/vim-yanktools'
-
 
   " Distraction Free Editing
   Plug 'junegunn/goyo.vim'
@@ -175,8 +182,9 @@ call plug#begin('$VIMPATH/plugged')
   Plug 'arakashic/chromatica.nvim'
 
 
-  Plug 'junegunn/fzf', { 'dir': '/scratch/opt/fzf', 'do': './install --bin' }
-  Plug 'junegunn/fzf.vim' | call ConfigFZF()
+  if executable('fzf')
+    Plug 'junegunn/fzf.vim' | call ConfigFZF()
+  endif
 
   Plug 'vimwiki/vimwiki', { 'branch': 'dev' } | call ConfigVimWiki()
   " XXX
