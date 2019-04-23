@@ -1,0 +1,7 @@
+{
+  "diagnostic.refreshAfterSave": true,
+  "python.jediEnabled": false,
+  "python.formatting.blackPath": "/scratch/.conda/envs/nvim3/bin/black",
+  "python.linting.pylamaPath": "/scratch/.conda/envs/nvim3/bin/pylama",
+  "python.linting.pylamaEnabled": true
+}
