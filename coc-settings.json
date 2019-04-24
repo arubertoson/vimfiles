@@ -1,0 +1,13 @@
+{
+  "coc.preferences.diagnostic.enable": false,
+  "python.linting.enabled": false,
+  "python.jediEnabled": false,
+  "languageserver": {
+    "golang": {
+      "command": "/scratch/opt/go/package/bin/gopls",
+      "args": [],
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
+    }
+  }
+}

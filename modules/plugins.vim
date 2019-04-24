@@ -48,9 +48,15 @@
     let g:ale_lint_on_save = 1
     let g:ale_lint_on_enter = 1
 
+    " Abspaths
+    let g:ale_python_black_executable = '/scratch/opt/conda/envs/nvim3/bin/black'
+    let g:ale_python_mypy_executable = '/scratch/opt/conda/envs/nvim3/bin/mypy'
+    let g:ale_python_flake8_executable = '/scratch/opt/conda/envs/nvim3/bin/flake8'
+    let g:ale_python_pylint_executable = '/scratch/opt/conda/envs/nvim3/bin/pylint'
+
     " Fix on save
     let g:ale_fixers = {
-      \ 'python': ['black'],
+      \ 'python': ['black', 'isort'],
       \ }
     let g:ale_fix_on_save = 1
 
@@ -135,8 +141,12 @@ call plug#begin('$VIMPATH/plugged')
   Plug 'romainl/vim-cool'
 
   " Auto Completions & Tags
-  Plug 'Valloric/YouCompleteMe'
-  Plug 'ludovicchabant/vim-gutentags' | call ConfigGutentags()
+  " Plug 'Valloric/YouCompleteMe'
+  Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+ 
+  if has('ctags')
+    Plug 'ludovicchabant/vim-gutentags' | call ConfigGutentags()
+  endif
 
   " XXX Test
   Plug 'reedes/vim-pencil'
@@ -167,10 +177,12 @@ call plug#begin('$VIMPATH/plugged')
 
   " USD syntax highlighting
   Plug 'sheerun/vim-polyglot'
+      Gautocmd FileType json syntax match Comment +\/\/.\+$+
   Plug 'saltstack/salt-vim'
   Plug 'superfunc/usda-syntax' 
       Gautocmd BufRead,BufNewFile *.{usd[a]} set filetype=usda
       Gautocmd FileType usda source $VIMPATH/plugged/usda-syntax/vim/usda.vim
+      "
   " clang syntax highlighting
   Plug 'arakashic/chromatica.nvim'
 
@@ -183,5 +195,9 @@ call plug#begin('$VIMPATH/plugged')
   " PR pending:
   " Plug 'MattesGroeger/vim-bookmarks'
   Plug 'mg979/vim-bookmarks', {'branch': 'fzf'}
+
+  if !empty($TMUX) 
+    Plug 'christoomey/vim-tmux-navigator'
+  endif
 
 call plug#end()
