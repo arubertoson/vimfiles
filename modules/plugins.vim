@@ -48,9 +48,15 @@
     let g:ale_lint_on_save = 1
     let g:ale_lint_on_enter = 1
 
+    " Abspaths
+    let g:ale_python_black_executable = '/scratch/opt/conda/envs/nvim3/bin/black'
+    let g:ale_python_mypy_executable = '/scratch/opt/conda/envs/nvim3/bin/mypy'
+    let g:ale_python_flake8_executable = '/scratch/opt/conda/envs/nvim3/bin/flake8'
+    let g:ale_python_pylint_executable = '/scratch/opt/conda/envs/nvim3/bin/pylint'
+
     " Fix on save
     let g:ale_fixers = {
-      \ 'python': ['black'],
+      \ 'python': ['black', 'isort'],
       \ }
     let g:ale_fix_on_save = 1
 
@@ -118,6 +124,16 @@
       \ '.markdown': 'markdown',
       \ }
   endfunction
+
+  function! _install_coc()
+    CocInstall coc-json coc-yaml coc-python coc-snippets coc-html coc-css
+    CocInstall https://github.com/arubertoson/vscode-snippets
+  endfunction
+
+  function! _coc()
+    command! -nargs=0 PlugCocInstall call _install_coc()
+  endfunction
+
 "---------------------------------------------------------------------------
 " Vim Plugin Installs:
 "---------------------------------------------------------------------------
@@ -134,23 +150,16 @@ call plug#begin('$VIMPATH/plugged')
   " For search highlight control
   Plug 'romainl/vim-cool'
 
-  " Auto Completions & Tags
-  Plug 'Valloric/YouCompleteMe'
-  Plug 'ludovicchabant/vim-gutentags' | call ConfigGutentags()
+  if executable('yarn')
+    " Auto Completions & Tags
+    Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install()}} | call _coc()
+  endif
 
   " XXX Test
   Plug 'tbabej/taskwiki'
   Plug 'reedes/vim-pencil'
   Plug 'tmhedberg/SimpylFold'
   Plug 'thinca/vim-quickrun'
-  Plug 'JamshedVesuna/vim-markdown-preview'
-    let vim_markdown_preview_github=1
-  Plug 'sjl/gundo.vim'
-  Plug 'ToruIwashita/git-switcher.vim'
-  " XXX
-  " Modify C-K keys in init#maps
-  " Plug 'mg979/vim-yanktools'
-
 
   " Distraction Free Editing
   Plug 'junegunn/goyo.vim'
@@ -158,7 +167,6 @@ call plug#begin('$VIMPATH/plugged')
 
   " Linters
   Plug 'w0rp/ale' | call ConfigAle()
-  Plug 'uber/prototool', { 'rtp':'vim/prototool' }
 
   " Themes
   Plug 'reedes/vim-colors-pencil'
@@ -168,21 +176,24 @@ call plug#begin('$VIMPATH/plugged')
 
   " USD syntax highlighting
   Plug 'sheerun/vim-polyglot'
+      Gautocmd FileType json syntax match Comment +\/\/.\+$+
   Plug 'saltstack/salt-vim'
   Plug 'superfunc/usda-syntax' 
       Gautocmd BufRead,BufNewFile *.{usd[a]} set filetype=usda
       Gautocmd FileType usda source $VIMPATH/plugged/usda-syntax/vim/usda.vim
-  " clang syntax highlighting
-  Plug 'arakashic/chromatica.nvim'
-
-
-  Plug 'junegunn/fzf', { 'dir': '/scratch/opt/fzf', 'do': './install --bin' }
-  Plug 'junegunn/fzf.vim' | call ConfigFZF()
+      "
+  if executable('fzf')
+    Plug 'junegunn/fzf.vim' | call ConfigFZF()
+  endif
 
   Plug 'vimwiki/vimwiki', { 'branch': 'dev' } | call ConfigVimWiki()
   " XXX
   " PR pending:
   " Plug 'MattesGroeger/vim-bookmarks'
   Plug 'mg979/vim-bookmarks', {'branch': 'fzf'}
+
+  if !empty($TMUX) 
+    Plug 'christoomey/vim-tmux-navigator'
+  endif
 
 call plug#end()
