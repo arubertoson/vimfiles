@@ -49,12 +49,18 @@
     let g:ale_lint_on_enter = 1
 
     " Abspaths
-    let g:ale_python_black_executable = '/scratch/opt/conda/envs/nvim3/bin/black'
-    let g:ale_python_mypy_executable = '/scratch/opt/conda/envs/nvim3/bin/mypy'
-    let g:ale_python_flake8_executable = '/scratch/opt/conda/envs/nvim3/bin/flake8'
-    let g:ale_python_pylint_executable = '/scratch/opt/conda/envs/nvim3/bin/pylint'
+    let g:ale_python_black_executable = '/scratch/.conda/envs/nvim3/bin/black'
+    let g:ale_python_mypy_executable = '/scratch/.conda/envs/nvim3/bin/mypy'
+    let g:ale_python_flake8_executable = '/scratch/.conda/envs/nvim3/bin/flake8'
+    let g:ale_python_flake8_options = '--ignore=E501'
+
+    let g:ale_python_pylint_executable = '/scratch/.conda/envs/nvim3/bin/pylint'
+    let g:ale_python_pydocstyle_executable = '/scratch/.conda/envs/nvim3/bin/pydocstyle'
 
     " Fix on save
+    let g:ale_linters = {
+      \ 'python': ['flake8', 'pydocstyle']
+      \ }
     let g:ale_fixers = {
       \ 'python': ['black', 'isort'],
       \ }
