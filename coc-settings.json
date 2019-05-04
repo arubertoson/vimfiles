@@ -1,5 +1,18 @@
 {
+  // General
+  "suggest.noselect": false,
+  "suggest.autoTrigger": "trigger",
+
+  "signature.enable": true,
+  "signature.target": "echo",
+  "coc.preferences.hoverTarget": "echo",
+  
+  "coc.preferences.jumpCommand": "drop",
+
+  // Turn of LS diagnostic
   "diagnostic.enable": false,
+
+  // General Python
   "python.jediEnabled": false,
   "languageserver": {
     "golang": {
