@@ -5,7 +5,11 @@
 "---------------------------------------------------------------------------
 " Environment Variables:
 
+  let g:vimpath = fnamemodify(resolve(expand('<sfile>:p:h')), '') 
+  let g:cachepath = $XDG_CACHE_HOME . '/nvim'
+
   let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p:h')), '')
+  let $CACHEPATH = expand('$XDG_CACHE_HOME/nvim') 
   " set runtimepath^=$VIMPATH
 
   " Python Setup
@@ -142,7 +146,7 @@
     \ 'mapping',
     \ 'abbr',
     \ 'plugins'
-    \ ])
+    \ ], g:vimpath . '/modules')
 
 
 "---------------------------------------------------------------------------
