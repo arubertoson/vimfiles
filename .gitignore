@@ -8,3 +8,5 @@ GTAGS
 
 plugged
 autoload/plug.vim
+
+*.swp

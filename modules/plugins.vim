@@ -52,10 +52,14 @@
     let s:conda_envs = expand('$CONDA_ENVS_PATH/nvim3/bin')
     let g:ale_python_black_executable = s:conda_envs . '/black'
     let g:ale_python_flake8_executable = s:conda_envs . '/flake8'
-    let g:ale_python_pylint_executable = s:conda_envs . '/pylint'
-    let g:ale_python_mypy_executable = s:conda_envs . '/mypy'
+    let g:ale_python_pydocstyle_executable = s:conda_envs . '/pydocstyle'
+
+    let g:ale_python_flake8_options = '--ignore=E501'
 
     " Fix on save
+    let g:ale_linters = {
+      \ 'python': ['flake8', 'pydocstyle']
+      \ }
     let g:ale_fixers = {
       \ 'python': ['black', 'isort'],
       \ }
