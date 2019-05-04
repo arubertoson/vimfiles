@@ -49,10 +49,11 @@
     let g:ale_lint_on_enter = 1
 
     " Abspaths
-    let g:ale_python_black_executable = '/scratch/opt/conda/envs/nvim3/bin/black'
-    let g:ale_python_mypy_executable = '/scratch/opt/conda/envs/nvim3/bin/mypy'
-    let g:ale_python_flake8_executable = '/scratch/opt/conda/envs/nvim3/bin/flake8'
-    let g:ale_python_pylint_executable = '/scratch/opt/conda/envs/nvim3/bin/pylint'
+    let s:conda_envs = expand('$CONDA_ENVS_PATH/nvim3/bin')
+    let g:ale_python_black_executable = s:conda_envs . '/black'
+    let g:ale_python_flake8_executable = s:conda_envs . '/flake8'
+    let g:ale_python_pylint_executable = s:conda_envs . '/pylint'
+    let g:ale_python_mypy_executable = s:conda_envs . '/mypy'
 
     " Fix on save
     let g:ale_fixers = {
@@ -183,6 +184,7 @@ call plug#begin('$VIMPATH/plugged')
       Gautocmd FileType usda source $VIMPATH/plugged/usda-syntax/vim/usda.vim
       "
   if executable('fzf')
+    Plug '/scratch/opt/fzf'
     Plug 'junegunn/fzf.vim' | call ConfigFZF()
   endif
 
