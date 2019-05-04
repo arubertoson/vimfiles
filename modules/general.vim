@@ -26,7 +26,7 @@
 "---------------------------------------------------------------------------
 " Directories:
 
-  set undofile swapfile nobackup
+  set undofile swapfile nobackup nowritebackup
   set directory=$XDG_CACHE_HOME/swap//,$XDG_CACHE_HOME,
   set undodir=$XDG_CACHE_HOME/undo//,$XDG_CACHE_HOME,
   set backupdir=$XDG_CACHE_HOME/backup//,$XDG_CACHE_HOME,
