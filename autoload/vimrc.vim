@@ -12,8 +12,8 @@ function! vimrc#make_dir(name, ...) abort
 endfunction
 
 
-function! vimrc#load_modules(modules) abort
-  let l:basedir = resolve(expand('$VIMPATH/modules'))
+function! vimrc#load_modules(modules, path) abort
+  let l:basedir = resolve(expand(a:path))
   for l:module in a:modules
     let l:modfile = l:basedir .'/'. l:module . '.vim'
     if filereadable(l:modfile)
