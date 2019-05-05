@@ -6,7 +6,8 @@
 "     sourceable file, preferably in local plugin directory
 "   3. Anything that requires a lot of effort without possible return should be
 "     cut, even if it might be mentally challenging
-"
+"   4. Test plugins should have configs in this file, only transfer configs of
+"     plugins I keep
 "
 
   let s:plug_script = g:cachepath . '/autoload/plug.vim'
@@ -78,6 +79,15 @@ call plug#begin(s:plugged)
 "---------------------------------------------------------------------------
 " Test:
 "---------------------------------------------------------------------------
+
+    Plug 'tpope/vim-fugitive'
+    Plug 'liuchengxu/vista.vim'
+    let g:vista_echo_cursor = 0
+    let g:vista_echo_cursor_strategy = 'floating_win'
+    let g:vista_close_on_jump = 1                                      
+
+    Plug 'rhysd/git-messenger.vim'
+    nmap <leader>gm <Plug>(git-messenger)
 
     Plug 'tbabej/taskwiki'
     Plug 'reedes/vim-pencil'

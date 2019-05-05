@@ -1,10 +1,11 @@
+"
 " Greatly inspired by: https://github.com/AlexMasterov/vimfiles
 "---------------------------------------------------------------------------
 " Mappings:
 
   let g:mapleader="\<Space>"
   let g:maplocalleader=";"
-  
+
   nnoremap <Space>  <Nop>
   xnoremap <Space>  <Nop>
   nnoremap ,        <Nop>
@@ -13,14 +14,13 @@
   xnoremap ;        <Nop>
   nnoremap q        <Nop>
 
-"---------------------------------------------------------------------------
-" User Tools:
-
-  nnoremap <silent> <leader>om :call mdpreview#open()<cr>  
-
 
 "---------------------------------------------------------------------------
 " Normal Mode:
+
+  " Exit
+  nnoremap <silent> <leader>q :<C-u>call <SID>smartClose()<CR>
+  nnoremap <silent> <leader>Q :<C-u>exit<CR>
 
   " [jk]: don't skip wrap lines
   nnoremap <expr> j v:count ? 'j' : 'gj'
@@ -32,11 +32,11 @@
   nnoremap <silent> <A-j> :<C-u>move+1<CR>
   nnoremap <silent> <A-k> :<C-u>move-2<CR>
 
-  " Ctrl-[jk]: scroll up/down 1/3 page
-  nnoremap <expr> <C-j> v:count ?
-    \ '<C-d>zz' : (winheight('.') / 4) . '<C-d>zz'
-  nnoremap <expr> <C-k> v:count ?
-    \ '<C-u>zz' : (winheight('.') / 4) . '<C-u>zz'
+  " Ctrl-[du]: scroll up/down half a page while centered
+  nnoremap <expr> <C-d> v:count ?
+    \ '<C-d>zz' : (winheight('.') / 6) . '<C-d>zz'
+  nnoremap <expr> <C-u> v:count ?
+    \ '<C-u>zz' : (winheight('.') / 6) . '<C-u>zz'
 
   " [oO]: append line
   nnoremap <silent> <expr> o v:count ?
@@ -48,55 +48,51 @@
   nnoremap Q ==
 
   " open vimrc in a new tab
-  nnoremap <silent> <leader>fer :<C-u>edit $VIMPATH/vimrc<CR>
-  nnoremap <silent> <leader>fep :<C-u>edit $VIMPATH/modules/plugins.vim<CR>
+  execute printf('nnoremap <silent> <leader>fer :<C-u>edit %s<CR>', g:vimpath.'/vimrc')
+  execute printf('nnoremap <silent> <leader>fep :<C-u>edit %s<CR>', g:vimpath.'/modules/plugins.vim')
+  execute printf('nnoremap <silent> <leader>fem :<C-u>edit %s<CR>', g:vimpath.'/modules/mapping.vim')
 
   " <leader>sr: replace a word under cursor
-  nnoremap <leader>sr :%s/<C-R><C-w>//g<left><left>
+  nnoremap <leader>/r :%s:<C-R><C-w>::g<left><left>
 
   " :s::: is more useful than :s/// when replacing paths
   " https://github.com/jalanb/dotjab/commit/35a40d11c425351acb9a31d6cff73ba91e1bd272
-  nnoremap <leader>sR :%s:<C-R><C-w>:<C-r><C-w>:<Left>
+  nnoremap <leader>/R :%s:<C-R><C-w>:<C-r><C-w>:<Left>
 
   " [*#]: with use 'smartcase'
   nnoremap * /\<<C-r>=expand('<cword>')<CR>\><CR>zv
   nnoremap # ?\<<C-r>=expand('<cword>')<CR>\><CR>zv
 
 " Buffers
-  " previous buffer
-  nnoremap <silent> <leader>bp :<C-u>bprev<CR>
-  " next buffer
-  nnoremap <silent> <leader>bn :<C-u>bnext<CR>
-  " delete buffer
-  nnoremap <silent> <Space>bd :<C-u>bdelete<CR>
-  " jump to alternate buffer
   nnoremap <silent> <leader><TAB> :<C-u>buffer#<CR>
+  nnoremap <silent> <leader>bp :<C-u>bprev<CR>
+  nnoremap <silent> <leader>bn :<C-u>bnext<CR>
+  nnoremap <silent> <leader>bd :<C-u>bdelete<CR>
   " new buffer
-  nnoremap <silent> <leader>bt :<C-u>call <SID>makeBuffer()<CR>
-  " smart close tab -> window -> buffer
   nnoremap <silent> <leader>bq :<C-u>call <SID>smartClose()<CR>
-
-  " save file
-  nnoremap <silent> <C-s> :<C-u>write<CR>
 
 " Windows
   for char in split('h j k l')
-    " Space + [hjkl]: jump to a window
-    execute printf('nnoremap <silent> <leader>%s :<C-u>wincmd %s<CR>', char, char)
-    " Space + [HJKL]: move the current window
-    execute printf('nnoremap <silent> <leader>%s :<C-u>wincmd %s<CR>', toupper(char), toupper(char))
+    " Control + [hjkl]: jump to a window
+    execute printf('nnoremap <silent> <C-%s> :<C-u>wincmd %s<CR>', char, char)
+    " Terminal
+    execute printf('tnoremap <silent> <C-%s> <C-\><C-n>:<C-u>wincmd %s<CR>', char, char)
+    " Control|Shift + [HJKL]: move the current window
+    execute printf('nnoremap <silent> <localleader>%s :<C-u>wincmd %s<CR>', toupper(char), toupper(char))
+    " 
   endfor | unlet char
 
   " Space + r: rotate windows downwards / rightwards
-  nnoremap <silent> <leader>wr :<C-u>wincmd r<CR>
+  nnoremap <silent> <localleader>r :<C-u>wincmd r<CR>
   " Space + R: rotate windows upwards / leftwards
-  nnoremap <silent> <leader>wR :<C-u>wincmd R<CR>
+  nnoremap <silent> <localleader>R :<C-u>wincmd R<CR>
   " Space + v: split window horizontaly
-  nnoremap <silent> <expr> <leader>wv ':<C-u>'. (v:count ? v:count : '') .'split<CR>'
+  nnoremap <silent> <expr> <localleader>v ':<C-u>'. (v:count ? v:count : '') .'split<CR>'
   " Space + V: split window verticaly
-  nnoremap <silent> <expr> <leader>wV ':<C-u>vertical '. (v:count ? v:count : '') .'split<CR>'
+  nnoremap <silent> <expr> <localleader>V ':<C-u>vertical '. (v:count ? v:count : '') .'split<CR>'
   " Space + m: move window to a new tab page
-  nnoremap <silent> <leader>wm :<C-u>wincmd T<CR>
+  nnoremap <silent> <localleader>t :<C-u>wincmd T<CR>
+  nnoremap <silent> <localleader>o :<C-u> GoldenRatio<CR>
 
 "---------------------------------------------------------------------------
 " Visual Mode:
@@ -110,14 +106,9 @@
 "---------------------------------------------------------------------------
 " Insert Mode:
 
-  " Ctrl-u: undo
-  inoremap <C-u> <C-o>u
   " Ctrl-s: save file
   inoremap <silent> <C-s> <Esc> :write<CR>i
-  " Ctrl-c: fast Esc
-  inoremap <C-c> <Esc>`^
-  " Ctrl-l: fast Esc
-  inoremap <C-l> <Esc>`^
+  nnoremap <silent> <C-s> :<C-u>write<CR>
 
   " [jj|qq]: smart fast Esc
   inoremap <expr> k getline('.')[getcurpos()[4]-2] ==# 'j' ? "\<BS>\<Esc>`^" : "\k"
@@ -151,12 +142,6 @@
   " Ctrl-v: open the command-line window
   cnoremap <C-v> <C-f>a
 
-"---------------------------------------------------------------------------
-" Terminal Mode:
-
-  if IsNvim()
-    tnoremap <C-\><C-\> <C-\><C-n>
-  endif
 
 "---------------------------------------------------------------------------
 " Functions:
@@ -173,17 +158,12 @@
     endfor
   endfunction
 
-  function! s:makeBuffer() abort
-    let buffers = filter(range(1, bufnr('$')),
-      \ 'buflisted(v:val) && "quickfix" !=? getbufvar(v:val, "&buftype")')
-    execute ':badd buffer'. (max(buffers) + 1)
-  endfunction
-
   function! s:smartClose() abort
     let tabPageNr = tabpagenr('$')
     if tabPageNr > 1
       tabclose | return
     endif
+
     if winnr('$') > 1
       let buffers = filter(tabpagebuflist(tabPageNr),
         \ 'bufname(v:val) =~? "vimfiler"')
@@ -191,6 +171,7 @@
         close | return
       endif
     endif
+
     if empty(bufname('#'))
       silent! bwipeout | return
     endif

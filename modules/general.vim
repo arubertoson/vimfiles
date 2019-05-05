@@ -1,7 +1,11 @@
 " Greatly inspired by rafi: https://github.com/rafi/vim-config
 "---------------------------------------------------------------------------
-" General Settings:
 
+let $CACHEPATH = g:cachepath
+
+"---------------------------------------------------------------------------
+" General Settings:
+"---------------------------------------------------------------------------
   set exrc                     " avoid reading local (g)vimrc, exrc
   if IsNvim()
     set packpath=
@@ -27,11 +31,11 @@
 " Directories:
 
   set undofile swapfile nobackup nowritebackup
-  set directory=$XDG_CACHE_HOME/swap//,$XDG_CACHE_HOME,
-  set undodir=$XDG_CACHE_HOME/undo//,$XDG_CACHE_HOME,
-  set backupdir=$XDG_CACHE_HOME/backup//,$XDG_CACHE_HOME,
-  set viewdir=$XDG_CACHE_HOME/view
-  set nospell spellfile=$VIMPATH/spell/en.utf-8.add
+  set directory=$CACHEPATH/swap//,$CACHEPATH,
+  set undodir=$CACHEPATH/undo//,$CACHEPATH,
+  set backupdir=$CACHEPATH/backup//,$CACHEPATH,
+  set viewdir=$CACHEPATH/view
+  set nospell spellfile=$CACHEPATH/spell/en.utf-8.add
 
   " History saving
   set history=2000
@@ -44,7 +48,7 @@
   	"   h - Disable the effect of 'hlsearch' when loading the shada
   	set shada='300,<10,@50,s100,h
   else
-  	set viminfo='300,<10,@50,h,n$XDG_CACHE_HOME/viminfo
+  	set viminfo='300,<10,@50,h,n$CACHEPATH/viminfo
   endif
 
 "---------------------------------------------------------------------------

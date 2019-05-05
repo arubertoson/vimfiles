@@ -1,44 +1,35 @@
 "
+"
 "   Repo URL: https://github.com/arubertoson/vimfiles
 "   Author: Marcus Albertsson
 "
 "---------------------------------------------------------------------------
 " Environment Variables:
+"---------------------------------------------------------------------------
 
   let g:vimpath = fnamemodify(resolve(expand('<sfile>:p:h')), '') 
   let g:cachepath = $XDG_CACHE_HOME . '/nvim'
 
-  let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p:h')), '')
-  let $CACHEPATH = expand('$XDG_CACHE_HOME/nvim') 
-  " set runtimepath^=$VIMPATH
-
-  " Python Setup
-  if executable('conda')
-    " Python2 Setup
-    let g:python_host_prog = resolve(expand('$CONDA_ENVS_PATH/nvim2')) . '/bin/python2'
-    if !filereadable(g:python_host_prog)
-      execute '!conda create -y -n nvim2 python=2 pip'
-      execute '!' . fnamemodify(g:python_host_prog, ':p:h') . '/pip install pynvim'
-    endif
-
-    " Python3 Setup
-    let g:python3_host_prog = resolve(expand('$CONDA_ENVS_PATH/nvim3')) . '/bin/python3'
-    if !filereadable(g:python3_host_prog)
-      execute '!conda create -y -n nvim3 python=3 pip'
-      execute '!' . fnamemodify(g:python3_host_prog, ':p:h') . '/pip install pynvim'
-      execute '!conda install --name -y nvim3 pylama black'
-    endif
-  endif
-
 "---------------------------------------------------------------------------
 " Global AutoCmd:
+"---------------------------------------------------------------------------
 
   augroup vimrc | execute 'autocmd!' | augroup END
   command! -nargs=* Gautocmd autocmd vimrc <args>
   command! -nargs=* Gautocmdft autocmd vimrc FileType <args>
+  
+  " Work around neovim 0.4.0+ bug
+  " https://github.com/neovim/neovim/issues/9881
+  " https://github.com/neoclide/coc.nvim/issues/668
+  augroup secure_modeline_conflict_workaround
+    autocmd!
+    autocmd FileType help setlocal nomodeline
+  augroup END
+
 
 "---------------------------------------------------------------------------
 " Global Commands:
+"---------------------------------------------------------------------------
 
   command! -nargs=1 Indent execute
     \ 'setlocal tabstop='.<q-args>
@@ -51,8 +42,10 @@
   " Set color theme
   command! -nargs=? SetColorScheme call vimrc#set_theme(<q-args>)
 
+
 "---------------------------------------------------------------------------
 " Global Events:
+"---------------------------------------------------------------------------
 
   " Optimize syntax in big files
   Gautocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
@@ -83,8 +76,10 @@
   Gautocmd BufWritePre,FileWritePre *?
     \ call vimrc#make_dir('<afile>:h', v:cmdbang)
 
+
 "---------------------------------------------------------------------------
 " Global Functions:
+"---------------------------------------------------------------------------
 
   function! IsWindows() abort
     return has('win64') || has('win32') || has('win32unix')
@@ -104,9 +99,11 @@
     return has('nvim')
   endfunction
 
+
 "---------------------------------------------------------------------------
 " Disable Default Plugins:
-"
+"---------------------------------------------------------------------------
+
   let g:did_install_default_menus = 1 " $VIMRUNTIME/menu.vim
   let g:did_menu_trans            = 1 " $VIMRUNTIME/menu.vim
   let g:load_doxygen_syntax       = 1 " $VIMRUNTIME/syntax/doxygen.vim
@@ -137,6 +134,7 @@
 
 "---------------------------------------------------------------------------
 " Global Settings Modules:
+"---------------------------------------------------------------------------
 
   " Load configuration modules
   call vimrc#load_modules([
@@ -151,6 +149,7 @@
 
 "---------------------------------------------------------------------------
 " Post:
+"---------------------------------------------------------------------------
 
   " Set default theme and other themes that we can change to
   let g:vimrc#theme = 'icode'
