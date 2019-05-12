@@ -19,9 +19,8 @@
     " Python3 Setup
     let g:python3_host_prog = resolve(expand('$CONDA_ENVS_PATH/nvim3')) . '/bin/python3'
     if !filereadable(g:python3_host_prog)
-      execute '!conda create -y -n nvim3 python=3 pip'
-      execute '!' . fnamemodify(g:python3_host_prog, ':p:h') . '/pip install pynvim'
-      execute '!conda install --name -y nvim3 pylama black'
+      execute '!conda create -y -n nvim3 python=3 pip flake8 pydocstyle'
+      execute '!' . fnamemodify(g:python3_host_prog, ':p:h') . '/pip install pynvim black isort'
     endif
   endif
 
