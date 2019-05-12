@@ -10,7 +10,7 @@
 "     plugins I keep
 "
 
-  let s:plug_script = g:cachepath . '/autoload/plug.vim'
+  let s:plug_script = g:vimpath . '/autoload/plug.vim'
   let s:plugged = g:cachepath . '/plugged'
   let s:plugcfg = g:vimpath . '/plugin/config'
 
