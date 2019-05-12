@@ -1,21 +1,5 @@
 " CoC:
 "---------------------------------------------------------------------------
-
-  " Install
-  if exists(':CocInstall')
-    " Built In
-    CocInstall 
-      \ coc-json
-      \ coc-yaml
-      \ coc-python
-      \ coc-snippets
-      \ coc-html
-      \ coc-css
-
-    " Custom
-    CocInstall
-      \ https://github.com/arubertoson/vscode-snippets
-  endif 
   
 "---------------------------------------------------------------------------
 " Functions:
@@ -33,6 +17,27 @@
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
+
+  function! s:install_coc_ext()
+    " Install
+    if exists(':CocInstall')
+      " Built In
+      CocInstall 
+        \ coc-json
+        \ coc-yaml
+        \ coc-python
+        \ coc-snippets
+        \ coc-html
+        \ coc-css
+
+      " Custom
+      CocInstall
+        \ https://github.com/arubertoson/vscode-snippets
+    endif 
+  endfunction
+
+
+  command! -nargs=0 PlugCocInstall call <SID>install_coc_ext() 
 
 "---------------------------------------------------------------------------
 " Mapping:
