@@ -2,23 +2,36 @@
   // General
   "suggest.noselect": false,
   "suggest.autoTrigger": "trigger",
-
-  "signature.enable": true,
-  "signature.target": "echo",
-  "coc.preferences.hoverTarget": "echo",
-  
-  "coc.preferences.jumpCommand": "drop",
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 12,
+  "suggest.minTriggerInputLength": 2,
 
   // Turn of LS diagnostic
   "diagnostic.enable": false,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.refreshAfterSave": true,
+  "diagnostic.virtualText": true,
+
+  // "coc.preferences.formatOnSaveFiletypes": ["json", "go", "python"],
+
+  "signature.enable": true,
+  "signature.target": "float",
+
+  "codeLens.enable": true,
+  
+  "coc.preferences.hoverTarget": "float",
+  "coc.preferences.jumpCommand": "drop",
 
   // General Python
   "python.jediEnabled": false,
+
   "languageserver": {
     "golang": {
-      "command": "/scratch/opt/go/package/bin/gopls",
+      "command": "gopls",
       "args": [],
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "trace.server": "verbose",
+      "rootPatterns": ["go.mod", ".git/", ".hg/"],
+      "requireRootPattern": true,
       "filetypes": ["go"]
     }
   }
