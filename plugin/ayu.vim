@@ -18,4 +18,4 @@
     \| hi ALEWarningSign guifg=#FFCC66 guibg=#242B38 gui=bold
 
 
-  call vimrc#set_theme('ayu')
+  call vimrc#set_theme('icode')
