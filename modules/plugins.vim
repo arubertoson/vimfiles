@@ -33,9 +33,10 @@ call plug#begin(s:plugged)
     " Themes
     Plug 'reedes/vim-colors-pencil'
     Plug 'ayu-theme/ayu-vim'
+    Plug 'mhartington/oceanic-next'
 
     " For highlight control
-    Plug 'Yggdroot/indentLine'
+    " Plug 'Yggdroot/indentLine'
     Plug 'romainl/vim-cool'
 
     Plug 'sheerun/vim-polyglot'
@@ -51,7 +52,7 @@ call plug#begin(s:plugged)
 
     if executable('fzf')
       Plug '/scratch/opt/fzf'
-      Plug 'junegunn/fzf.vim' " | call ConfigFZF()
+      Plug 'junegunn/fzf.vim'
     endif
   
 "---------------------------------------------------------------------------
@@ -70,15 +71,22 @@ call plug#begin(s:plugged)
   
     " Quick comments
     Plug 'tomtom/tcomment_vim'
+    
     " Smart input provides auto-pairs like behaviour to complete ()[]{} and other
     " inputs that require a secondary input to be considdered complete.
     Plug 'kana/vim-smartinput'
+   
     " Provides a way to add, delete, switch surrounding brackets [test]->(test)
     Plug 'machakann/vim-sandwich'
 
 "---------------------------------------------------------------------------
 " Test:
 "---------------------------------------------------------------------------
+    " Plug 'fatih/vim-go'
+    Plug 'lifepillar/pgsql.vim'
+    " let g:sql_type_default = 'sql'
+
+    Plug 'Shougo/echodoc.vim' 
 
     Plug 'tpope/vim-fugitive'
     Plug 'liuchengxu/vista.vim'
@@ -89,13 +97,15 @@ call plug#begin(s:plugged)
     Plug 'rhysd/git-messenger.vim'
     nmap <leader>gm <Plug>(git-messenger)
 
-    Plug 'tbabej/taskwiki'
-    Plug 'reedes/vim-pencil'
-    Plug 'tmhedberg/SimpylFold'
-    Plug 'thinca/vim-quickrun'
+    Plug 'kassio/neoterm'
 
-    Plug 'mg979/vim-bookmarks', {'branch': 'fzf'}
+    " Plug 'tbabej/taskwiki'
+    " Plug 'reedes/vim-pencil'
+    " Plug 'tmhedberg/SimpylFold'
+    " Plug 'thinca/vim-quickrun'
+
     Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+    Plug 'mg979/vim-bookmarks', {'branch': 'fzf'}
 
 call plug#end()
 

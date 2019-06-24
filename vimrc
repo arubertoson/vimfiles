@@ -1,4 +1,4 @@
-"
+
 "
 "   Repo URL: https://github.com/arubertoson/vimfiles
 "   Author: Marcus Albertsson
@@ -152,7 +152,7 @@
 "---------------------------------------------------------------------------
 
   " Set default theme and other themes that we can change to
-  let g:vimrc#theme = 'icode'
+  let g:vimrc#theme = 'ocean'
   let g:vimrc#themes = {
     \   'iwrite': { 'colorscheme': 'pencil',
     \              'background': 'light',
@@ -166,6 +166,12 @@
     \              'linespace': '3',
     \              'typeface': 'Droid Sans Mono',
     \               },
+    \   'ocean': { 'colorscheme': 'OceanicNext',
+    \              'background': 'dark',
+    \              'font-size': '14',
+    \              'linespace': '3',
+    \              'typeface': 'Droid Sans Mono',
+    \               },
     \ }
   
   if !has('gui_running')
@@ -173,5 +179,5 @@
   endif
 
   " Avoid running autocmds not owned by you in local .vimrc
-  set secure                
+  set secure
 
