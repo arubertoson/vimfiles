@@ -82,7 +82,7 @@ call plug#begin(s:plugged)
 "---------------------------------------------------------------------------
 " Test:
 "---------------------------------------------------------------------------
-    " Plug 'fatih/vim-go'
+    Plug 'fatih/vim-go'
     Plug 'lifepillar/pgsql.vim'
     " let g:sql_type_default = 'sql'
 

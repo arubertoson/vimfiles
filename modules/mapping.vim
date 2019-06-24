@@ -110,9 +110,12 @@
   inoremap <silent> <C-s> <Esc> :write<CR>i
   nnoremap <silent> <C-s> :<C-u>write<CR>
 
+  inoremap jk <ESC>l
+  inoremap kj <ESC>l
+
   " [jj|qq]: smart fast Esc
-  inoremap <expr> k getline('.')[getcurpos()[4]-2] ==# 'j' ? "\<BS>\<Esc>`^" : "\k"
-  inoremap <expr> j getline('.')[getcurpos()[4]-2] ==# 'k' ? "\<BS>\<Esc>`^" : "\j"
+  " inoremap <expr> k getline('.')[getcurpos()[4]-2] ==# 'j' ? "\<BS>\<Esc>`^" : "\k"
+  " inoremap <expr> j getline('.')[getcurpos()[4]-2] ==# 'k' ? "\<BS>\<Esc>`^" : "\j"
 
   " Unbinds
   inoremap <C-j> <Nop>
