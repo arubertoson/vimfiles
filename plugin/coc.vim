@@ -16,6 +16,8 @@
     CocInstall
       \ https://github.com/arubertoson/vscode-snippets
   endif 
+
+  let g:coc_force_debug = 1
   
 "---------------------------------------------------------------------------
 " Functions:
@@ -48,9 +50,9 @@
 
   " Goto
   nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gy <Plug>(coc-type-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
   nmap <silent> gr <Plug>(coc-references)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gy <Plug>(coc-type-definition)
   " <Plug>(coc-definition)
   " <Plug>(coc-declaration)
   " <Plug>(coc-implementation)
