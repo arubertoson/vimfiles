@@ -10,3 +10,4 @@ plugged
 autoload/plug.vim
 
 *.swp
+*.old
