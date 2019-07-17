@@ -29,7 +29,7 @@ call plug#begin(s:plugged)
 "---------------------------------------------------------------------------
 " Interface:
 "---------------------------------------------------------------------------
-  
+
     " Themes
     Plug 'reedes/vim-colors-pencil'
     Plug 'ayu-theme/ayu-vim'
@@ -51,10 +51,10 @@ call plug#begin(s:plugged)
 "---------------------------------------------------------------------------
 
     if executable('fzf')
-      Plug '/scratch/opt/fzf'
+      Plug expand('$XDG_APP_HOME/fzf')
       Plug 'junegunn/fzf.vim'
     endif
-  
+
 "---------------------------------------------------------------------------
 " Language:
 "---------------------------------------------------------------------------
@@ -68,14 +68,14 @@ call plug#begin(s:plugged)
 "---------------------------------------------------------------------------
 " Tools:
 "---------------------------------------------------------------------------
-  
+
     " Quick comments
     Plug 'tomtom/tcomment_vim'
-    
+
     " Smart input provides auto-pairs like behaviour to complete ()[]{} and other
     " inputs that require a secondary input to be considdered complete.
     Plug 'kana/vim-smartinput'
-   
+
     " Provides a way to add, delete, switch surrounding brackets [test]->(test)
     Plug 'machakann/vim-sandwich'
 
@@ -92,7 +92,9 @@ call plug#begin(s:plugged)
     Plug 'liuchengxu/vista.vim'
     let g:vista_echo_cursor = 0
     let g:vista_echo_cursor_strategy = 'floating_win'
-    let g:vista_close_on_jump = 1                                      
+    let g:vista_close_on_jump = 1
+
+    Plug 'hashivim/vim-terraform'
 
     Plug 'rhysd/git-messenger.vim'
     nmap <leader>gm <Plug>(git-messenger)

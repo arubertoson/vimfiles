@@ -2,6 +2,10 @@
 " ALE:
 "---------------------------------------------------------------------------
 
+if !exists("ale#linter#Define")
+  finish
+endif
+
 "---------------------------------------------------------------------------
 " Interface:
 "---------------------------------------------------------------------------
@@ -14,6 +18,34 @@
 
   let g:ale_sign_style_error = 's'
   let g:ale_sign_style_warning = 's'
+
+  let g:ale_set_loclist=0
+  let g:ale_set_quickfix=0
+
+"---------------------------------------------------------------------------
+" Functions:
+"---------------------------------------------------------------------------
+
+function! OpenALEResults()
+  let l:bfnum = bufnr('')
+  let l:items = ale#engine#GetLoclist(l:bfnum)
+  call filter(l:items, '!(has_key(v:val, "bufnr") && v:val["bufnr"] == -1)')
+  call setqflist([], 'r', {'items': l:items, 'title': 'ALE results'})
+  botright cwindow
+endfunction
+
+function! RunALELint()
+  if empty(ale#engine#GetLoclist(bufnr('')))
+    let b:ale_enabled = 1
+    augroup ALEProgress
+      autocmd!
+      autocmd User ALELintPost call OpenALEResult() | au! ALEProgress
+    augroup end
+    call ale#Queue(0, 'lint_file')
+  else
+    call OpenALEResults()
+  endif
+endfunction
 
 "---------------------------------------------------------------------------
 " General:
@@ -41,10 +73,14 @@
   let g:ale_linters = {
     \ 'python': ['flake8', 'pydocstyle'],
     \ 'go': ['revive', 'golangci-lint'],
+    \ 'json': ['jsonlint'],
+    \ 'text': ['redpen', 'writegood', 'proselint'],
     \ }
   let g:ale_fixers = {
     \ 'python': ['black', 'isort'],
     \ 'go': ['gofmt'],
+    \ 'json': ['prettier', 'fixjson'],
+    \ 'terraform': ['terraform']
     \ }
 
   
