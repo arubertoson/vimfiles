@@ -2,7 +2,7 @@
 " ALE:
 "---------------------------------------------------------------------------
 
-if !exists("ale#linter#Define")
+if !exists("g:loaded_ale")
   finish
 endif
 
@@ -60,6 +60,7 @@ endfunction
   let g:ale_lint_on_save = 1
   let g:ale_fix_on_save = 1
 
+  " Define new go linter
   call ale#linter#Define('go', {
     \ 'name': 'revive',
     \ 'output_stream': 'both',

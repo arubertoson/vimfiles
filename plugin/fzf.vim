@@ -5,7 +5,6 @@
   let $FZF_DEFAULT_OPTS='--layout=reverse'
   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
-  " let g:fzf_history_dir = '~/.fzf-history'
   let g:fzf_buffers_jump = 1
   let g:fzf_action = {
         \ 'ctrl-t': 'tab split',
@@ -13,6 +12,7 @@
         \ 'ctrl-v': 'vsplit' }
   let g:fzf_tags_command = 'retag'
 
+  " Required configurations for drop down terminas
   aug user:autocmd:fzf
     au!
     au TermOpen term://*FZF tnoremap <silent> <buffer> <nowait> <esc> <c-c>
@@ -28,9 +28,23 @@
 
   command! FZFMru call fzf#run(fzf#wrap('MRU', { 'source': MRUfiles() }))
 
-  command! -bang -nargs=* Rg
-    \ call fzf#vim#grep(
-    \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  command! -bang -nargs=* RgDev
+    \ call fzf#vim#grep('
+      \ rg --column --line-number --no-heading --fixed-strings --no-ignore 
+      \ --hidden --follow --smart-case --color=always
+      \ -g "*.{js,json,php,md,styl,jade,html,config,py,h,hpp,cpp,c,go,hs,rb,conf,zsh,sh}"
+      \ -g "!{.git,node_modules,vendor}/*"
+    \ '.shellescape(<q-args>), 1,
+    \ <bang>0 ? fzf#vim#with_preview('up:60%')
+    \         : fzf#vim#with_preview('right:50%:hidden', '?'),
+    \ <bang>0)
+
+  command! -bang -nargs=* RgAll
+    \ call fzf#vim#grep('
+      \ rg --column --line-number --no-heading --fixed-strings --no-ignore 
+      \ --hidden --follow --smart-case --color=always
+      \ -g "!{.git,node_modules,vendor}/*"
+    \ '.shellescape(<q-args>), 1,
     \ <bang>0 ? fzf#vim#with_preview('up:60%')
     \         : fzf#vim#with_preview('right:50%:hidden', '?'),
     \ <bang>0)
@@ -86,7 +100,8 @@
 
   " Searching
   nnoremap <leader>ss :BLines<CR>
-  nnoremap <leader>sl :Rg<CR>
+  nnoremap <leader>sd :RgDev<CR>
+  nnoremap <leader>sl :RgAll<CR>
 
   " Others
   nnoremap <leader>ft :Filetypes<CR>
