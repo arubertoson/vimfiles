@@ -45,9 +45,11 @@ augroup END
 
   function! SplitCommand(...)
     let l:command = a:0 ? a:1 : ''
-    if winwidth('%') >= 160 " Minimum width
+    if winwidth('%') >= 120 " Minimum width
+      let l:width = winwidth('%')/2
+
       execute 'vertical botright ' . l:command
-      execute 'vertical resize 120'
+      execute 'vertical resize ' . l:width
     else
       execute 'botright ' . l:command
     endif
@@ -86,12 +88,7 @@ augroup END
 
   " nnoremap <silent> <leader>tv :<c-u>exec printf('%sTtoggle', v:count)<cr>
   " nnoremap <silent> <leader>tl :<c-u>exec printf('botright vertical %s Ttoggle', v:count)<cr>
-  nnoremap <silent> <leader>te :<c-u>exec printf('%sT exit', v:count)<cr>
+  nnoremap <silent> <leader>te <C-\><C-n>:<c-u>exec printf('%sT exit', v:count)<cr>
   nnoremap <silent> <leader>tl :<c-u>exec printf('%sTclear', v:count)<cr>
   nnoremap <silent> <leader>tk :<c-u>exec printf('%sTkill', v:count)<cr>
 
-
-  " cabbrev tt Ttoggle
-  " cabbrev htt botright Ttoggle
-  " cabbrev vtt botright vertical Ttoggle
-  " cabbrev vt botright vertical T
