@@ -1,38 +1,33 @@
 {
-  // General
   "suggest.noselect": false,
   "suggest.autoTrigger": "trigger",
-  "suggest.echodocSupport": true,
+  "suggest.echodocSupport": false,
   "suggest.maxCompleteItemCount": 12,
   "suggest.minTriggerInputLength": 2,
-
-  // Turn of LS diagnostic
   "diagnostic.enable": false,
+  "diagnostic.virtualText": true,
   "diagnostic.checkCurrentLine": true,
   "diagnostic.refreshAfterSave": true,
-  "diagnostic.virtualText": true,
-
-  // "coc.preferences.formatOnSaveFiletypes": ["json", "go", "python"],
-
   "signature.enable": true,
   "signature.target": "float",
-
-  "codeLens.enable": true,
-  
+  "codeLens.enable": false,
   "coc.preferences.hoverTarget": "float",
   "coc.preferences.jumpCommand": "drop",
-
-  // General Python
   "python.jediEnabled": false,
-
   "languageserver": {
     "golang": {
       "command": "gopls",
       "args": [],
       "trace.server": "verbose",
-      "rootPatterns": ["go.mod", ".git/", ".hg/"],
+      "rootPatterns": [
+        "go.mod",
+        ".git/",
+        ".hg/"
+      ],
       "requireRootPattern": true,
-      "filetypes": ["go"]
+      "filetypes": [
+        "go"
+      ]
     }
   }
 }
