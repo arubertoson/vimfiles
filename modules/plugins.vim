@@ -43,8 +43,8 @@ call plug#begin(s:plugged)
     Plug 'saltstack/salt-vim'
     "
     " Distraction Free Editing
-    Plug 'junegunn/goyo.vim'
-    Plug 'junegunn/limelight.vim'
+    Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
+    Plug 'junegunn/limelight.vim', {'on': 'Limelight'}
 
 "---------------------------------------------------------------------------
 " Navigation:
@@ -95,6 +95,8 @@ call plug#begin(s:plugged)
     let g:vista_close_on_jump = 1
 
     Plug 'hashivim/vim-terraform'
+    let g:terraform_align = 1
+    let g:terraform_fmt_on_save = 1
 
     Plug 'rhysd/git-messenger.vim'
     nmap <leader>gm <Plug>(git-messenger)
@@ -106,7 +108,7 @@ call plug#begin(s:plugged)
     " Plug 'tmhedberg/SimpylFold'
     " Plug 'thinca/vim-quickrun'
 
-    Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+    " Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
     Plug 'mg979/vim-bookmarks', {'branch': 'fzf'}
 
 call plug#end()
