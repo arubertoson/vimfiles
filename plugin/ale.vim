@@ -2,9 +2,9 @@
 " ALE:
 "---------------------------------------------------------------------------
 
-if !exists("g:loaded_ale")
-  finish
-endif
+" if !exists("g:loaded_ale")
+"   finish
+" endif
 
 "---------------------------------------------------------------------------
 " Interface:
@@ -80,7 +80,7 @@ endfunction
   let g:ale_fixers = {
     \ 'python': ['black', 'isort'],
     \ 'go': ['gofmt'],
-    \ 'json': ['prettier', 'fixjson'],
+    \ 'json': ['fixjson'],
     \ 'terraform': ['terraform']
     \ }
 
@@ -106,5 +106,6 @@ endfunction
 
   " Linter Config
   let g:ale_python_flake8_options = '--ignore=E501'
+  let g:ale_python_pydocstyle_options = '--add-ignore=D202'
 
 
