@@ -1,20 +1,112 @@
 {
+  // coc settings
+
+  "list.nextKeymap": "<C-n>",
+  "list.previousKeymap": "<C-p>",
+  "list.maxHeight": 15,
+  "list.insertMappings": {
+    "<C-c>": "do:exit"
+  },
+
+  "coc.preferences.snippets.enable": true,
+  "coc.preferences.snippetStatusText": "",
+  "coc.preferences.formatOnType": false,
+  "coc.preferences.hoverTarget": "float",
+  "coc.preferences.jumpCommand": "drop",
+
+
+  "coc.preferences.formatOnSaveFiletypes": [
+     "go",
+     "python",
+     "json"
+  ],
+
+  // "diagnostic.infoSign":            "ღ",
+  // "diagnostic.hintSign":            "ஐ",
+  // "diagnostic.warningSign":         "⚠",
+  // "diagnostic.errorSign":           "✖",
+  "diagnostic.enable":              true,
+  "diagnostic.signOffset":          9999999,
+  "diagnostic.highlightOffset":     9999999,
+  "diagnostic.refreshOnInsertMode": true,
+
+
+
+
+  // Diagnostics
+  "diagnostic-languageserver.debug": true,
+
+  "diagnostic-languageserver.formatters": {
+    "gofumports": {
+      "command": "gofumports",
+      "args": ["-e"],
+      "isStderr": true,
+      "isStdout": true
+    },
+    "jsonfmt": {
+      "command": "prettier",
+      "args": ["--parser", "json"],
+      "isStdout": true,
+      "isStderr": false
+    }
+  },
+
+  "diagnostic-languageserver.formatFiletypes": {
+    "go": "gofumports",
+    "json": "jsonfmt"
+
+  },
+
+  "diagnostic-languageserver.filetypes": {
+    "go": ["golangci-lint"]
+  },
+
+  // end diag
+
+	"tabnine.disable_filetypes": [".*data.*"],
+
+  "yank.highlight.duration": 200,
   "suggest.noselect": false,
   "suggest.autoTrigger": "trigger",
   "suggest.echodocSupport": false,
   "suggest.maxCompleteItemCount": 12,
   "suggest.minTriggerInputLength": 2,
-  "diagnostic.enable": false,
-  "diagnostic.virtualText": true,
-  "diagnostic.checkCurrentLine": true,
-  "diagnostic.refreshAfterSave": true,
+
+  // "diagnostic.enable": false,
+  // "diagnostic.virtualText": true,
+  // "diagnostic.checkCurrentLine": true,
+  // "diagnostic.refreshAfterSave": true,
+  "suggest.enablePreselect": true,
+
   "signature.enable": true,
   "signature.target": "float",
   "codeLens.enable": false,
-  "coc.preferences.hoverTarget": "float",
-  "coc.preferences.jumpCommand": "drop",
   "python.jediEnabled": false,
   "languageserver": {
+    "sh": {
+      "command": "bash-language-server",
+      "args": ["start", "--stdio"],
+      "filetypes": ["sh"],
+      "cwd": "./",
+      "initializationOptions": {},
+      "ignoredRootPaths": ["~"],
+      "settings": {}
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
+    },
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
+    },
     "golang": {
       "command": "gopls",
       "args": [],

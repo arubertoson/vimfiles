@@ -1,7 +1,12 @@
+
+"
+"   Repo URL: https://github.com/arubertoson/vimfiles
+"   Author: Marcus Albertsson
 "
 " Greatly inspired by: https://github.com/AlexMasterov/vimfiles
 "---------------------------------------------------------------------------
 " Mappings:
+"---------------------------------------------------------------------------
 
   let g:mapleader="\<Space>"
   let g:maplocalleader=";"
@@ -17,6 +22,7 @@
 
 "---------------------------------------------------------------------------
 " Normal Mode:
+"---------------------------------------------------------------------------
 
   " Exit
   nnoremap <silent> <leader>q :<C-u>call <SID>smartClose()<CR>
@@ -34,9 +40,9 @@
 
   " Ctrl-[du]: scroll up/down half a page while centered
   nnoremap <expr> <C-d> v:count ?
-    \ '<C-d>zz' : (winheight('.') / 6) . '<C-d>zz'
+    \ '<C-d>zz' : (winheight('.') / 2) . '<C-d>zz'
   nnoremap <expr> <C-u> v:count ?
-    \ '<C-u>zz' : (winheight('.') / 6) . '<C-u>zz'
+    \ '<C-u>zz' : (winheight('.') / 2) . '<C-u>zz'
 
   " [oO]: append line
   nnoremap <silent> <expr> o v:count ?
@@ -44,13 +50,10 @@
   nnoremap <silent> <expr> O v:count ?
     \ ':<C-u>call <SID>appendLineDown(v:count1)<CR>' : 'O'
 
-  " Q: auto indent text
-  nnoremap Q ==
-
   " open vimrc in a new tab
   execute printf('nnoremap <silent> <leader>fer :<C-u>edit %s<CR>', g:vimpath.'/vimrc')
-  execute printf('nnoremap <silent> <leader>fep :<C-u>edit %s<CR>', g:vimpath.'/modules/plugins.vim')
-  execute printf('nnoremap <silent> <leader>fem :<C-u>edit %s<CR>', g:vimpath.'/modules/mapping.vim')
+  execute printf('nnoremap <silent> <leader>fep :<C-u>edit %s<CR>', g:vimpath.'/conf/plugin.vim')
+  execute printf('nnoremap <silent> <leader>fem :<C-u>edit %s<CR>', g:vimpath.'/conf/mapping.vim')
 
   " <leader>sr: replace a word under cursor
   nnoremap <leader>/r :%s:<C-R><C-w>::g<left><left>
@@ -65,11 +68,7 @@
 
 " Buffers
   nnoremap <silent> <leader><TAB> :<C-u>buffer#<CR>
-  nnoremap <silent> <leader>bp :<C-u>bprev<CR>
-  nnoremap <silent> <leader>bn :<C-u>bnext<CR>
   nnoremap <silent> <leader>bd :<C-u>bdelete<CR>
-  " new buffer
-  nnoremap <silent> <leader>bq :<C-u>call <SID>smartClose()<CR>
 
 " Windows
   for char in split('h j k l')
@@ -82,15 +81,15 @@
     " 
   endfor | unlet char
 
-  " Space + r: rotate windows downwards / rightwards
+  " rotate windows downwards / rightwards
   nnoremap <silent> <localleader>r :<C-u>wincmd r<CR>
-  " Space + R: rotate windows upwards / leftwards
+  " rotate windows upwards / leftwards
   nnoremap <silent> <localleader>R :<C-u>wincmd R<CR>
-  " Space + v: split window horizontaly
+  " split window horizontaly
   nnoremap <silent> <expr> <localleader>v ':<C-u>'. (v:count ? v:count : '') .'split<CR>'
-  " Space + V: split window verticaly
+  " split window verticaly
   nnoremap <silent> <expr> <localleader>V ':<C-u>vertical '. (v:count ? v:count : '') .'split<CR>'
-  " Space + m: move window to a new tab page
+  " move window to a new tab page
   nnoremap <silent> <localleader>t :<C-u>wincmd T<CR>
   nnoremap <silent> <localleader>o :<C-u> GoldenRatio<CR>
 

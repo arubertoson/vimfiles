@@ -24,17 +24,17 @@ endfunction
 
 
 function! vimrc#set_theme(...) abort
-  let a:theme_name = a:0 > 0 ? a:1 : g:vimrc#theme
-  let a:theme = g:vimrc#themes[a:theme_name]
+  let l:theme_name = a:0 > 0 ? a:1 : g:vimrc#theme
+  let l:theme = g:vimrc#themes[l:theme_name]
 
   " Use the original background
-  let l:background = get(a:theme, 'background', 'dark')
+  let l:background = get(l:theme, 'background', 'dark')
   if l:background != &background
-    execute 'set background=' . a:theme['background']
+    execute 'set background=' . l:theme['background']
   endif
 
   " assume the colorscheme exists, else set a default
-  let l:colorscheme = get(a:theme, 'colorscheme', 'desert')
+  let l:colorscheme = get(l:theme, 'colorscheme', 'desert')
   try
     " execute 'colorscheme ' . l:colorscheme
     call color#set(l:colorscheme)
@@ -43,29 +43,19 @@ function! vimrc#set_theme(...) abort
     call color#set('desert')
   endtry
 
-  " Set font and linespace
-  let l:font = a:theme['typeface'] . ':h' . a:theme['font-size']
-  let l:linespace = a:theme['linespace']
+  " Set font and linespace (only gui)
   if exists('g:GuiLoaded')
+    let l:font = l:theme['typeface'] . ':h' . l:theme['font-size']
+    let l:linespace = l:theme['linespace']
+
     execute 'GuiFont! ' . l:font
-    execute 'GuiLinespace ' . a:theme['linespace']
+    execute 'GuiLinespace ' . l:theme['linespace']
   endif
 
   " Execute callback
-  let l:cmd = get(a:theme, 'callback')
+  let l:cmd = get(l:theme, 'callback')
   if l:cmd
     execute l:cmd
   endif
-endfunction
-
-
-function! vimrc#auto_nohlsearch() abort
-  nnoremap <silent> <Plug>(_auto-nohl) :<C-u>nohlsearch<CR>
-
-  augroup auto-nohl
-    autocmd!
-    autocmd InsertEnter,CursorMoved * call feedkeys('\<Plug>(_auto-nohl)')
-      \| autocmd! auto-nohl
-  augroup END
 endfunction
 

@@ -1,5 +1,12 @@
+
 "
 " Fzf:
+"---------------------------------------------------------------------------
+
+  if !executable('fzf')
+    finish
+  endif
+
 "---------------------------------------------------------------------------
 
   let $FZF_DEFAULT_COMMAND='fd --hidden --type file -E ".git*" -E "__pycache__*"'
@@ -106,3 +113,5 @@
   " Others
   nnoremap <leader>ft :Filetypes<CR>
   nnoremap <leader>fc :Colors<CR>
+
+  echom "Sources fzf"

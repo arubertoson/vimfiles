@@ -11,73 +11,6 @@
   let g:cachepath = $XDG_CACHE_HOME . '/nvim'
 
 "---------------------------------------------------------------------------
-" Global AutoCmd:
-"---------------------------------------------------------------------------
-
-  augroup vimrc | execute 'autocmd!' | augroup END
-  command! -nargs=* Gautocmd autocmd vimrc <args>
-  command! -nargs=* Gautocmdft autocmd vimrc FileType <args>
-  
-  " Work around neovim 0.4.0+ bug
-  " https://github.com/neovim/neovim/issues/9881
-  " https://github.com/neoclide/coc.nvim/issues/668
-  augroup secure_modeline_conflict_workaround
-    autocmd!
-    autocmd FileType help setlocal nomodeline
-  augroup END
-
-
-"---------------------------------------------------------------------------
-" Global Commands:
-"---------------------------------------------------------------------------
-
-  command! -nargs=1 Indent execute
-    \ 'setlocal tabstop='.<q-args>
-    \ 'softtabstop='.<q-args>
-    \ 'shiftwidth='.<q-args>
-  command! -nargs=0 -bar GoldenRatio exe 'vertical resize' &columns * 5 / 8
-  " Shows the syntax stack under the cursor
-  command! -bar SS echo 
-    \ map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-  " Set color theme
-  command! -nargs=? SetColorScheme call vimrc#set_theme(<q-args>)
-
-
-"---------------------------------------------------------------------------
-" Global Events:
-"---------------------------------------------------------------------------
-
-  " Optimize syntax in big files
-  Gautocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
-
-  " Check if there are other open instances of file in buffer
-  Gautocmd WinEnter * checktime
-
-  " Use relative numbers only in buffer with focus
-  Gautocmd WinLeave *? let [&l:number, &l:relativenumber] =
-    \ &l:number ? [1, 0] : [&l:number, &l:relativenumber]
-  Gautocmd WinEnter *? let [&l:number, &l:relativenumber] =
-    \ &l:number ? [1, 1] : [&l:number, &l:relativenumber] 
-
-  " Show listchars in insert mode 
-  Gautocmd InsertEnter *? setlocal list
-  Gautocmd InsertLeave *? setlocal nolist
-
-  " Format options
-  Gautocmdft *? setlocal formatoptions=cmMj
-
-  " Fix window position of help
-  Gautocmd FileType help if &l:buftype ==# 'help' | wincmd K | endif
-
-  " Always open read-only when a swap file is found
-  Gautocmd SwapExists * let v:swapchoice = 'o'
-
-  " Create directory if hierarchy doesn't exist
-  Gautocmd BufWritePre,FileWritePre *?
-    \ call vimrc#make_dir('<afile>:h', v:cmdbang)
-
-
-"---------------------------------------------------------------------------
 " Global Functions:
 "---------------------------------------------------------------------------
 
@@ -136,48 +69,55 @@
 " Global Settings Modules:
 "---------------------------------------------------------------------------
 
+  if IsNvim() 
+    call vimrc#load_modules(['neovim'], g:vimpath . 'conf')
+  endif 
+
   " Load configuration modules
   call vimrc#load_modules([
-    \ 'encoding',
     \ 'general',
-    \ 'view',
+    \ 'autocmd',
     \ 'mapping',
-    \ 'abbr',
-    \ 'plugins'
-    \ ], g:vimpath . '/modules')
-
+    \ 'command',
+    \ 'plugin',
+    \ 'style',
+    \ ], g:vimpath . '/conf')
 
 "---------------------------------------------------------------------------
 " Post:
 "---------------------------------------------------------------------------
 
-  " Set default theme and other themes that we can change to
-  let g:vimrc#theme = 'ocean'
-  let g:vimrc#themes = {
-    \   'iwrite': { 'colorscheme': 'pencil',
-    \              'background': 'light',
-    \              'font-size': '14',
-    \              'linespace': '6',
-    \              'typeface': 'Cousine',
-    \               },
-    \   'icode': { 'colorscheme': 'ayu',
-    \              'background': 'dark',
-    \              'font-size': '12',
-    \              'linespace': '3',
-    \              'typeface': 'Droid Sans Mono',
-    \               },
-    \   'ocean': { 'colorscheme': 'OceanicNext',
-    \              'background': 'dark',
-    \              'font-size': '14',
-    \              'linespace': '3',
-    \              'typeface': 'Droid Sans Mono',
-    \               },
-    \ }
-  
-  if !has('gui_running')
-    SetColorScheme icode
-  endif
-
   " Avoid running autocmds not owned by you in local .vimrc
   set secure
 
+
+
+"  function IsBackListFiletypes() abort
+"   if &filetype =~# '\v^(list|coc-explorer|cocactions)$'
+"     return v:true
+"   endif
+"   return v:false
+" endfunction
+" 
+" "使用绝对行号
+" function! UserFuncAbsNum()
+"   if IsBackListFiletypes()
+"     return
+"   endif
+"   if !exists('#goyo')
+"     set norelativenumber number
+"   else
+"     set norelativenumber nonumber
+"   endif
+" endfunction
+"  "使用相对行号
+" function! UserFuncRelNum()
+"   if IsBackListFiletypes()
+"     return
+"   endif
+"   if !exists('#goyo')
+"     set relativenumber number
+"   else
+"     set norelativenumber nonumber
+"   endif
+" endfunction
