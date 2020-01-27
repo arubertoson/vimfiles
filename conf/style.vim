@@ -154,13 +154,13 @@ let g:vimrc#themes = {
   \               },
   \ }
 
-let cscheme = "oned"
+let cscheme = "gruv"
 
 " set contrast
 " this configuration option should be placed before `colorscheme gruvbox-material`
 " available values: 'hard', 'medium'(default), 'soft'
-let g:gruvbox_material_background = 'hard'
+let g:gruvbox_material_background = 'soft'
 
-let g:lightline = {'colorscheme' : g:vimrc#themes[cscheme]["colorscheme"]}
+let g:lightline = {'colorscheme' : g:vimrc#themes[cscheme]["lightline"]}
 call vimrc#set_theme(cscheme)
 

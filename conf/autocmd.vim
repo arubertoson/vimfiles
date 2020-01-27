@@ -33,6 +33,7 @@
     \ &l:number ? [1, 1] : [&l:number, &l:relativenumber] 
 
   " Show listchars in insert mode 
+  Gautocmd BufEnter *? setlocal nolist
   Gautocmd InsertEnter *? setlocal list
   Gautocmd InsertLeave *? setlocal nolist
 

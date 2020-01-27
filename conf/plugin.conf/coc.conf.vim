@@ -168,7 +168,7 @@ function s:init() abort
   " highlight! link CocHighlightText htmlLink XXX Needs to light up properly
   highlight! CocHighlightText cterm=underline gui=underline
 
-  highlight! link CocErrorSign ErrorMsg
+  highlight! link CocErrorSign Error
   highlight! link CocWarningSign WarningMsg
   highlight! link CocInfoSign MoreMsg
   highlight! link CocHintSign ModeMsg
