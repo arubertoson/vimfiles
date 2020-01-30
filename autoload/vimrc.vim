@@ -43,6 +43,10 @@ function! vimrc#set_theme(...) abort
     call color#set('desert')
   endtry
 
+  if has_key(l:theme, 'lightline') 
+    let g:lightline = {'colorscheme' : l:theme['lightline']}
+  endif
+
   " Set font and linespace (only gui)
   if exists('g:GuiLoaded')
     let l:font = l:theme['typeface'] . ':h' . l:theme['font-size']
