@@ -11,3 +11,6 @@ autoload/plug.vim
 
 *.swp
 *.old
+
+# Logs
+.nvimlog
