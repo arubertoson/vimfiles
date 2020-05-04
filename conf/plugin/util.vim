@@ -28,7 +28,7 @@ Plug 'machakann/vim-textobj-delimited'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " Nnvim in browser XXX how to run in wsl?
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-if exists('g:started_by_firenvim')
-  packadd firenvim
-endif
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" if exists('g:started_by_firenvim')
+"   packadd firenvim
+" endif

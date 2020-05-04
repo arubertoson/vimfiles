@@ -36,7 +36,8 @@ let g:coc_global_extensions = [
   \ 'coc-vimlsp',
   \ 'coc-python',
   \ 'coc-smartf',
-  \ 'coc-bookmark'
+  \ 'coc-bookmark',
+  \ 'coc-clangd',
   \ ]
 
 
@@ -158,6 +159,9 @@ augroup coc_au
   autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
 augroup END
 
+
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function s:init() abort
   " do not underline error/info/hit lines
