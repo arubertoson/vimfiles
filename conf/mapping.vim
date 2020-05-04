@@ -68,7 +68,7 @@
 
 " Buffers
   nnoremap <silent> <leader><TAB> :<C-u>buffer#<CR>
-  nnoremap <silent> <leader>bd :<C-u>bdelete<CR>
+  nnoremap <silent> <leader>bd :<C-u>bp<bar>bdelete<CR>
 
 " Windows
   for char in split('h j k l')
