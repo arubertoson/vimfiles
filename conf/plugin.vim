@@ -38,6 +38,7 @@ call plug#begin(s:plugged)
         \ 'util',
         \], s:script_path . "/plugin" )
 
+  Plug 'jackguo380/vim-lsp-cxx-highlight'
     " XXX remnants
     " Plug 'rhysd/git-messenger.vim'
     " nmap <leader>gm <Plug>(git-messenger) 
