@@ -13,14 +13,19 @@
   "coc.preferences.formatOnType": false,
   "coc.preferences.hoverTarget": "float",
   "coc.preferences.jumpCommand": "drop",
-
-
   "coc.preferences.formatOnSaveFiletypes": [
      "go",
      "python",
-     "json"
+     "json",
+     "cpp",
+     "h"
   ],
 
+  // --------------------------------------------------------------------------------
+  // Diagnostics
+  // --------------------------------------------------------------------------------
+
+  // "diagnostic.enable": false,
   "diagnostic.infoSign":            "»",
   "diagnostic.hintSign":            "»",
   "diagnostic.warningSign":         "»",
@@ -28,13 +33,13 @@
   "diagnostic.enable":              true,
   "diagnostic.signOffset":          9999999,
   "diagnostic.highlightOffset":     9999999,
-  "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.refreshOnInsertMode": false,
   "diagnostic.refreshAfterSave": true,
+  "diagnostic.separateRelatedInformationAsDiagnostics": true,
 
+  // Diagnostic Plug
 
-  // Diagnostics
   "diagnostic-languageserver.debug": false,
-
   "diagnostic-languageserver.formatters": {
     "gofumports": {
       "command": "gofumports",
@@ -47,40 +52,45 @@
       "args": ["--parser", "json"],
       "isStdout": true,
       "isStderr": false
+    },
+    "clangfmt": {
+        "command": "clang-format"
     }
   },
 
   "diagnostic-languageserver.formatFiletypes": {
     "go": "gofumports",
-    "json": "jsonfmt"
-
+    "json": "jsonfmt",
+    "cpp": "clangfmt",
+    "hpp": "clangfmt"
   },
 
   "diagnostic-languageserver.filetypes": {
     "go": ["golangci-lint"]
   },
 
-  // end diag
 
-	"tabnine.disable_filetypes": [".*data.*"],
-
+  "tabnine.disable_filetypes": [".*data.*"],
   "yank.highlight.duration": 200,
+
   "suggest.noselect": false,
   "suggest.autoTrigger": "trigger",
   "suggest.echodocSupport": false,
   "suggest.maxCompleteItemCount": 12,
   "suggest.minTriggerInputLength": 2,
-
-  // "diagnostic.enable": false,
-  // "diagnostic.virtualText": true,
-  // "diagnostic.checkCurrentLine": true,
-  // "diagnostic.refreshAfterSave": true,
   "suggest.enablePreselect": true,
 
   "signature.enable": true,
   "signature.target": "float",
   "codeLens.enable": false,
+
+  // Language Specific
+
   "python.jediEnabled": false,
+  "python.pythonPath": "/scratch/.conda/envs/nvim3/bin/python3",
+
+  "clangd.semanticHighlighting": true,
+
   "languageserver": {
     "sh": {
       "command": "bash-language-server",
@@ -91,30 +101,10 @@
       "ignoredRootPaths": ["~"],
       "settings": {}
     },
-    "cmake": {
-      "command": "cmake-language-server",
-      "filetypes": ["cmake"],
-      "rootPatterns": [
-        "build/"
-      ],
-      "initializationOptions": {
-        "buildDirectory": "build"
-      }
-    },
     "dockerfile": {
       "command": "docker-langserver",
       "filetypes": ["dockerfile"],
       "args": ["--stdio"]
-    },
-    "ccls": {
-      "command": "ccls",
-      "filetypes": ["c", "cpp", "objc", "objcpp"],
-      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-      "initializationOptions": {
-        "cache": {
-          "directory": "/tmp/ccls"
-        }
-      }
     },
     "golang": {
       "command": "gopls",
