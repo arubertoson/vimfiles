@@ -9,14 +9,6 @@
 
 let $CACHEPATH = g:cachepath
 
-if IsNvim()
-  " Do not use providers
-  let g:loaded_node_provider = 0
-  let g:loaded_ruby_provider = 0
-  let g:loaded_python_provider = 0
-  let g:loaded_python3_provider = 0
-endif
-
 "---------------------------------------------------------------------------
 " General Settings: {{{
   set exrc                     " avoid reading local (g)vimrc, exrc
