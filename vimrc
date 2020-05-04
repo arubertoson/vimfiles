@@ -70,7 +70,7 @@
 "---------------------------------------------------------------------------
 
   if IsNvim() 
-    call vimrc#load_modules(['neovim'], g:vimpath . 'conf')
+    call vimrc#load_modules(['neovim'], g:vimpath . '/conf')
   endif 
 
   " Load configuration modules

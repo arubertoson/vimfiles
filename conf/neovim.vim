@@ -20,11 +20,15 @@ set switchbuf+=vsplit               " Switch buffer behavior to vsplit
 set completeopt+=noselect           " Do not select a match in the menu
 set completeopt+=noinsert           " Do not insert any text
 
+
 " Do not use providers
 let g:loaded_node_provider = 0
 let g:loaded_ruby_provider = 0
-let g:loaded_python_provider = 0
-let g:loaded_python3_provider = 0
+" let g:loaded_python_provider = 0
+" let g:loaded_python3_provider = 0
+let g:python_host_prog = "/scratch/.conda/envs/nvim2/bin/python2"
+let g:python3_host_prog = "/scratch/.conda/envs/nvim3/bin/python3"
+let pyx=3
 
 "  ShaDa/viminfo:
 "   ' - Maximum number of previously edited files marks
