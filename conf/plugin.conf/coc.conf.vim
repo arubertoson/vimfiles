@@ -32,6 +32,8 @@ let g:coc_global_extensions = [
   \ 'coc-spell-checker',
   \ 'coc-cspell-dicts',
   \ 'coc-snippets',
+  \ 'coc-diagnostics',
+  \ 'coc-clangd',
   \ 'coc-actions',
   \ 'coc-vimlsp',
   \ 'coc-python',

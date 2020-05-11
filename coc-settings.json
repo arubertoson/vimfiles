@@ -49,7 +49,7 @@
     },
     "jsonfmt": {
       "command": "prettier",
-      "args": ["--parser", "json"],
+      "args": ["--parser", "json", "--tab-width", "4"],
       "isStdout": true,
       "isStderr": false
     },
@@ -58,15 +58,13 @@
     }
   },
 
+  "json.format.enable": false,
+
   "diagnostic-languageserver.formatFiletypes": {
     "go": "gofumports",
     "json": "jsonfmt",
     "cpp": "clangfmt",
     "hpp": "clangfmt"
-  },
-
-  "diagnostic-languageserver.filetypes": {
-    "go": ["golangci-lint"]
   },
 
 
