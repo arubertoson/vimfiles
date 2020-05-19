@@ -5,6 +5,7 @@ GTAGS
 
 .backup
 .scratchpads
+.mypy_cache
 
 plugged
 autoload/plug.vim
