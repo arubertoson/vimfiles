@@ -24,10 +24,12 @@ set completeopt+=noinsert           " Do not insert any text
 " Do not use providers
 let g:loaded_node_provider = 0
 let g:loaded_ruby_provider = 0
+
 " let g:loaded_python_provider = 0
 " let g:loaded_python3_provider = 0
-let g:python_host_prog = "/scratch/.conda/envs/nvim2/bin/python2"
-let g:python3_host_prog = "/scratch/.conda/envs/nvim3/bin/python3"
+
+let g:python_host_prog = "/scratch/package/pyenv/versions/2.7.18/envs/nvim2/bin/python2.7"
+let g:python3_host_prog = "/scratch/package/pyenv/versions/3.8.5/envs/nvim3/bin/python3.8"
 let pyx=3
 
 "  ShaDa/viminfo:
