@@ -1,0 +1,6 @@
+# We need to be on a windows "spot" to be able to 
+# invoke win32yank executable
+
+cd /mnt/c/scratch/bin
+
+./win32yank.exe "$@"
