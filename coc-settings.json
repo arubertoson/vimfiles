@@ -1,122 +1,128 @@
 {
-  // coc settings
+    // coc settings
 
-  "list.nextKeymap": "<C-n>",
-  "list.previousKeymap": "<C-p>",
-  "list.maxHeight": 15,
-  "list.insertMappings": {
-    "<C-c>": "do:exit"
-  },
+    "python.pythonPath": "/scratch/bin/python",
 
-  "coc.preferences.snippets.enable": true,
-  "coc.preferences.snippetStatusText": "",
-  "coc.preferences.formatOnType": false,
-  "coc.preferences.hoverTarget": "float",
-  "coc.preferences.jumpCommand": "drop",
-  "coc.preferences.formatOnSaveFiletypes": [
-     "go",
-     "python",
-     "json",
-     "cpp",
-     "h"
-  ],
-
-  // --------------------------------------------------------------------------------
-  // Diagnostics
-  // --------------------------------------------------------------------------------
-
-  // "diagnostic.enable": false,
-  "diagnostic.infoSign":            "»",
-  "diagnostic.hintSign":            "»",
-  "diagnostic.warningSign":         "»",
-  "diagnostic.errorSign":           "»",
-  "diagnostic.enable":              true,
-  "diagnostic.signOffset":          9999999,
-  "diagnostic.highlightOffset":     9999999,
-  "diagnostic.refreshOnInsertMode": false,
-  "diagnostic.refreshAfterSave": true,
-  "diagnostic.separateRelatedInformationAsDiagnostics": true,
-
-  // Diagnostic Plug
-
-  "diagnostic-languageserver.debug": false,
-  "diagnostic-languageserver.formatters": {
-    "gofumports": {
-      "command": "gofumports",
-      "args": ["-e"],
-      "isStderr": true,
-      "isStdout": true
+    "list.nextKeymap": "<C-n>",
+    "list.previousKeymap": "<C-p>",
+    "list.maxHeight": 15,
+    "list.insertMappings": {
+        "<C-c>": "do:exit"
     },
-    "jsonfmt": {
-      "command": "prettier",
-      "args": ["--parser", "json", "--tab-width", "4"],
-      "isStdout": true,
-      "isStderr": false
+
+    "coc.preferences.snippets.enable": true,
+    "coc.preferences.snippetStatusText": "",
+    "coc.preferences.formatOnType": false,
+    "coc.preferences.hoverTarget": "float",
+    "coc.preferences.jumpCommand": "drop",
+    "coc.preferences.formatOnSaveFiletypes": [
+        "go",
+        "python",
+        "json",
+        "cpp",
+        "h"
+    ],
+
+    // --------------------------------------------------------------------------------
+    // Diagnostics
+    // --------------------------------------------------------------------------------
+
+    // "diagnostic.enable": false,
+    "diagnostic.infoSign": "»",
+    "diagnostic.hintSign": "»",
+    "diagnostic.warningSign": "»",
+    "diagnostic.errorSign": "»",
+    "diagnostic.enable": true,
+    "diagnostic.signOffset": 9999999,
+    "diagnostic.highlightOffset": 9999999,
+    "diagnostic.refreshOnInsertMode": false,
+    "diagnostic.refreshAfterSave": true,
+    "diagnostic.separateRelatedInformationAsDiagnostics": true,
+
+    // Diagnostic Plug
+    // "json.format.enable": false,
+
+    "diagnostic-languageserver.debug": true,
+    "diagnostic-languageserver.formatters": {
+        "gofumports": {
+            "command": "gofumports",
+            "args": ["-e"],
+            "isStdout": true,
+            "isStderr": false
+        },
+        "jsonfmt": {
+            "command": "prettier",
+            "args": ["--parser", "json", "--tab-width", "4"],
+            "isStdout": true,
+            "isStderr": false
+        },
+        "clangfmt": {
+            "command": "clang-format"
+        }
     },
-    "clangfmt": {
-        "command": "clang-format"
-    }
-  },
 
-  "json.format.enable": false,
-
-  "diagnostic-languageserver.formatFiletypes": {
-    "go": "gofumports",
-    "json": "jsonfmt",
-    "cpp": "clangfmt",
-    "hpp": "clangfmt"
-  },
-
-
-  "tabnine.disable_filetypes": [".*data.*"],
-  "yank.highlight.duration": 200,
-
-  "suggest.noselect": false,
-  "suggest.autoTrigger": "trigger",
-  "suggest.echodocSupport": false,
-  "suggest.maxCompleteItemCount": 12,
-  "suggest.minTriggerInputLength": 2,
-  "suggest.enablePreselect": true,
-
-  "signature.enable": true,
-  "signature.target": "float",
-  "codeLens.enable": false,
-
-  // Language Specific
-
-  "python.jediEnabled": false,
-  "python.pythonPath": "/scratch/.conda/envs/nvim3/bin/python3",
-
-  "clangd.semanticHighlighting": true,
-
-  "languageserver": {
-    "sh": {
-      "command": "bash-language-server",
-      "args": ["start", "--stdio"],
-      "filetypes": ["sh"],
-      "cwd": "./",
-      "initializationOptions": {},
-      "ignoredRootPaths": ["~"],
-      "settings": {}
+    "diagnostic-languageserver.filetypes": {
+        "go": "golangci-lint"
     },
-    "dockerfile": {
-      "command": "docker-langserver",
-      "filetypes": ["dockerfile"],
-      "args": ["--stdio"]
+
+    "diagnostic-languageserver.formatFiletypes": {
+        "go": "gofumports",
+        "json": "jsonfmt",
+        "cpp": "clangfmt",
+        "hpp": "clangfmt"
     },
-    "golang": {
-      "command": "gopls",
-      "args": [],
-      "trace.server": "verbose",
-      "rootPatterns": [
-        "go.mod",
-        ".git/",
-        ".hg/"
-      ],
-      "requireRootPattern": true,
-      "filetypes": [
-        "go"
-      ]
-    }
-  }
+
+    "git.addedSign.hlGroup": "GitGutterAdd",
+    "git.changedSign.hlGroup": "GitGutterChange",
+    "git.removedSign.hlGroup": "GitGutterDelete",
+
+    "tabnine.disable_filetypes": [".*data.*"],
+    "yank.highlight.duration": 200,
+
+    "suggest.noselect": false,
+    "suggest.autoTrigger": "trigger",
+    "suggest.echodocSupport": false,
+    "suggest.maxCompleteItemCount": 12,
+    "suggest.minTriggerInputLength": 2,
+    "suggest.enablePreselect": true,
+
+    "signature.enable": true,
+    "signature.target": "float",
+    "codeLens.enable": false,
+
+    // Language Specific
+
+    "python.jediEnabled": false,
+    // "python.pythonPath": "python",
+
+    "explorer.file.showHiddenFiles": true,
+
+    // "explorer.icon.expanded": "▾",
+    // "explorer.icon.enableNerdfont": true,
+    "explorer.quitOnOpen": true,
+    "explorer.floating.width": -20,
+    "explorer.floating.height": -10,
+    "explorer.openAction.strategy": "sourceWindow",
+
+    "clangd.semanticHighlighting": true,
+
+    "languageserver": {
+        "sh": {
+            "command": "bash-language-server",
+            "args": ["start", "--stdio"],
+            "filetypes": ["sh"],
+            "cwd": "./",
+            "initializationOptions": {},
+            "ignoredRootPaths": ["~"],
+            "settings": {}
+        },
+        "dockerfile": {
+            "command": "docker-langserver",
+            "filetypes": ["dockerfile"],
+            "args": ["--stdio"]
+        }
+    },
+    "cSpell.userWords": ["lsrec"],
+    "git.enableGutters": true,
+    "clangd.path": "/home/macke/.config/coc/extensions/coc-clangd-data/install/10.0.0/clangd_10.0.0/bin/clangd"
 }
