@@ -39,6 +39,21 @@ call plug#begin(s:plugged)
         \], s:script_path . "/plugin" )
 
   Plug 'jackguo380/vim-lsp-cxx-highlight'
+  Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+  let g:semshi#error_sign = v:false
+
+  Plug 'liuchengxu/vista.vim'
+  Plug 'antoinemadec/coc-fzf'
+
+  " Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
+  let g:vista#renderer#enable_icon = 1
+
+  " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
+  let g:vista#renderer#icons = {
+  \   "function": "\uf794",
+  \   "variable": "\uf71b",
+  \  }
+  
     " XXX remnants
     " Plug 'rhysd/git-messenger.vim'
     " nmap <leader>gm <Plug>(git-messenger) 
