@@ -11,6 +11,8 @@ if exists('+pumheight')
   set pumheight=30
 endif
 
+let g:node_client_debug = 0
+
 set noshowmode 
 set statusline^=%{coc#status()}
 set completeopt=noinsert,menuone,noselect
@@ -40,6 +42,7 @@ let g:coc_global_extensions = [
   \ 'coc-smartf',
   \ 'coc-bookmark',
   \ 'coc-clangd',
+  \ 'coc-go',
   \ ]
 
 
@@ -181,9 +184,9 @@ function s:init() abort
 
   highlight! link CocCodeLens ModeMsg
 
-  highlight! link GitAddHi SignifySignAdd
-  highlight! link GitModifyHi SignifySignChange
-  highlight! link GitDeleteHi SignifySignDelete
+  " highlight! link GitAddHi SignifySignAdd
+  " highlight! link GitModifyHi SignifySignChange
+  " highlight! link GitDeleteHi SignifySignDelete
 
   highlight! link CocCursorRange Cursor
 endfunction

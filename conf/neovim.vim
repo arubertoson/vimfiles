@@ -20,6 +20,7 @@ set switchbuf+=vsplit               " Switch buffer behavior to vsplit
 set completeopt+=noselect           " Do not select a match in the menu
 set completeopt+=noinsert           " Do not insert any text
 
+let $PATH .= ':' . g:vimpath . "/bin"
 
 " Do not use providers
 let g:loaded_node_provider = 0
