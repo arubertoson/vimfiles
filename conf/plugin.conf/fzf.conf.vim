@@ -18,7 +18,7 @@
         \ 'ctrl-t': 'tab split',
         \ 'ctrl-s': 'split',
         \ 'ctrl-v': 'vsplit' }
-  let g:fzf_tags_command = 'retag'
+  " let g:fzf_tags_command = 'retag'
 
   " Required configurations for drop down terminas
   aug user:autocmd:fzf
@@ -77,7 +77,7 @@
     let height = float2nr(&lines * 0.4)
     let width = float2nr(&columns * 0.8)
     let horizontal = float2nr((&columns - width) / 2)
-    let vertical = 1
+    let vertical = 0.5
 
     let opts = {
           \ 'relative': 'editor',
@@ -93,6 +93,17 @@
 "---------------------------------------------------------------------------
 " Mapping:
 "---------------------------------------------------------------------------
+  " Coc
+  nnoremap <silent> <localleader>d  :<C-u>CocFzfList diagnostics<CR>
+  nnoremap <silent> <localleader>b  :<C-u>CocFzfList diagnostics --current-buf<CR>
+  nnoremap <silent> <localleader>l  :<C-u>CocFzfList location<CR>
+  nnoremap <silent> <leader>c  :<C-u>CocFzfList commands<CR>
+  nnoremap <silent> <leader>o  :<C-u>CocFzfList outline<CR>
+  nnoremap <silent> <leader>s  :<C-u>CocFzfList symbols<CR>
+  nnoremap <silent> <leader>S  :<C-u>CocFzfList services<CR>
+  nnoremap <silent> <leader>p  :<C-u>CocFzfListResume<CR>
+
+  nnoremap <silent> <leader>e  :<C-u>CocFzfList extensions<CR>
 
   " File Jumping
   nnoremap <silent> <localleader>f :Files<CR>
@@ -113,5 +124,3 @@
   " Others
   nnoremap <leader>ft :Filetypes<CR>
   nnoremap <leader>fc :Colors<CR>
-
-  echom "Sources fzf"
