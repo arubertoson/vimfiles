@@ -65,6 +65,7 @@ call plug#begin(s:plugged)
         \ 'fzf.conf',
         \ 'coc.conf',
         \ 'neoterm.conf',
+        \ 'python.conf',
         \], s:script_path . "/plugin.conf" )
 
 call plug#end()
