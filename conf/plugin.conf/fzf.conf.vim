@@ -94,6 +94,7 @@
 " Mapping:
 "---------------------------------------------------------------------------
   " Coc
+  nnoremap <silent> <localleader>a  :<C-u>CocFzfList actions<CR>
   nnoremap <silent> <localleader>d  :<C-u>CocFzfList diagnostics<CR>
   nnoremap <silent> <localleader>b  :<C-u>CocFzfList diagnostics --current-buf<CR>
   nnoremap <silent> <localleader>l  :<C-u>CocFzfList location<CR>
