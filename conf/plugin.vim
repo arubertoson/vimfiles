@@ -40,7 +40,9 @@ call plug#begin(s:plugged)
 
   Plug 'jackguo380/vim-lsp-cxx-highlight'
   Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-  let g:semshi#error_sign = v:false
+  let g:semshi#error_sign = 0
+  let g:semshi#simplify_markup = 1
+  let g:semshi#mark_selected_nodes = 0
 
   Plug 'liuchengxu/vista.vim'
   Plug 'antoinemadec/coc-fzf'
