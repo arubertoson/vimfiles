@@ -1,8 +1,6 @@
 {
     // coc settings
 
-    "python.pythonPath": "/scratch/bin/python",
-
     "list.nextKeymap": "<C-n>",
     "list.previousKeymap": "<C-p>",
     "list.maxHeight": 15,
