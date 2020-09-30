@@ -28,6 +28,7 @@ if executable('pyenv')
   endif 
 
   let g:python3_host_prog = output . s:pybin . 'python3'
+  let pyx = 3
 else
   let g:loaded_python3_provider = 0
 endif
