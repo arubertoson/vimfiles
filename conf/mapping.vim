@@ -68,7 +68,6 @@
 
 " Buffers
   nnoremap <silent> <leader><TAB> :<C-u>buffer#<CR>
-  nnoremap <silent> <leader>bd :<C-u>bp<bar>bdelete<CR>
 
 " Windows
   for char in split('h j k l')
@@ -167,15 +166,14 @@
     endif
 
     if winnr('$') > 1
-      let buffers = filter(tabpagebuflist(tabPageNr),
-        \ 'bufname(v:val) =~? "vimfiler"')
-      if empty(buffers)
-        close | return
+      if len(getbufinfo({'buflisted':1})) > 2
+        bprev | silent! bwipeout # | return
       endif
+
+      silent! close | return
     endif
 
     if empty(bufname('#'))
       silent! bwipeout | return
     endif
-    bprev | silent! bwipeout # | return
   endfunction
